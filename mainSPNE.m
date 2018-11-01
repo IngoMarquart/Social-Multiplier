@@ -1,13 +1,10 @@
 %%
 %   Matlab Simulation CWS Model - Simplified, SPNE
 %   Ingo Marquart, Nghi Truong
-%   17.07.2018
 %
 %   This is the main file to set configuration and loop over
 %   SimulateAttSubgame.m, which simulates on firm
 %%
-
-
 %% CONFIGURATION
 
 % Restrict the maximum time periods for the simulation
