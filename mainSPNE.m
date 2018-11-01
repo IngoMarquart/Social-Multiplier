@@ -5,6 +5,9 @@
 %   This is the main file to set configuration and loop over
 %   SimulateAttSubgame.m, which simulates on firm
 %%
+
+
+
 %% CONFIGURATION
 
 % Restrict the maximum time periods for the simulation
@@ -101,7 +104,7 @@ gVec={ 0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50};
 
 %%
 % nVec is a cell array of all firm sizes to run
-nVec={10,15,20,25,30,35,40,45,50,55,60,65,70,75,80};
+nVec={75};
 
 %%
 % mVec includes the random seeds to run for each configuration.
@@ -121,8 +124,8 @@ mnVec={0};
 pnVec={0};
 
 %% Settings for consolidation
-%consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
-consVec={0};
+consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
+
 %% Use this to run only one simulation
 % thetaVec={[2,15 ,1,1]};
 % nVec={50};

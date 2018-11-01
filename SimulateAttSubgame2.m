@@ -437,7 +437,7 @@ else % Nilpotent matrix
 end
 B=alpha.*((eye(n,n)-beta.*Gmat)^(-1))*Gmat*ones(n,1);
 %B=B./max(B);
-BNeg=alpha.*((eye(n,n)-beta.*Gmat)^(-1))*Gmat*ones(n,1);
+BNeg=alpha.*((eye(n,n)-betaneg.*Gmat)^(-1))*Gmat*ones(n,1);
 %BNeg=BNeg./max(BNeg);
 
 RetStruct.GmeanBonacich=mean(B);
