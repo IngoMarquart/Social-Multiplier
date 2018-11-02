@@ -79,6 +79,7 @@ end
 
 % prepare vectors
 theta=TIVec(:,1);
+thetaOrg=theta;
 identity=TIVec(:,2);
 
 %% Create helper functions
@@ -98,6 +99,10 @@ pmat=cell(1,T);
 
 % In this we will save the X-values
 xmat=repmat(theta,1,T);
+% In this we will save the theta-values
+thetamat=repmat(theta,1,T);
+% In this we will save the shock-values
+shockmat=repmat(theta,1,T);
 % Initialize p_matrix
 pmat{1} = zeros(n,n);
 % Initialize u_matrix
@@ -133,6 +138,10 @@ for t = 2:(T)
     pmatT=pmat{t};
     pmat_prev=pmat{t-1};
     
+    
+    % We will shock thetas
+    [theta, shockmat(:,t)]=ShockThetas(thetaOrg,0.05,m*t);
+    thetamat(:,t)=theta;
     %
     %%
     % If not using parfor outside of this function (ie. simulating one
@@ -305,10 +314,10 @@ for t = 2:(T)
     end
     % If half-time is achieved and p values fluctuate only by tiny amounts,
     % end the simulation
-    if  ((abs(pdif)<= 1.0000e-6*t) && (t>=T/2))
-        warning('Convergence achieved due to half-time');
-        break;
-    end
+%     if  ((abs(pdif)<= 1.0000e-6*t) && (t>=T/2))
+%         warning('Convergence achieved due to half-time');
+%         break;
+%     end
 end
 %% Deliver return values
 % We will return two objects,
@@ -320,9 +329,21 @@ end
 T=finalt;
 P=pmat{T};
 X=xmat(:,T);
+thetamat=thetamat(:,1:T);
+xmat=xmat(:,1:T);
 diff=X-theta;
 utils=umat(:,T);
 
+
+
+pmat=pmat(1:T);
+range=max(5,round(T/5))-1;
+pmattoavg=pmat(end-range:end);
+pAvg=pmattoavg{1}-pmattoavg{1};
+for i = 1:length(pmattoavg)
+    pAvg=pAvg+pmattoavg{i};
+end
+pAvg=pAvg./(range+1);
 
 % Nr of types
 RetStruct.NrClimbers=length(identity(identity==1));
@@ -450,6 +471,7 @@ RetStruct.GmaxNegBonacich=max(BNeg);
 RetStruct.GminNegBonacich=min(BNeg);
 RetStruct.GvarNegBonacich=var(BNeg);
 %% A
+P=pAvg;
 SPMat=(P+P')./2;
 SPMat(SPMat>0)=1;
 Agraph=digraph(P);
