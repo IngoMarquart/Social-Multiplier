@@ -140,7 +140,7 @@ for t = 2:(T)
     
     
     % We will shock thetas
-    [theta, shockmat(:,t)]=ShockThetas(thetaOrg,0.05,m*t);
+    [theta, shockmat(:,t)]=ShockThetas(thetaOrg,0.1,m*t);
     thetamat(:,t)=theta;
     %
     %%
