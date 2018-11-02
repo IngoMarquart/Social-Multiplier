@@ -619,12 +619,12 @@ type(identity==-1)="S";
     type(:) = strcat(strType,strleer,strtheta(:),strleer,strleer,strX(:),strleer,strdiff(:));
     type(:) = strcat(strtheta(:),strleer,strdiff(:));
     asdf= cellstr(type');
-    h=plot(GPgraph,'Layout','force','NodeLabel',asdf);
+    h=plot(Sgraph,'Layout','force','NodeLabel',asdf);
     %h=plot(GPgraph,'Layout','force');
     h.NodeCData=identity;
     h.MarkerSize=12;
     layout(h,'force')
-    highlight(h,Sgraph,'EdgeColor','r','LineWidth',1.5)
+    %highlight(h,Sgraph,'EdgeColor','r','LineWidth',1.5)
     
     txt = {'Attention network:',['N=',num2str(n)],['g=',num2str(g)], ...
         ['NrC=',num2str(RetStruct.NrClimbers)],['NrW=',num2str(RetStruct.NrWatchers)],['NrS=',num2str(RetStruct.NrSlackers)],['Skew=',num2str(skewness(theta))], ...

@@ -11,7 +11,7 @@
 %% CONFIGURATION
 
 % Restrict the maximum time periods for the simulation
-T=200;
+T=100;
 % Define a minimum of time periods each simulation runs
 minT=4;
 % Exogenous Connection Benefit to force no isolates. Unused.
@@ -128,9 +128,9 @@ consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
 
 %% Use this to run only one simulation
 thetaVec={[2,15 ,1,1]};
-nVec={50};
+nVec={100};
 mVec={1};
-gVec={0.5};
+gVec={0.3};
 gammaVec={[1/3, 1/3, 1/3]};
 mnVec={3};
 pnVec={0};
