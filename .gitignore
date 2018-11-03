@@ -1,2 +1,7 @@
 Matlab/DataSave/*
 Matlab/DataSave/
+*.m~
+
+*.asv
+
+graphs/
