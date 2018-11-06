@@ -30,12 +30,12 @@ delta=1;
 convexp=1;
 % Plot a network graph. Note that this should only be enabled for
 % simulating a single firm!
-graphit=0;
+graphit=1;
 % Use globalsearch algorithm. Time intensive!
 globalsearch=-1;
 % Save results. Creates a folder with timestamp and saves aggregate data as
 % well as ALL matrices
-saveit=1;
+saveit=0;
 % Force matlab to store table out of memory. Slower if enough RAM.
 longtable=0;
 
@@ -127,13 +127,14 @@ pnVec={0};
 consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
 
 %% Use this to run only one simulation
-% thetaVec={[2,15 ,1,1]};
-% nVec={50};
-% mVec={1};
-% gVec={100};
-% gammaVec={[1/3, 1/3, 1/3]};
-% mnVec={3,4,5,6};
-% pnVec={0.3};
+thetaVec={[2,15 ,1,1]};
+nVec={50};
+mVec={1};
+gVec={100};
+gammaVec={[1/3, 1/3, 1/3]};
+mnVec={1};
+pnVec={0.3};
+consVec={0};
 %% END OF CONFIGURATION
 
 
@@ -236,7 +237,7 @@ for cn = nVec
                         % If you want many firms, it is far more efficient to
                         % parallelize per firm! Use
                         % parfor i = 1:length(gVec)
-                        parfor i = 1:length(gVec)
+                        for i = 1:length(gVec)
                             g=gVec(i);
                             
                             % Save current timestamp to associate matrix with table

@@ -428,18 +428,11 @@ RetStruct.GAvgDegree=mean(deg);
 
 
 % Bonacich family centralities
-alpha=1;
-if abs(max(eig(Gmat))) >0
-    beta=0.95*abs(1/max(eig(Gmat)));
-    betaneg=-0.95*abs(1/max(eig(Gmat)));
-else % Nilpotent matrix
-    beta=1;
-end
-B=alpha.*((eye(n,n)-beta.*Gmat)^(-1))*Gmat*ones(n,1);
-%B=B./max(B);
-BNeg=alpha.*((eye(n,n)-betaneg.*Gmat)^(-1))*Gmat*ones(n,1);
-%BNeg=BNeg./max(BNeg);
+B=BonacichCentrality(0,0,1,1,0,Gmat);
+% Power centrality
+BNeg=BonacichCentrality(0,0,1,1,1,Gmat);
 
+% Create aggregate measures for Centralities
 RetStruct.GmeanBonacich=mean(B);
 RetStruct.GmaxBonacich=max(B);
 RetStruct.GminBonacich=min(B);
@@ -449,6 +442,8 @@ RetStruct.GmeanNegBonacich=mean(BNeg);
 RetStruct.GmaxNegBonacich=max(BNeg);
 RetStruct.GminNegBonacich=min(BNeg);
 RetStruct.GvarNegBonacich=var(BNeg);
+
+
 %% A
 SPMat=(P+P')./2;
 SPMat(SPMat>0)=1;
@@ -498,33 +493,18 @@ RetStruct.ASymAvgDegree=mean(deg);
 RetStruct.AAvgDegree=mean(deg2);
 
 
-% Bonacich family centralities: P
-alpha=1;
-if abs(max(eig(P))) >0
-    beta=0.95*abs(1/max(eig(P)));
-    betaneg=-0.95*abs(1/max(eig(P)));
-else % Nilpotent matrix
-    beta=1;
-    betaneg=-1;
-end
-ABonacich=alpha.*((eye(n,n)-beta.*P)^(-1))*P*ones(n,1);
-%ABonacich=ABonacich./max(ABonacich);
-AnegBonacich=alpha.*((eye(n,n)-betaneg.*P)^(-1))*P*ones(n,1);
-%AnegBonacich=AnegBonacich./max(AnegBonacich);
-% Bonacich family centralities: P Symmetric
-alpha=1;
-if abs(max(eig(SPMat))) >0
-    beta=0.95*abs(1/max(eig(SPMat)));
-    betaneg=-0.95*abs(1/max(eig(SPMat)));
-else % Nilpotent matrix
-    beta=1;
-    betaneg=-1;
-end
-ASymBonacich=alpha.*((eye(n,n)-beta.*P)^(-1))*P*ones(n,1);
-%ASymBonacich=ASymBonacich./max(ASymBonacich);
-ASymnegBonacich=alpha.*((eye(n,n)-betaneg.*P)^(-1))*P*ones(n,1);
-%ASymnegBonacich=ASymnegBonacich./max(ASymnegBonacich);
+% Bonacich family centralities
+ABonacich=BonacichCentrality(0,0,1,1,0,P);
+% Power centrality
+AnegBonacich=BonacichCentrality(0,0,1,1,1,P);
 
+
+% Bonacich family centralities: P Symmetric
+ASymBonacich=BonacichCentrality(0,0,1,1,0,SPMat);
+% Power centrality
+ASymnegBonacich=BonacichCentrality(0,0,1,1,1,SPMat);
+
+% Create aggregate measures for Centralities
 RetStruct.AmeanBonacich=mean(ABonacich);
 RetStruct.AmaxBonacich=max(ABonacich);
 RetStruct.AminBonacich=min(ABonacich);

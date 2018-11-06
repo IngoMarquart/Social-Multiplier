@@ -1,7 +1,19 @@
 G=[ 0 1 1 0;
     1 0 0 1;
-    1 0 1 0;
+    1 0 0 1;
     0 1 0 0];
+
+G4=[ 0 1 1 0;
+    1 0 0 0;
+    1 0 0 1;
+    0 0 1 0];
+
+G2=[ 0 1 0 0;
+    1 0 0 0;
+    0 0 0 1;
+    0 0 1 0];
+
+G3=zeros(4,4);
 
 theta=[1,2,3,4];
 identity=[1,0,-1,0];
@@ -38,7 +50,7 @@ prest=[1, 1]';
 p_i2 = RecoverPi(prest,ChoiceCell{2}, n);
 p_i3 = RecoverPi(prest,ChoiceCell{3}, n);
 
-if isequal(p_i, [0;1;0;0]) && isequal(p_i2, [1;0;0;1]) && isequal(p_i3, [1;0;1;0])
+if isequal(p_i, [0;1;0;0]) && isequal(p_i2, [1;0;0;1]) && isequal(p_i3, [1;0;0;1])
     disp("RecoverPi: Success");
 else
     error("RecoverPi: Error");
@@ -69,3 +81,13 @@ nrChoice=NrChoices(1);
 delta=1;
 i=1;
 [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta(1), theta', PsiA,i,Choice,nrChoice)
+
+
+%% Bonacich centralities
+normAlpha=1;
+normBeta=1;
+alpha=1;
+beta=1;
+Power=0;
+
+centralities = BonacichCentrality(alpha,beta,normAlpha,normBeta,Power,G4)
