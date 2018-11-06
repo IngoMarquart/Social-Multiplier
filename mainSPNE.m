@@ -30,12 +30,12 @@ delta=1;
 convexp=1;
 % Plot a network graph. Note that this should only be enabled for
 % simulating a single firm!
-graphit=1;
+graphit=0;
 % Use globalsearch algorithm. Time intensive!
 globalsearch=-1;
 % Save results. Creates a folder with timestamp and saves aggregate data as
 % well as ALL matrices
-saveit=0;
+saveit=1;
 % Force matlab to store table out of memory. Slower if enough RAM.
 longtable=0;
 
@@ -45,15 +45,15 @@ longtable=0;
 
 %%
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
-gammaVec={[1/3, 1/3, 1/3], ...
-    [1/2, 1/2, 0/3], ...
-    [0/3, 1/2, 1/2], ...
-    [2/9,1/3,4/9], ...
-    [2/6,1/3,2/6], ...
-    [4/9,1/3,2/9], ...
-    [1/9,2/3,2/9], ...
-    [1/6,2/3,1/6], ...
-    [2/9,2/3,1/9]};
+% gammaVec={[1/3, 1/3, 1/3], ...
+%     [1/2, 1/2, 0/3], ...
+%     [0/3, 1/2, 1/2], ...
+%     [2/9,1/3,4/9], ...
+%     [2/6,1/3,2/6], ...
+%     [4/9,1/3,2/9], ...
+%     [1/9,2/3,2/9], ...
+%     [1/6,2/3,1/6], ...
+%     [2/9,2/3,1/9]};
 
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
 gammaVec={[1/3, 1/3, 1/3], ...
@@ -104,7 +104,7 @@ gVec={ 0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50};
 
 %%
 % nVec is a cell array of all firm sizes to run
-nVec={75};
+nVec={10,15,20,25,30,35,40,45,50,55,60,65,70,75,80};
 
 %%
 % mVec includes the random seeds to run for each configuration.
@@ -127,14 +127,14 @@ pnVec={0};
 consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
 
 %% Use this to run only one simulation
-thetaVec={[2,15 ,1,1]};
-nVec={50};
-mVec={1};
-gVec={100};
-gammaVec={[1/3, 1/3, 1/3]};
-mnVec={1};
-pnVec={0.3};
-consVec={0};
+% thetaVec={[2,15 ,1,1]};
+% nVec={50};
+% mVec={1};
+% gVec={100};
+% gammaVec={[1/3, 1/3, 1/3]};
+% mnVec={1};
+% pnVec={0.3};
+% consVec={0};
 %% END OF CONFIGURATION
 
 
@@ -237,7 +237,7 @@ for cn = nVec
                         % If you want many firms, it is far more efficient to
                         % parallelize per firm! Use
                         % parfor i = 1:length(gVec)
-                        for i = 1:length(gVec)
+                        parfor i = 1:length(gVec)
                             g=gVec(i);
                             
                             % Save current timestamp to associate matrix with table
