@@ -1,8 +1,15 @@
 %%
-% utilitySPNE
-% Given a set of P-vectors from t-1
-% this function gives the utility of p_i
-% assuming that the SPNE will be played
+% DiscreteChoice
+% Assuming that each actor picks only one peer, this function find the one
+% giving the most utility
+% @param: P_t_1 - Attention matrix of last time period
+% @param: g,delta - Embedding and scaling variable
+% @param: theta_i, theta - theta vector and theta of i
+% @param: Psi - Expected benefit function handle
+% @param: Choice - Vector given the indecies of valid peers (where connection in G exists)
+% @param: nrChoice - Number of choices
+% @return: util - Utility value
+% @return: p_i_star - Attention choice in the space of all n actors
 %%
 function [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice)
 

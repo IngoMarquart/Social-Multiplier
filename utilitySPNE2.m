@@ -1,9 +1,17 @@
 %%
-% utilitySPNE
-% Given a set of P-vectors from t-1
-% this function gives the utility of p_i
-% assuming that the SPNE will be played
-%%
+% % utilitySPNE
+% Objective function to be optimized
+% This version takes a restricted p vector, containing weights only for neighbors in G
+% @param: prest - The restricted attention choice: Weights in the space of neighbor nodes
+% @param: P_t_1 - Attention matrix of last time period
+% @param: g,delta - Embedding and scaling variable
+% @param: theta_i, theta - theta vector and theta of i
+% @param: Psi - Expected benefit function handle
+% @param: ConBen - Exogenous connection benefit
+% @param: convexp - Exponent on the expected benefit of connection
+% @param: ChoiceCell - Vector given the indecies of valid peers (where connection in G exists)
+%% 
+
 function [util,x]=utilitySPNE(prest,P_t_1,g,delta,theta_i, theta, Psi, ConBen,i,convexp,ChoiceCell)
 
     

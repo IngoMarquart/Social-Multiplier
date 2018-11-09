@@ -1,14 +1,19 @@
- function n=GraphNetwork(Gmat, SPMat, identity, theta, X, )
- 
+%%
+% % GraphNetwork
+% This function graphs the G network and highlights the A network on top of it.
+% @param: Gmat - Symmetric G matrix
+% @param: SPmat - Symmetric P matrix
+% @param: identity, theta, X: nx1 vectors of identity, theta and X
+%% 
+
+function n=GraphNetwork(Gmat, SPMat, identity, theta, X, )
     GPgraph=graph(Gmat);
     Sgraph=graph(SPMat);
     diff=X-theta;
-    
-    
-type=string(ones(size(identity)));
-type(identity==1)="C";
-type(identity==0)="W";
-type(identity==-1)="S";
+    type=string(ones(size(identity)));
+    type(identity==1)="C";
+    type(identity==0)="W";
+    type(identity==-1)="S";
     GPgraph.Nodes.Type=identity;
     GPgraph.Nodes.X=X;
     GPgraph.Nodes.Num=[1: length(identity)]';

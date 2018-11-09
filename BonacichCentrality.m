@@ -1,15 +1,13 @@
 %%%
-% BonacichCentrality - Calculate different Bonacich (1987) centralities
-% Arguments:
-% alpha - Provide alpha term
-% beta - Provide beta term
-% normAlpha - 1/0 - whether to norm Alpha term
-% normBeta - 1/0 - whether to set beta equal to 0.9*1/max(eigenvalue)
-% Power - 1/0 - If 1, the beta term is flipped to -beta
-% G - The matrix on which to calculacte centrality
-%
-% Return values:
-% centralities - Returns a vector of centralities
+% % BonacichCentrality 
+% Calculate different Bonacich (1987) centralities
+% @param: alpha - Provide alpha term
+% @param: beta - Provide beta term
+% @param: normAlpha - 1/0 - whether to norm Alpha term
+% @param: normBeta - 1/0 - whether to set beta equal to 0.9*1/max(eigenvalue)
+% @param: Power - 1/0 - If 1, the beta term is flipped to -beta
+% @param: G - The matrix on which to calculacte centrality
+% @return: centralities - Returns a vector of centralities
 %%%
 function centralities = BonacichCentrality(alpha,beta,normAlpha,normBeta,Power,G)
 n=length(G);

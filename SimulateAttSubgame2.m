@@ -1,12 +1,10 @@
-function returndata=SimulateAttSubgame2(n,T,gamma, thetaD,ConBen, gemA, gemL, delta, g,m, minT,graphit,globalsearch,convexp,Gmat,cons)
 %%
-%
 %   SimulateAttSubgame
-%   Ingo Marquart, Nghi Truong
-%   v. 0.9, 17.07.2018
 %   For given parameter ranges, this function calculates the
 %   SPNE as a steady state of a dynamic simulation
 %%
+function returndata=SimulateAttSubgame2(n,T,gamma, thetaD,ConBen, gemA, gemL, delta, g,m, minT,graphit,globalsearch,convexp,Gmat,cons)
+
 
 % We used different distributions but have settled for Beta, hence forcing
 % it here

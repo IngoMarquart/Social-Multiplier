@@ -1,3 +1,13 @@
+%%
+% % XFOCSPNE
+% Solves the FOC of all actors, for given attention choices P and theta, for their effort
+% levels X.
+% @param: P - Attention matrix
+% @param: g, delta - Embedding and exogenous weight
+% @param: theta - Skill levels
+% @return: x - vector of effort levels
+%% 
+
 function x=XFOCSPNE(P,delta,theta,g)
 
     % Create Laplacian matrix
