@@ -45,21 +45,21 @@ longtable=0;
 
 %%
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
-% gammaVec={[1/3, 1/3, 1/3], ...
-%     [1/2, 1/2, 0/3], ...
-%     [0/3, 1/2, 1/2], ...
-%     [2/9,1/3,4/9], ...
-%     [2/6,1/3,2/6], ...
-%     [4/9,1/3,2/9], ...
-%     [1/9,2/3,2/9], ...
-%     [1/6,2/3,1/6], ...
-%     [2/9,2/3,1/9]};
+gammaVec={[1/3, 1/3, 1/3], ...
+    [1/2, 1/2, 0/3], ...
+    [0/3, 1/2, 1/2], ...
+    [2/9,1/3,4/9], ...
+    [2/6,1/3,2/6], ...
+    [4/9,1/3,2/9], ...
+    [1/9,2/3,2/9], ...
+    [1/6,2/3,1/6], ...
+    [2/9,2/3,1/9]};
 
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
-gammaVec={[1/3, 1/3, 1/3], ...
-    [2/9,2/9,5/9], ...
-    [5/9,2/9,2/9], ...
-    [2/9,5/9,2/9]};
+% gammaVec={[1/3, 1/3, 1/3], ...
+%     [2/9,2/9,5/9], ...
+%     [5/9,2/9,2/9], ...
+%     [2/9,5/9,2/9]};
 
 
 %%
@@ -85,16 +85,16 @@ thetaVec{iz}=[2,2,1,1];
 % a,b - Beta shape parameters
 % b,c - Scaling of variance and mean - unused in the current version
 % Note that the current version scales fixes variance to 1.
-thetascale=[5];
-thetastart=2;
-thetaVec={};
-iz=1;
-for scale = thetascale
-    thetaVec{iz}=[2,scale,1,1];
-    thetaVec{iz+1}=[scale,2,1,1];
-    iz=iz+2;
-end
-thetaVec{iz}=[2,2,1,1];
+% thetascale=[5];
+% thetastart=2;
+% thetaVec={};
+% iz=1;
+% for scale = thetascale
+%     thetaVec{iz}=[2,scale,1,1];
+%     thetaVec{iz+1}=[scale,2,1,1];
+%     iz=iz+2;
+% end
+% thetaVec{iz}=[2,2,1,1];
 
 %%
 % gVec is a cell array of all g values to run
@@ -117,11 +117,11 @@ end
 
 %% Settings for G-Matrix
 % 2xAverage degree
-mnVec={1,3,5,10};
-%mnVec={0};
+%mnVec={1,3,5,10};
+mnVec={0};
 % Probability of connecting to peer once found
-pnVec={0.1,0.3,0.5,1};
-%pnVec={0};
+%pnVec={0.1,0.3,0.5,1};
+pnVec={0};
 
 %% Settings for consolidation
 % consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
