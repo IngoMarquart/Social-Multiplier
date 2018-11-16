@@ -35,7 +35,7 @@ graphit=0;
 globalsearch=-1;
 % Save results. Creates a folder with timestamp and saves aggregate data as
 % well as ALL matrices
-saveit=1;
+saveit=0;
 % Force matlab to store table out of memory. Slower if enough RAM.
 longtable=0;
 
@@ -238,7 +238,7 @@ for cn = nVec
                         % If you want many firms, it is far more efficient to
                         % parallelize per firm! Use
                         % parfor i = 1:length(gVec)
-                        parfor i = 1:length(gVec)
+                        for i = 1:length(gVec)
                             g=gVec(i);
                             
                             % Save current timestamp to associate matrix with table

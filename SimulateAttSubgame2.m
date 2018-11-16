@@ -400,6 +400,7 @@ bincell = conncomp(GPgraph, 'OutputForm', 'cell');
 nrsubgraphs = length(bincell);
 nrNodes=zeros(1,nrsubgraphs);
 sumDist=zeros(1,nrsubgraphs);
+nrEdges=zeros(1,nrsubgraphs);
 weightfactor=zeros(1,nrsubgraphs);
 for ii = 1:nrsubgraphs
     subg=subgraph(GPgraph, bincell{ii});
@@ -407,8 +408,18 @@ for ii = 1:nrsubgraphs
     nrNodes(ii)=length(DM);
     sumDist(ii)=sum(sum(DM));
     weightfactor(ii)=nrNodes(ii)/n;
+    nrEdges(ii)=(nrNodes(ii).*(nrNodes(ii)-1));
+    % Zero weight for single nodes (Path Length not defined)
+    if(nrNodes(ii) == 1)
+        weightfactor(ii)=0;
+        nrEdges(ii)=1;
+    end
+    % Renormalize weights to sum to one
+    weightfactor=weightfactor./sum(weightfactor);
+   
 end
-RetStruct.GAvgPathLength=((1./(nrNodes.*(nrNodes-1))).*weightfactor)*sumDist';
+% Average path length is given by the sum of distances divided by the 
+RetStruct.GAvgPathLength=((1./nrEdges).*weightfactor)*sumDist';
 
 
 % Largest eigenvector
@@ -464,15 +475,26 @@ bincell = conncomp(ASymgraph, 'OutputForm', 'cell');
 nrsubgraphs = length(bincell);
 nrNodes=zeros(1,nrsubgraphs);
 sumDist=zeros(1,nrsubgraphs);
+nrEdges=zeros(1,nrsubgraphs);
 weightfactor=zeros(1,nrsubgraphs);
 for ii = 1:nrsubgraphs
-    subg=subgraph(ASymgraph, bincell{ii});
+    subg=subgraph(GPgraph, bincell{ii});
     DM=distances(subg);
     nrNodes(ii)=length(DM);
     sumDist(ii)=sum(sum(DM));
     weightfactor(ii)=nrNodes(ii)/n;
+    nrEdges(ii)=(nrNodes(ii).*(nrNodes(ii)-1));
+    % Zero weight for single nodes (Path Length not defined)
+    if(nrNodes(ii) == 1)
+        weightfactor(ii)=0;
+        nrEdges(ii)=1;
+    end
+    % Renormalize weights to sum to one
+    weightfactor=weightfactor./sum(weightfactor);
+   
 end
-RetStruct.AAvgPathLength=((1./(nrNodes.*(nrNodes-1))).*weightfactor)*sumDist';
+% Average path length is given by the sum of distances divided by the 
+RetStruct.AAvgPathLength=((1./nrEdges).*weightfactor)*sumDist';
 
 
 % Largest eigenvector
