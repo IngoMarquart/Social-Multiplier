@@ -35,7 +35,7 @@ graphit=0;
 globalsearch=-1;
 % Save results. Creates a folder with timestamp and saves aggregate data as
 % well as ALL matrices
-saveit=0;
+saveit=1;
 % Force matlab to store table out of memory. Slower if enough RAM.
 longtable=0;
 
@@ -68,15 +68,15 @@ gammaVec={[1/3, 1/3, 1/3], ...
 % a,b - Beta shape parameters
 % b,c - Scaling of variance and mean - unused in the current version
 % Note that the current version scales fixes variance to 1.
-thetascale=2.5:0.5:8;
-thetaVec={};
-iz=1;
-for scale = thetascale
-    thetaVec{iz}=[2,scale,1,1];
-    thetaVec{iz+1}=[scale,2,1,1];
-    iz=iz+2;
-end
-thetaVec{iz}=[2,2,1,1];
+% thetascale=2.5:0.5:8;
+% thetaVec={};
+% iz=1;
+% for scale = thetascale
+%     thetaVec{iz}=[2,scale,1,1];
+%     thetaVec{iz+1}=[scale,2,1,1];
+%     iz=iz+2;
+% end
+% thetaVec{iz}=[2,2,1,1];
 
 
 %%
@@ -238,7 +238,7 @@ for cn = nVec
                         % If you want many firms, it is far more efficient to
                         % parallelize per firm! Use
                         % parfor i = 1:length(gVec)
-                        for i = 1:length(gVec)
+                        parfor i = 1:length(gVec)
                             g=gVec(i);
                             
                             % Save current timestamp to associate matrix with table
