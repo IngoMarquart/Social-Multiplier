@@ -117,15 +117,15 @@ end
 
 %% Settings for G-Matrix
 % 2xAverage degree
-mnVec={1,3,5,10};
-%mnVec={0};
+%mnVec={1,3,5,10};
+mnVec={0};
 % Probability of connecting to peer once found
-pnVec={0.1,0.3,0.5,1};
-%pnVec={0};
+%pnVec={0.1,0.3,0.5,1};
+pnVec={0};
 
 %% Settings for consolidation
-% consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
-consVec={0};
+ consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
+%consVec={0};
 
 %% Use this to run only one simulation
 % thetaVec={[2,15 ,1,1]};
