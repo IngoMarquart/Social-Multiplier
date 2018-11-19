@@ -517,6 +517,8 @@ RetStruct.AAvgDegree=mean(deg2);
 ABonacich=BonacichCentrality(0,0,1,1,0,P);
 % In-Degree Bonacich family centralities
 AInBonacich=BonacichCentrality(0,0,1,1,0,P');
+% In-Degree Power centralities
+AInnegBonacich=BonacichCentrality(0,0,1,1,1,P');
 % Power centrality
 AnegBonacich=BonacichCentrality(0,0,1,1,1,P);
 
@@ -536,6 +538,11 @@ RetStruct.AInmeanBonacich=mean(AInBonacich);
 RetStruct.AInmaxBonacich=max(AInBonacich);
 RetStruct.AInminBonacich=min(AInBonacich);
 RetStruct.AInvarBonacich=var(AInBonacich);
+
+RetStruct.AInmeanNegBonacich=mean(AInnegBonacich);
+RetStruct.AInmaxNegBonacich=max(AInnegBonacich);
+RetStruct.AInminNegBonacich=min(AInnegBonacich);
+RetStruct.AInvarNegBonacich=var(AInnegBonacich);
 
 RetStruct.AmeanNegBonacich=mean(AnegBonacich);
 RetStruct.AmaxNegBonacich=max(AnegBonacich);
