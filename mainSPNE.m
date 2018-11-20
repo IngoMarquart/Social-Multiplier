@@ -36,7 +36,7 @@ globalsearch=-1;
 % Save results. Creates a folder with timestamp and saves aggregate data as
 % well as ALL matrices
 saveit=1;
-% Force matlab to store table out of memory. Slower if enough RAM.
+% Force matlab to store table out of memory. Sl ower if enough RAM.
 longtable=0;
 
 %%
@@ -45,7 +45,7 @@ longtable=0;
 
 %%
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
-PCscale=0:0.1:0.5;
+PCscale=0:0.2:0.5;
 Wscale=[1/3,2/3];
 gammaVec={};
 iC=1;
@@ -57,7 +57,7 @@ for watchP = Wscale
         if normC == normS
          iC=iC+1;    
         else
-        gammaVec{iC+1}=[normS,watchP,normC]
+        gammaVec{iC+1}=[normS,watchP,normC];
         iC=iC+2;            
         end
 
@@ -88,7 +88,7 @@ end
 % a,b - Beta shape parameters
 % b,c - Scaling of variance and mean - unused in the current version
 % Note that the current version scales fixes variance to 1.
-thetascale=2.5:0.5:7.5;
+thetascale=2.5:1:7.5;
 thetaVec={};
 iz=1;
 for scale = thetascale
@@ -124,7 +124,7 @@ gVec={ 0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50};
 
 %%
 % nVec is a cell array of all firm sizes to run
-nVec={10,15,20,25,30,35,40,45,50,55,60};
+nVec={10,15,20,25,30,35,40,45,50};
 
 %%
 % mVec includes the random seeds to run for each configuration.
