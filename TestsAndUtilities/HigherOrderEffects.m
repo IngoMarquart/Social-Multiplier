@@ -1,3 +1,6 @@
+% This is an emergency function that opens all Pmats in an aggregate sample and re-calculates some values
+% if needed.
+
 
 runtime='HighN40-55';
 filenameTable=['DataSave/',runtime,'/'];

@@ -1,11 +1,14 @@
 %%
-%   Matlab Simulation CWS Model - Simplified, SPNE
-%   Ingo Marquart, Nghi Truong
+% % MAINSPNE
+% Authors: Ingo Marquart, Nghi Truong, Matthew Bothner, Richard Haynes
 %
-%   This is the main file to set configuration and loop over
-%   SimulateAttSubgame.m, which simulates on firm
-%%
-
+% This simulation generates a set of firms based on the paper
+% "Shaping the social architecture of a start-up: What raises the social multiplier?"
+% In particular, this calculates the subgame-perfect Nash equilibrium
+%
+% Note that if saveit=1, the simulation will save each firm advacency matrix as well
+% as a table of aggregates in a folder ../Datasave/Timestamp
+%% 
 
 
 %% CONFIGURATION
@@ -14,15 +17,7 @@
 T=500;
 % Define a minimum of time periods each simulation runs
 minT=4;
-% Exogenous Connection Benefit to force no isolates. Unused.
-ConBen=0;
-% Different marginal Psi utility for climbers and slackers, set to 1 (unused).
-gemA=1;
-% Different marginal Psi utility for watchers, set to 1 (unused).
-gemL=1;
-% Exogenous scaling parameter for social effects, set to 1 (unused).
-delta=1;
-% Convexity parameter of Psi wrt. g, set to 1 (unused).
+% Convexity parameter of Psi wrt. e, set to 1 (unused).
 % Use this if you wish to examine very low values of g, as for
 % very low values of g the differences become so small that
 % Matlab otherwise has trouble finding the optimum (g<0.01).
@@ -31,22 +26,48 @@ convexp=1;
 % Plot a network graph. Note that this should only be enabled for
 % simulating a single firm!
 graphit=0;
-% Use globalsearch algorithm. Time intensive!
+% Use of search algorithm for SPNE
+% We usually use "-1" and use the other, continous numeric options to confirm correctness of our approach
+% 1 - Use Matlab globalsearch - necessary for n<10, time intensive for high n
+% 0 - Use Matlab minimizer - Faster than global search, almost always converges to same value
+% -1 - Discrete optimizer - Custom, based on mathematical results in paper, fastest algorithm
 globalsearch=-1;
-% Save results. Creates a folder with timestamp and saves aggregate data as
-% well as ALL matrices
+% Save results. Creates a folder with timestamp and saves aggregate data
 saveit=1;
-% Force matlab to store table out of memory. Slower if enough RAM.
+% If saveadjmat = 1 in addition to saveit=1, then the simulation will create
+% a subfolder "PMats" and save in it all adjacency matrices for the firm
+saveadjmat=1;
+% Force matlab to store table out of memory. Slower if enough RAM, but necessary
+% if ResultTable exceeds RAM (leads to crash). 
 longtable=0;
 
-%%
-% Template for setting variables:
-% Setting variables
+
+%% CURRENTLY UNUSED PARAMETERS
+% Please do not change
+% Exogenous Connection Benefit to force no isolates (unused).
+ConBen=0;
+% Different marginal Psi utility for climbers and slackers, set to 1 (unused).
+gemA=1;
+% Different marginal Psi utility for watchers, set to 1 (unused).
+gemL=1;
+% Exogenous scaling parameter for social effects, set to 1 (unused).
+delta=1;
+
+
+%% DEFINE PARAMETER RANGES OF FIRMS
+% The following sets cell arrays for the parameters in use.
+% The simulation will produce an observation for each combination.
 
 %%
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
+% You may define a scale to check both for Climbers&Slackers, as well as
+% Watchers.
+
+% Probabilities of climbers relative to slackers. Simulation will check symmetrically for slackers
 PCscale=0:0.1:0.5;
+% Overall probability of watchers.
 Wscale=[1/3,2/3];
+% Inititalize
 gammaVec={};
 iC=1;
 for watchP = Wscale
@@ -64,7 +85,8 @@ for watchP = Wscale
     end
 end
 
-
+%% Previously generated vectors
+% to replicate data.
 % gammaVec={[1/3, 1/3, 1/3], ...
 %     [1/2, 1/2, 0/3], ...
 %     [0/3, 1/2, 1/2], ...
@@ -75,7 +97,7 @@ end
 %     [1/6,2/3,1/6], ...
 %     [2/9,2/3,1/9]};
 
-% gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
+% "Archetype examples"
 % gammaVec={[1/3, 1/3, 1/3], ...
 %     [2/9,2/9,5/9], ...
 %     [5/9,2/9,2/9], ...
@@ -99,27 +121,16 @@ end
 thetaVec{iz}=[2,2,1,1];
 
 
-%%
-% thetaVec defines a cell array of parameters for the Beta distribution
-% Each vector includes [a,b,c,d]
-% a,b - Beta shape parameters
-% b,c - Scaling of variance and mean - unused in the current version
-% Note that the current version scales fixes variance to 1.
+%% "Archetype examples"
 % thetascale=[5];
 % thetastart=2;
 % thetaVec={};
-% iz=1;
-% for scale = thetascale
-%     thetaVec{iz}=[2,scale,1,1];
-%     thetaVec{iz+1}=[scale,2,1,1];
-%     iz=iz+2;
-% end
-% thetaVec{iz}=[2,2,1,1];
 
 %%
-% gVec is a cell array of all g values to run
+% gVec is a cell array of all g (or e) values to run
 % Note, we parallelize over this so its best to have it equal to the number
 % of cores
+% In this case, we use 8 values.
 gVec={ 0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50};
 
 %%
@@ -128,6 +139,8 @@ nVec={10,15,20,25,30,35,40,45,50,55,60};
 
 %%
 % mVec includes the random seeds to run for each configuration.
+% We usually want many firms for each combination of paramters. 
+% Each value is used to initialize the random number generator.
 % Set manually as: mVec={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 iz=1;
 for scale = 1:30
@@ -136,18 +149,27 @@ for scale = 1:30
 end
 
 %% Settings for G-Matrix
+% If you set these values to non-zero, firms will
+% start with a random network G at the beginning
+% using Jackon&Rogers algorithm.
+
 % 2xAverage degree
-%mnVec={1,3,5,10};
+% Example:
+% mnVec={1,3,5,10};
 mnVec={0};
 % Probability of connecting to peer once found
-%pnVec={0.1,0.3,0.5,1};
+% Example:
+% pnVec={0.1,0.3,0.5,1};
 pnVec={0};
 
 %% Settings for consolidation
 consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
-%consVec={0};
+% Set to zero for no consolidation
+% consVec={0};
 
-%% Use this to run only one simulation
+%% SINGLE SIMULATION
+% You can uncomment the following lines and run a single simulation
+
 % thetaVec={[2,15 ,1,1]};
 % nVec={50};
 % mVec={1};
@@ -156,6 +178,9 @@ consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
 % mnVec={1};
 % pnVec={0.3};
 % consVec={0};
+
+
+
 %% END OF CONFIGURATION
 
 
@@ -180,6 +205,8 @@ gVec=cell2mat(gVec);
 ResultTable=table();
 
 % We run one small simulation to test the system and create the table
+% such that we can preallocate.
+% Note that we only use this with longtable out of RAM.
 if saveit==1
     GTest=ones(10,10)-eye(10,10);
     returndata=SimulateAttSubgame2(10,T,[1/3, 1/3, 1/3], [2,2,1,1],ConBen, gemA, gemL, delta, 1,1, 2,0,globalsearch,convexp,GTest,1);
@@ -199,7 +226,7 @@ if saveit==1
         ds=datastore(storename);
         ResultTable=tall(ds);
     else
-        % Preallocation here does not seem to improve performance
+        % Preallocation without longtable does not seem to improve performance
     end
 end
 
@@ -207,7 +234,7 @@ end
 tic
 
 
-%% Running through loops
+%% START OF MAIN LOOP
 
 count=1;
 
@@ -275,7 +302,7 @@ for cn = nVec
                             else
                                 Gmat=JacksonRogersNW(n,mn,pn, m);
                             end
-                            returndata=SimulateAttSubgame2(n,T,gamma, thetaD,ConBen, gemA, gemL, delta, g,m, minT,graphit,globalsearch,convexp,Gmat,cons);
+                            returndata=SimulateAttSubgame(n,T,gamma, thetaD,ConBen, gemA, gemL, delta, g,m, minT,graphit,globalsearch,convexp,Gmat,cons);
                             
                             % Row to add to table
                             addrow=struct2table(returndata.RetStruct);
@@ -320,7 +347,7 @@ for cn = nVec
                         % If saving is enabled, we save the adjacency matrices
                         % Saving is done outside the for loop because it seems
                         % faster
-                        if saveit==1
+                        if saveit==1 && saveadjmat == 1
                             for i = 1:length(gVec)
                                 writetable(tablecell{1,i},tablenamecell{1,i});
                             end

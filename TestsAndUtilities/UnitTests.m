@@ -1,3 +1,5 @@
+%% This was a failed attempt to write some automatic tests...
+
 G=[ 0 1 1 0;
     1 0 0 1;
     1 0 0 1;
