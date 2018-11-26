@@ -45,6 +45,26 @@ longtable=0;
 
 %%
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
+PCscale=0:0.1:0.5;
+Wscale=[1/3,2/3];
+gammaVec={};
+iC=1;
+for watchP = Wscale
+    for scale = PCscale
+        normC=scale.*(1-watchP);
+        normS=(1-scale).*(1-watchP);
+        gammaVec{iC}=[normC,watchP,normS];
+        if normC == normS
+         iC=iC+1;    
+        else
+        gammaVec{iC+1}=[normS,watchP,normC]
+        iC=iC+2;            
+        end
+
+    end
+end
+
+
 % gammaVec={[1/3, 1/3, 1/3], ...
 %     [1/2, 1/2, 0/3], ...
 %     [0/3, 1/2, 1/2], ...
@@ -56,10 +76,10 @@ longtable=0;
 %     [2/9,2/3,1/9]};
 
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
-gammaVec={[1/3, 1/3, 1/3], ...
-    [2/9,2/9,5/9], ...
-    [5/9,2/9,2/9], ...
-    [2/9,5/9,2/9]};
+% gammaVec={[1/3, 1/3, 1/3], ...
+%     [2/9,2/9,5/9], ...
+%     [5/9,2/9,2/9], ...
+%     [2/9,5/9,2/9]};
 
 
 %%
@@ -68,25 +88,7 @@ gammaVec={[1/3, 1/3, 1/3], ...
 % a,b - Beta shape parameters
 % b,c - Scaling of variance and mean - unused in the current version
 % Note that the current version scales fixes variance to 1.
-% thetascale=2.5:0.5:8;
-% thetaVec={};
-% iz=1;
-% for scale = thetascale
-%     thetaVec{iz}=[2,scale,1,1];
-%     thetaVec{iz+1}=[scale,2,1,1];
-%     iz=iz+2;
-% end
-% thetaVec{iz}=[2,2,1,1];
-
-
-%%
-% thetaVec defines a cell array of parameters for the Beta distribution
-% Each vector includes [a,b,c,d]
-% a,b - Beta shape parameters
-% b,c - Scaling of variance and mean - unused in the current version
-% Note that the current version scales fixes variance to 1.
-thetascale=[5];
-thetastart=2;
+thetascale=2.5:0.5:7.5;
 thetaVec={};
 iz=1;
 for scale = thetascale
@@ -96,6 +98,24 @@ for scale = thetascale
 end
 thetaVec{iz}=[2,2,1,1];
 
+
+%%
+% thetaVec defines a cell array of parameters for the Beta distribution
+% Each vector includes [a,b,c,d]
+% a,b - Beta shape parameters
+% b,c - Scaling of variance and mean - unused in the current version
+% Note that the current version scales fixes variance to 1.
+% thetascale=[5];
+% thetastart=2;
+% thetaVec={};
+% iz=1;
+% for scale = thetascale
+%     thetaVec{iz}=[2,scale,1,1];
+%     thetaVec{iz+1}=[scale,2,1,1];
+%     iz=iz+2;
+% end
+% thetaVec{iz}=[2,2,1,1];
+
 %%
 % gVec is a cell array of all g values to run
 % Note, we parallelize over this so its best to have it equal to the number
@@ -104,7 +124,7 @@ gVec={ 0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50};
 
 %%
 % nVec is a cell array of all firm sizes to run
-nVec={10,15,20,25,30,35,40,45,50,55,60,65,70,75,80};
+nVec={10,15,20,25,30,35,40,45,50,55,60};
 
 %%
 % mVec includes the random seeds to run for each configuration.
@@ -117,15 +137,15 @@ end
 
 %% Settings for G-Matrix
 % 2xAverage degree
-mnVec={1,3,5,10};
-%mnVec={0};
+%mnVec={1,3,5,10};
+mnVec={0};
 % Probability of connecting to peer once found
-pnVec={0.1,0.3,0.5,1};
-%pnVec={0};
+%pnVec={0.1,0.3,0.5,1};
+pnVec={0};
 
 %% Settings for consolidation
-% consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
-consVec={0};
+consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
+%consVec={0};
 
 %% Use this to run only one simulation
 % thetaVec={[2,15 ,1,1]};
