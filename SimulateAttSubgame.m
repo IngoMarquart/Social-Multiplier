@@ -2,8 +2,22 @@
 %   SimulateAttSubgame
 %   For given parameter ranges, this function calculates the
 %   SPNE as a steady state of a dynamic simulation
-%%
-function returndata=SimulateAttSubgame2(n,T,gamma, thetaD,ConBen, gemA, gemL, delta, g,m, minT,graphit,globalsearch,convexp,Gmat,cons)
+% @param: n - Number of actors
+% @param: T - Maximum time periods
+% @param: gamma - Vector of type probabilities
+% @param: thetaD - Parameters of Beta distribution
+% @param: ConBen, gemA, gemL, delta - Currently not used
+% @param: g - Embedding
+% @param: m - Firm Seed
+% @param: minT - Minimum time periods to run (independent of convergence)
+% @param: globalsearch - Search method
+% @param: convexp - Exponentiate Psi benefit
+% @param: Gmat - Exogenous social matrix
+% @param: cons - Consolidation 
+% @return: RetStruct - Row of aggregate values
+% @return: RetCell - Cell list of individual results
+%% 
+function returndata=SimulateAttSubgame(n,T,gamma, thetaD,ConBen, gemA, gemL, delta, g,m, minT,graphit,globalsearch,convexp,Gmat,cons)
 
 
 % We used different distributions but have settled for Beta, hence forcing
@@ -34,7 +48,7 @@ TIVec = zeros(n,2);
 if BetaDist==1
     pd = makedist('Beta',thetaD(1),thetaD(2));
     
-    % If exogenous scaling is desired use this
+    % If exogenous scaling is desired use this and set fourth and third parameters
     %TIVec(:,1) = (random(pd,n,1)-pd.mean).*thetaD(4)+thetaD(3);
     
     % We scale automatically by fixing variance.
@@ -52,7 +66,6 @@ else
     pd = makedist('Lognormal','mu',thetaD(1),'sigma',thetaD(2));
     TIVec(:,1) = random(pd,n,1);
 end
-
 
 %% Generate identities
 p = [gammaC, gammaW, gammaS];
@@ -75,25 +88,21 @@ else % Consolidation > 0: We sort descending, since climbers at the top
     TIVec(sidx,1)=vec;
 end
 
-% prepare vectors
+% Prepare vectors
 theta=TIVec(:,1);
 identity=TIVec(:,2);
 
 %% Create helper functions
-% calculate range of theta
+% Calculate range of theta
 thetaRange = abs(max(theta)-min(theta));
 % Motivation functions
 PsiL=@(theta_i,theta_j) -gemL.*abs(theta_j-theta_i)+thetaRange;
 PsiA=@(theta_i,theta_j) -gemA.*(theta_i-theta_j);
 PsiS=@(theta_i,theta_j) -gemA.*(theta_j-theta_i);
 
-
-
 %% Populate Choice matrix
-
 % pmat  saves the P_i choice for each agent, for each t
 pmat=cell(1,T);
-
 % In this we will save the X-values
 xmat=repmat(theta,1,T);
 % Initialize p_matrix
@@ -131,7 +140,6 @@ for t = 2:(T)
     pmatT=pmat{t};
     pmat_prev=pmat{t-1};
     
-    %
     %%
     % If not using parfor outside of this function (ie. simulating one
     % company), you can enable parfor here to work through the employees
@@ -187,11 +195,11 @@ for t = 2:(T)
             
             %% Set up objective function
             if identity(i)==1 % Climber
-                fnc=@(prest) -utilitySPNE2(prest,pmat_prev,g,delta,theta_i, theta, PsiA, ConBen,i,convexp,ChoiceCell{i});
+                fnc=@(prest) -utilitySPNE(prest,pmat_prev,g,delta,theta_i, theta, PsiA, ConBen,i,convexp,ChoiceCell{i});
             elseif identity(i)==0 % Watcher
-                fnc=@(prest) -utilitySPNE2(prest,pmat_prev,g,delta,theta_i, theta, PsiL, ConBen,i,convexp,ChoiceCell{i});
+                fnc=@(prest) -utilitySPNE(prest,pmat_prev,g,delta,theta_i, theta, PsiL, ConBen,i,convexp,ChoiceCell{i});
             else % Slacker
-                fnc=@(prest) -utilitySPNE2(prest,pmat_prev,g,delta,theta_i, theta, PsiS, ConBen,i,convexp,ChoiceCell{i});
+                fnc=@(prest) -utilitySPNE(prest,pmat_prev,g,delta,theta_i, theta, PsiS, ConBen,i,convexp,ChoiceCell{i});
             end
             
             
@@ -283,15 +291,15 @@ for t = 2:(T)
     pmat{t}=pmatT;
     umat(:,t)=uvec(:);
     
-    % Check convergence. Fluctuations should be small enough, and / or the
-    % simulation has run for many periods already
+    % Check convergence. Fluctuations should be small enough, and the
+    % Simulation has run for many periods already
     prevpmat=pmat{t-1};
     udif = max(abs(umat(:,t)-umat(:,t-1)));
     xdif = max(abs(xmat(:,t)-xmat(:,t-1)));
     pdif = max(max(abs(pmatT-prevpmat)));
     finalt=t;
     
-    %%% Uncomment to see convergence per iteration
+    %%% Uncomment "disp" to see convergence per iteration
     %disp([' t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
     if (((pdif <= 1.0000e-4) && (udif <= 1.0000e-5) && (xdif<= 1.0000e-5)) && (t>2*minT))
         %disp(['Finish on t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
@@ -418,7 +426,6 @@ for ii = 1:nrsubgraphs
     weightfactor=weightfactor./sum(weightfactor);
    
 end
-% Average path length is given by the sum of distances divided by the 
 RetStruct.GAvgPathLength=((1./nrEdges).*weightfactor)*sumDist';
 
 
@@ -453,7 +460,7 @@ RetStruct.GminNegBonacich=min(BNeg);
 RetStruct.GvarNegBonacich=var(BNeg);
 
 
-%% A
+%% A (or P)
 SPMat=(P+P')./2;
 SPMat(SPMat>0)=1;
 Agraph=digraph(P);
