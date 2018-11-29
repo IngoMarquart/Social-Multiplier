@@ -124,7 +124,7 @@ gVec={ 0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50};
 
 %%
 % nVec is a cell array of all firm sizes to run
-nVec={10,15,20,25,30,35,40,45,50};
+nVec={50,55,60,65,70};
 
 %%
 % mVec includes the random seeds to run for each configuration.
