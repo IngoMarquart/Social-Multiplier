@@ -1,0 +1,25 @@
+In main wscript:
+
+def options(opt):
+    opt.add_option(
+        '--simulate',
+        action='store',
+        default=None,
+        dest='simulate',
+        help='Simulate a model specified as the option value.'
+    )
+
+
+in src/wscript, assuming that you have a subdirectory "simulations"
+
+def build():
+
+	if ctx.options.simulate:
+		ctx.recurse('simulate')
+	else:
+	    ctx.recurse('final')
+
+
+in src/simulate/wscript you can access ctx.options.simulate to pick the model you want.
+
+Call waf with "python waf.py --simulate=x" to simulate model x, and as usual for a normal build.
