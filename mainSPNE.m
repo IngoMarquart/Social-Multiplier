@@ -370,6 +370,7 @@ for cn = nVec
             TableName=strcat(dirname,'SPNERes_n',num2str(n),'.csv');
             writetable(TableToWrite,TableName);
         end
+        clear TableToWrite
     end
 end
 toc
