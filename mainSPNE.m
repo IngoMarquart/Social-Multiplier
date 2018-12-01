@@ -169,11 +169,11 @@ consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
 
 %% SINGLE SIMULATION
 % You can uncomment the following lines and run a single simulation
-
+% 
 % thetaVec={[2,15 ,1,1]};
 % nVec={50};
-% mVec={1};
-% gVec={100};
+% mVec={1,2,3,4,5};
+% gVec={1};
 % gammaVec={[1/3, 1/3, 1/3]};
 % mnVec={1};
 % pnVec={0.3};
@@ -196,7 +196,7 @@ end
 
 %% Preallocation
 NrSims = length(gammaVec)*length(thetaVec)*length(gVec)*length(nVec)*length(mVec)*length(mnVec)*length(pnVec)*length(consVec);
-returncell={};
+%returncell={};
 
 % Used cells for consistency. Parallelized dimensions we want as vector.
 gVec=cell2mat(gVec);
@@ -209,7 +209,7 @@ ResultTable=table();
 % Note that we only use this with longtable out of RAM.
 if saveit==1
     GTest=ones(10,10)-eye(10,10);
-    returndata=SimulateAttSubgame2(10,T,[1/3, 1/3, 1/3], [2,2,1,1],ConBen, gemA, gemL, delta, 1,1, 2,0,globalsearch,convexp,GTest,1);
+    returndata=SimulateAttSubgame(10,T,[1/3, 1/3, 1/3], [2,2,1,1],ConBen, gemA, gemL, delta, 1,1, 2,0,globalsearch,convexp,GTest,1);
     addrow=struct2table(returndata.RetStruct);
     addrow.timestamp=1;
     addrow.Archetype=strcat("Test");
@@ -314,7 +314,7 @@ for cn = nVec
                             addrow.cons=cons;
                             % Concat table and cell
                             PreReturnTable=[PreReturnTable;addrow];
-                            returncell=[returncell;returndata.RetCell];
+                            %returncell=[returncell;returndata.RetCell];
                             
                             
                             %% Save adjacency matrix of simulation
