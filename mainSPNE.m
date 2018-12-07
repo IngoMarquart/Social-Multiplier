@@ -78,7 +78,7 @@ for watchP = Wscale
         if normC == normS
          iC=iC+1;    
         else
-        gammaVec{iC+1}=[normS,watchP,normC]
+        gammaVec{iC+1}=[normS,watchP,normC];
         iC=iC+2;            
         end
 
