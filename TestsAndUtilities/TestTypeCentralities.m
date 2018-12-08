@@ -48,6 +48,11 @@ classdef TestTypeCentralities < matlab.unittest.TestCase
     		'Central', [-1,3],... 
     		'Follower', [1,-3])
     end
+    methods (TestClassSetup)
+        function ClassSetup(testCase, identities)
+            identity=identities;
+        end
+    end
      methods (Test)
         function testSignage(testCase, identities, matrices)
             centralities=TypeCentralities(matrices, identities);
