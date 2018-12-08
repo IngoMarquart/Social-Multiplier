@@ -7,9 +7,7 @@
 %%%
 function [outdegreesim,indegreesim] = DegreeSimilarity(G)
 n=length(G);
-if G==G'
-	Gsym=True
-end
+
 
 inDeg=G'*ones(n,1);
 outDeg=G*ones(n,1);
