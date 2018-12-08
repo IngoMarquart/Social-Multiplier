@@ -12,10 +12,9 @@ function calcdistance = RolemodelDistance(G)
 	% Sort centralities
 	Bcent=BonacichCentrality(0,0,1,1,0,G);
 	% Sort the centralities, G and create Graph
-	[Bcent,sortIndex]=sort(Bcent,'descend')
-	G=G(sortIndex,:);
+	[Bcent,sortIndex]=sort(Bcent,'descend');
 	GGraph=graph(G);
-
-	P = shortestpath(G,1,2);
-	calcdistance=length(P);
+    
+	[~,d] = shortestpath(GGraph,sortIndex(1),sortIndex(2));
+	calcdistance=max(d,0);
 end
