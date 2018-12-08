@@ -7,7 +7,9 @@
 % @return: centralities - Returns a vector of centralities
 %%%
 classdef TestDegreeSimilarity < matlab.unittest.TestCase
-
+    properties (ClassSetupParameter)
+        identities = {[1,1,1,1]',[0,0,0,0]',[1,-1,1,-1]',[-1,1,-1,1]',[-1,-1,-1,-1]'};
+    end
     properties (TestParameter)
     	matrices=struct('Empty', ...
     		[0,0,0,0; ...
@@ -39,20 +41,25 @@ classdef TestDegreeSimilarity < matlab.unittest.TestCase
     		 0,0,0,0; ...
     		 0,1,0,0; ...
     		 0,1,0,0])
-        	degreediffs=struct('Empty', [0,0] , ...
+        	typecents=struct('Empty', [0,0] , ...
     		'SymPairs', [0,0] , ... 
     		'SymCentral', [2,2], ... 
     		'SymFollower', [-2,-2],... 
     		'Central', [-1,3],... 
     		'Follower', [1,-3])
     end
-     methods (Test, ParameterCombination='sequential')
-        function testInOutDifferences(testCase, matrices, degreediffs)
-            [outdegreesim,indegreesim]=DegreeSimilarity(matrices);
-            testvec=[outdegreesim(1,2),indegreesim(1,2)];
-            testCase.verifyEqual(testvec,...
-                degreediffs)
+     methods (Test)
+        function testSignage(testCase, identities, matrices)
+            centralities=TypeCentralities(matrices, identities);
+            if identities(1)>=0
+                testCase.verifyGreaterThanOrEqual(testCase,centralities.outcentrality(1),0);
+                testCase.verifyGreaterThanOrEqual(testCase,centralities.incentrality(1),0);
+                testCase.verifyGreaterThanOrEqual(testCase,centralities.influencecentrality(1),0);
+            else
+                testCase.verifyLessThanOrEqual(testCase,centralities.outcentrality(1),0);
+                testCase.verifyLessThanOrEqual(testCase,centralities.incentrality(1),0);
+                testCase.verifyLessThanOrEqual(testCase,centralities.influencecentrality(1),0);                
+            end
         end
-     end
-    
+     end    
 end
