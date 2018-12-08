@@ -8,8 +8,8 @@
 
 
 
-runtime='20181204 FullSpaceTo65';
-ResName='20180712-ConsFullSpace50-65.csv';
+runtime='20181126 FullSpaceTo50';
+ResName='20181126-ConsFullSpace50.csv';
 filenameTable=['../DataSave/',runtime,'/'];
 filenamePMats=['../DataSave/',runtime,'/Pmats/'];
 
@@ -53,15 +53,17 @@ parfor i = 1:alllength
         centralities=TypeCentralities(P,XMat.Identity);
         row.TypeWeightOutCentMin=min(centralities.outcentrality);
         row.TypeWeightOutCentMax=max(centralities.outcentrality);
+        row.TypeWeightOutCentMean=mean(centralities.outcentrality);
         row.TypeWeightInCentMin=min(centralities.incentrality);
         row.TypeWeightInCentMax=max(centralities.incentrality);
+        row.TypeWeightInCentMean=mean(centralities.incentrality);
         row.InfluenceCentMax=max(centralities.influencecentrality);
         row.InfluenceCentMin=min(centralities.influencecentrality);
         row.InfluenceCentMean=mean(centralities.influencecentrality);
         
         [~,indegreesim] = DegreeSimilarity(P);
-        row.InDegreeSimMax=min(min(indegreesim));
-        row.InDegreeSimMin=max(max(indegreesim));
+        row.InDegreeSimMin=min(min(indegreesim));
+        row.InDegreeSimMax=max(max(indegreesim));
         row.InDegreeSimMean=mean(mean(indegreesim));
         
         row.RolemodelDistance=RolemodelDistance(P);
