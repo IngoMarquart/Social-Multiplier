@@ -1,9 +1,9 @@
 %%%
 % TEST
-% % DegreeSimilarity
-% Returns a matrix of similarities in degree
+% % TypeCentralities
+% Return a couple of measures that provide risk
 % @param: G - The matrix on which to calculacte centrality
-% @param: types - vector of types
+% @param: identities - vector of types in [-1,1]^n
 % @return: centralities - Returns a vector of centralities
 %%%
 classdef TestTypeCentralities < matlab.unittest.TestCase
