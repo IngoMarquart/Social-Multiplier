@@ -1,5 +1,5 @@
 %%%
-% % BonacichCentrality 
+% % BonacichCentrality
 % Calculate different Bonacich (1987) centralities
 % @param: alpha - Provide alpha term
 % @param: beta - Provide beta term
@@ -11,25 +11,31 @@
 %%%
 function centralities = BonacichCentrality(alpha,beta,normAlpha,normBeta,Power,G)
 n=length(G);
-
-if normBeta==1
-    if abs(max(eig(G))) >0
-    beta=0.9*abs(1/max(eig(G)));
-else % Nilpotent matrix
-    beta=1;
+if rank(G)==0
+    centralities=zeros(n,1);
+else
+    if normBeta==1
+        if abs(max(eig(G))) >0
+            beta=0.9*abs(1/max(eig(G)));
+        else % Nilpotent matrix
+            beta=1;
+        end
+        
+    end
+    if Power==1
+        beta=-beta;
     end
     
-end
-if Power==1
-   beta=-beta; 
-end
-
-B=1.*((eye(n,n)-beta.*G)^(-1))*G*ones(n,1);
-
-if normAlpha==1
+    B=1.*((eye(n,n)-beta.*G)^(-1))*G*ones(n,1);
     
-    alpha=sqrt(n/(B'*B));
+    if normAlpha==1
+        if B'*B == 0
+            alpha=0;
+        else
+            alpha=sqrt(n/(B'*B));
+        end
+    end
+    
+    centralities = B.*alpha;
 end
-
-centralities = B.*alpha;
 end
