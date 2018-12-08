@@ -6,7 +6,7 @@
 % @param: types - vector of types
 % @return: centralities - Returns a vector of centralities
 %%%
-classdef TestDegreeSimilarity < matlab.unittest.TestCase
+classdef TestTypeCentralities < matlab.unittest.TestCase
     properties (ClassSetupParameter)
         identities = {[1,1,1,1]',[0,0,0,0]',[1,-1,1,-1]',[-1,1,-1,1]',[-1,-1,-1,-1]'};
     end
