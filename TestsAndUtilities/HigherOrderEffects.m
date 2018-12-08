@@ -4,20 +4,21 @@
 %
 % This is a utility to recalculate measured without re-running
 % the simulations
-%% 
+%%
 
 
 
-runtime='TestFitty';
+runtime='20181204 FullSpaceTo65';
+ResName='20180712-ConsFullSpace50-65.csv';
 filenameTable=['../DataSave/',runtime,'/'];
 filenamePMats=['../DataSave/',runtime,'/Pmats/'];
 
-allTable=readtable(strcat(filenameTable,'SPNEResAll.csv'));
+allTable=readtable(strcat(filenameTable,ResName));
 
 
 
 
-allTable=allTable(2:end,:)
+allTable=allTable(2:end,:);
 alllength=height(allTable);
 %allTable=allTable(:,2:end);
 newTable=allTable;
@@ -38,31 +39,32 @@ newTable.InDegreeSimMean=zeros(alllength,1);
 
 newTable.RolemodelDistance=zeros(alllength,1);
 
-for i = 1:alllength
+parfor i = 1:alllength
     row=newTable(i,:);
     g=row.g;
     
     filenamePMat=strcat(filenamePMats,num2str(row.timestamp),'_','P_n',num2str(row.n),'_m',num2str(row.m),'_mn',num2str(row.mn),'_pn',num2str(row.pn),'.csv');
     PMat=readtable(filenamePMat);
     if ~isempty(PMat)
-          XMat=PMat(:,1:8);
-          P=PMat{:,9:end};
-          
-          centralities=TypeCentralities(P,XMat.Identities);
+        XMat=PMat(:,1:8);
+        
+        P=PMat{:,9:row.n+8};
+        G=PMat{:,row.n+8:end};
+        centralities=TypeCentralities(P,XMat.Identity);
         row.TypeWeightOutCentMin=min(centralities.outcentrality);
-    row.TypeWeightOutCentMax=max(centralities.outcentrality);
-    row.TypeWeightInCentMin=min(centralities.incentrality);
-    row.TypeWeightInCentMax=max(centralities.incentrality);
-    row.InfluenceCentMax=max(centralities.influencecentrality);
-    row.InfluenceCentMin=min(centralities.influencecentrality);
-    row.InfluenceCentMean=mean(centralities.influencecentrality,'all');
-
+        row.TypeWeightOutCentMax=max(centralities.outcentrality);
+        row.TypeWeightInCentMin=min(centralities.incentrality);
+        row.TypeWeightInCentMax=max(centralities.incentrality);
+        row.InfluenceCentMax=max(centralities.influencecentrality);
+        row.InfluenceCentMin=min(centralities.influencecentrality);
+        row.InfluenceCentMean=mean(centralities.influencecentrality);
+        
         [~,indegreesim] = DegreeSimilarity(P);
-    row.InDegreeSimMax=min(indegreesim,'all');
-    row.InDegreeSimMin=max(indegreesim,'all');
-    row.InDegreeSimMean=mean(indegreesim,'all');
-
-    row.RolemodelDistance=RolemodelDistance(P);
+        row.InDegreeSimMax=min(min(indegreesim));
+        row.InDegreeSimMin=max(max(indegreesim));
+        row.InDegreeSimMean=mean(mean(indegreesim));
+        
+        row.RolemodelDistance=RolemodelDistance(P);
         
         
         
@@ -73,4 +75,4 @@ for i = 1:alllength
 end
 
 
-%writetable(newTable,strcat(filenameTable,'SPNEResAll2.csv'));
+writetable(newTable,strcat(filenameTable,strcat('Update_',ResName)));
