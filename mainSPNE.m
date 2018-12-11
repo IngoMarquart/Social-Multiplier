@@ -163,7 +163,7 @@ mnVec={0};
 pnVec={0};
 
 %% Settings for consolidation
-consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
+consVec={-1,-0.5,0,0.5,1};
 % Set to zero for no consolidation
 % consVec={0};
 
