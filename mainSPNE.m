@@ -64,9 +64,9 @@ delta=1;
 % Watchers.
 
 % Probabilities of climbers relative to slackers. Simulation will check symmetrically for slackers
-PCscale=0:0.1:0.5;
+PCscale=0.25:0.25:0.5;
 % Overall probability of watchers.
-Wscale=[1/3,2/3];
+Wscale=[1/3];
 % Inititalize
 gammaVec={};
 iC=1;
@@ -110,7 +110,7 @@ end
 % a,b - Beta shape parameters
 % b,c - Scaling of variance and mean - unused in the current version
 % Note that the current version scales fixes variance to 1.
-thetascale=2.5:0.5:7.5;
+thetascale=5;
 thetaVec={};
 iz=1;
 for scale = thetascale
@@ -135,7 +135,7 @@ gVec={ 0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50};
 
 %%
 % nVec is a cell array of all firm sizes to run
-nVec={10,15,20,25,30,35,40,45,50,55,60};
+nVec={20,25,30,35,40,45,50,55,60,65,70,75,80};
 
 %%
 % mVec includes the random seeds to run for each configuration.
@@ -163,7 +163,7 @@ mnVec={0};
 pnVec={0};
 
 %% Settings for consolidation
-consVec={-1,-0.8,-0.5,-0.3,0,0.3,0.5,0.8,1};
+consVec={-1,-0.5,0,0.5,1};
 % Set to zero for no consolidation
 % consVec={0};
 

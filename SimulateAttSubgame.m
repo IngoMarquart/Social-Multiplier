@@ -13,10 +13,10 @@
 % @param: globalsearch - Search method
 % @param: convexp - Exponentiate Psi benefit
 % @param: Gmat - Exogenous social matrix
-% @param: cons - Consolidation 
+% @param: cons - Consolidation
 % @return: RetStruct - Row of aggregate values
 % @return: RetCell - Cell list of individual results
-%% 
+%%
 function returndata=SimulateAttSubgame(n,T,gamma, thetaD,ConBen, gemA, gemL, delta, g,m, minT,graphit,globalsearch,convexp,Gmat,cons)
 
 
@@ -174,11 +174,11 @@ for t = 2:(T)
                 [UCon,pi_star]=DiscreteChoice(pmat_prev,g,delta,theta(i), theta, PsiS,i,ChoiceCell{i},nrChoices(i));
             end
             % Convention is utility is negative for fmincon
-            UCon=-UCon;           
+            UCon=-UCon;
             
         else
             %%  Continous Optimization Setup
-
+            
             % Set up the global search
             if globalsearch==1
                 gs = GlobalSearch('Display','off','StartPointsToRun','bounds-ineqs');
@@ -424,7 +424,7 @@ for ii = 1:nrsubgraphs
     end
     % Renormalize weights to sum to one
     weightfactor=weightfactor./sum(weightfactor);
-   
+    
 end
 RetStruct.GAvgPathLength=((1./nrEdges).*weightfactor)*sumDist';
 
@@ -434,10 +434,10 @@ RetStruct.GMaxEV=max(eig(Gmat));
 
 
 % Clustering & average Degree
-deg = sum(Gmat, 2); %Determine node degrees 
+deg = sum(Gmat, 2); %Determine node degrees
 cn = diag(Gmat*triu(Gmat)*Gmat); %Number of triangles for each node
-%The local clustering coefficient of each node 
-c = zeros(size(deg)); 
+%The local clustering coefficient of each node
+c = zeros(size(deg));
 c(deg > 1) = 2 * cn(deg > 1) ./ (deg(deg > 1).*(deg(deg > 1) - 1));
 RetStruct.GAvgClustering=mean(c);
 RetStruct.GAvgDegree=mean(deg);
@@ -498,9 +498,9 @@ for ii = 1:nrsubgraphs
     end
     % Renormalize weights to sum to one
     weightfactor=weightfactor./sum(weightfactor);
-   
+    
 end
-% Average path length is given by the sum of distances divided by the 
+% Average path length is given by the sum of distances divided by the
 RetStruct.AAvgPathLength=((1./nrEdges).*weightfactor)*sumDist';
 
 
@@ -512,8 +512,8 @@ RetStruct.ASymMaxEV=max(eig(SPMat));
 deg = sum(SPMat, 2); %Determine node degrees
 deg2 = sum(P, 2);
 cn = diag(SPMat*triu(SPMat)*SPMat); %Number of triangles for each node
-%The local clustering coefficient of each node 
-c = zeros(size(deg)); 
+%The local clustering coefficient of each node
+c = zeros(size(deg));
 c(deg > 1) = 2 * cn(deg > 1) ./ (deg(deg > 1).*(deg(deg > 1) - 1));
 RetStruct.ASymAvgClustering=mean(c);
 RetStruct.ASymAvgDegree=mean(deg);
@@ -566,6 +566,24 @@ RetStruct.ASymmaxNegBonacich=max(ASymnegBonacich);
 RetStruct.ASymminNegBonacich=min(ASymnegBonacich);
 RetStruct.ASymvarNegBonacich=var(ASymnegBonacich);
 
+
+centralities=TypeCentralities(P,identity);
+RetStruct.TypeWeightOutCentMin=min(centralities.outcentrality);
+RetStruct.TypeWeightOutCentMax=max(centralities.outcentrality);
+RetStruct.TypeWeightOutCentMean=mean(centralities.outcentrality);
+RetStruct.TypeWeightInCentMin=min(centralities.incentrality);
+RetStruct.TypeWeightInCentMax=max(centralities.incentrality);
+RetStruct.TypeWeightInCentMean=mean(centralities.incentrality);
+RetStruct.InfluenceCentMax=max(centralities.influencecentrality);
+RetStruct.InfluenceCentMin=min(centralities.influencecentrality);
+RetStruct.InfluenceCentMean=mean(centralities.influencecentrality);
+
+[~,indegreesim] = DegreeSimilarity(P);
+RetStruct.InDegreeSimMin=min(min(indegreesim));
+RetStruct.InDegreeSimMax=max(max(indegreesim));
+RetStruct.InDegreeSimMean=mean(mean(indegreesim));
+
+RetStruct.RolemodelDistance=RolemodelDistance(P);
 
 % Calculate articulation points
 [~,iC] = biconncomp(ASymgraph);
