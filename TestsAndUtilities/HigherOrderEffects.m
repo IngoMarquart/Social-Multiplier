@@ -37,6 +37,15 @@ newTable.InDegreeSimMax=zeros(alllength,1);
 newTable.InDegreeSimMin=zeros(alllength,1);
 newTable.InDegreeSimMean=zeros(alllength,1);
 newTable.RolemodelDistance=zeros(alllength,1);
+        newTable.AvgRgDiffC=zeros(alllength,1);
+        newTable.AvgRgDiffW=zeros(alllength,1);
+        newTable.AvgRgDiffS=zeros(alllength,1);
+        newTable.AvgRgDiffOverall=zeros(alllength,1);
+        newTable.samplecons = zeros(alllength,1);
+        newTable.CrossLinkPcC=zeros(alllength,1);
+        newTable.CrossLinkPcW=zeros(alllength,1);
+        newTable.CrossLinkPcS=zeros(alllength,1);
+        newTable.CrossLinkOverall=zeros(alllength,1);
 
 parfor i = 1:alllength
     row=newTable(i,:);
@@ -49,6 +58,26 @@ parfor i = 1:alllength
         
         P=PMat{:,9:row.n+8};
         G=PMat{:,row.n+8:end};
+        
+        % Average connection ranges
+        ranges=RangeMeasure(XMat.theta,XMat.identity,P);
+        row.AvgRgDiffC=ranges.rdiffC;
+        row.AvgRgDiffW=ranges.rdiffW;
+        row.AvgRgDiffS=ranges.rdiffS;
+        row.AvgRgDiffOverall=ranges.rdiffOverall;
+
+
+        % Actual consolidation
+        row.samplecons = ConsolidationMeasure(XMat.theta,XMat.identity);
+
+        % Cross linkage percentages
+        crosslinkage = CrossLinkMeasure(XMat.theta,XMat.identity,P);
+        row.CrossLinkPcC=crosslinkage.crosslinkageC;
+        row.CrossLinkPcW=crosslinkage.crosslinkageW;
+        row.CrossLinkPcS=crosslinkage.crosslinkageS;
+        row.CrossLinkOverall=crosslinkage.overall;
+
+        % Type centrality measures
         centralities=TypeCentralities(P,XMat.Identity);
         row.TypeWeightOutCentMin=min(centralities.outcentrality);
         row.TypeWeightOutCentMax=max(centralities.outcentrality);
