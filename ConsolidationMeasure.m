@@ -6,8 +6,11 @@
 % @return: samplecons - consolidation value
 %%%
 function samplecons = ConsolidationMeasure(theta,identity)
-[~,sortindex]=sort(theta);
+[~,sortindex]=sort(theta,'descend');
 n=numel(theta);
-same=round(sortindex(:)==[1:n]');
-samplecons=sum(same)./n;
+same=(sortindex(:)==[1:n]');
+sameNeg=(sortindex(:)==[n:-1:1]');
+samplecons.cons=sum(same)./n;
+samplecons.consNeg=-sum(sameNeg)./n;
+
 end
