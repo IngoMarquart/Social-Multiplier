@@ -8,8 +8,8 @@
 
 
 
-runtime='20181126 FullSpaceTo50';
-ResName='20181126-ConsFullSpace50.csv';
+runtime='20181209 FullSpaceComplete';
+ResName='20181209-ConsFullSpaceCOMPLETE.csv';
 filenameTable=['../DataSave/',runtime,'/'];
 filenamePMats=['../DataSave/',runtime,'/Pmats/'];
 
@@ -26,8 +26,10 @@ newTable=allTable;
 % Define new columns
 newTable.TypeWeightOutCentMin=zeros(alllength,1);
 newTable.TypeWeightOutCentMax=zeros(alllength,1);
+newTable.TypeWeightOutCentMean=zeros(alllength,1);
 newTable.TypeWeightInCentMin=zeros(alllength,1);
 newTable.TypeWeightInCentMax=zeros(alllength,1);
+newTable.TypeWeightInCentMean=zeros(alllength,1);
 newTable.InfluenceCentMax=zeros(alllength,1);
 newTable.InfluenceCentMin=zeros(alllength,1);
 newTable.InfluenceCentMean=zeros(alllength,1);
