@@ -33,12 +33,9 @@ newTable.TypeWeightInCentMean=zeros(alllength,1);
 newTable.InfluenceCentMax=zeros(alllength,1);
 newTable.InfluenceCentMin=zeros(alllength,1);
 newTable.InfluenceCentMean=zeros(alllength,1);
-
 newTable.InDegreeSimMax=zeros(alllength,1);
 newTable.InDegreeSimMin=zeros(alllength,1);
 newTable.InDegreeSimMean=zeros(alllength,1);
-
-
 newTable.RolemodelDistance=zeros(alllength,1);
 
 parfor i = 1:alllength
