@@ -11,26 +11,34 @@
 			"file": "ConsolidationMeasure.m",
 			"settings":
 			{
-				"buffer_size": 387,
+				"buffer_size": 464,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "RangeMeasure.m",
+			"settings":
+			{
+				"buffer_size": 788,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "TestsAndUtilities/HigherOrderEffects.m",
+			"settings":
+			{
+				"buffer_size": 4063,
+				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "CrossLinkMeasure.m",
 			"settings":
 			{
-				"buffer_size": 572,
+				"buffer_size": 1018,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "SimulateAttSubgame.m",
-			"settings":
-			{
-				"buffer_size": 19457,
-				"line_ending": "Unix"
 			}
 		}
 	],
@@ -130,7 +138,8 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Marquart/Documents/Matlab/SocArch"
+		"/D/Marquart/Documents/Matlab/SocArch",
+		"/D/Marquart/Documents/Matlab/SocArch/TestsAndUtilities"
 	],
 	"file_history":
 	[
@@ -181,7 +190,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -190,15 +199,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 387,
+						"buffer_size": 464,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								387,
-								0
+								226,
+								275
 							]
 						],
 						"settings":
@@ -210,24 +219,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "CrossLinkMeasure.m",
+					"file": "RangeMeasure.m",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 572,
+						"buffer_size": 788,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								568,
-								568
+								623,
+								623
 							]
 						],
 						"settings":
@@ -238,24 +247,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "SimulateAttSubgame.m",
-					"semi_transient": true,
+					"file": "TestsAndUtilities/HigherOrderEffects.m",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19457,
+						"buffer_size": 4063,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								12237,
-								12134
+								1615,
+								1615
 							]
 						],
 						"settings":
@@ -265,7 +274,35 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 6116.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "CrossLinkMeasure.m",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1018,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								354,
+								354
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Matlab/Matlab.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 40.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,

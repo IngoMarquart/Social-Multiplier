@@ -58,6 +58,10 @@ delta=1;
 % The following sets cell arrays for the parameters in use.
 % The simulation will produce an observation for each combination.
 
+%% NOTE
+% Generally we initialize cell arrays. This makes it easier to loop through in matlab
+% while using multiple cores (etc.). There is probably a simpler way to do this.
+
 %%
 % gammaVec defines a cell array of sets of probabilities P(C),P(W),P(S)
 % You may define a scale to check both for Climbers&Slackers, as well as
@@ -65,7 +69,7 @@ delta=1;
 
 % Probabilities of climbers relative to slackers. Simulation will check symmetrically for slackers
 PCscale=0.25:0.25:0.5;
-% Overall probability of watchers.
+% Overall probability of watchers. Can also be a vector to check for several levels of watchers
 Wscale=[1/3];
 % Inititalize
 gammaVec={};
@@ -110,6 +114,9 @@ end
 % a,b - Beta shape parameters
 % b,c - Scaling of variance and mean - unused in the current version
 % Note that the current version scales fixes variance to 1.
+% We currently use a Beta distribution of the shape B(2,b) and B(a,2)
+
+% thetascale can be a vector of levels to check against
 thetascale=5;
 thetaVec={};
 iz=1;
@@ -121,10 +128,11 @@ end
 thetaVec{iz}=[2,2,1,1];
 
 
-%% "Archetype examples"
+%% "Archetype examples" settings
 % thetascale=[5];
 % thetastart=2;
 % thetaVec={};
+% (this gives three levels, (2,5),(2,2) and (5,2))
 
 %%
 % gVec is a cell array of all g (or e) values to run
@@ -168,7 +176,7 @@ consVec={-1,-0.5,0,0.5,1};
 % consVec={0};
 
 %% SINGLE SIMULATION
-% You can uncomment the following lines and run a single simulation
+% You can uncomment the following lines and run a single simulation for a single firm
 % 
 % thetaVec={[2,15 ,1,1]};
 % nVec={50};
