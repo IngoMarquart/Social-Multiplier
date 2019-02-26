@@ -25,7 +25,7 @@ minT=4;
 convexp=1;
 % Plot a network graph. Note that this should only be enabled for
 % simulating a single firm!
-graphit=0;
+graphit=1;
 % Use of search algorithm for SPNE
 % We usually use "-1" and use the other, continous numeric options to confirm correctness of our approach
 % 1 - Use Matlab globalsearch - necessary for n<10, time intensive for high n
@@ -33,10 +33,10 @@ graphit=0;
 % -1 - Discrete optimizer - Custom, based on mathematical results in paper, fastest algorithm
 globalsearch=-1;
 % Save results. Creates a folder with timestamp and saves aggregate data
-saveit=1;
+saveit=0;
 % If saveadjmat = 1 in addition to saveit=1, then the simulation will create
 % a subfolder "PMats" and save in it all adjacency matrices for the firm
-saveadjmat=1;
+saveadjmat=0;
 % Force matlab to store table out of memory. Slower if enough RAM, but necessary
 % if ResultTable exceeds RAM (leads to crash). 
 longtable=0;
@@ -178,14 +178,14 @@ consVec={-1,-0.5,0,0.5,1};
 %% SINGLE SIMULATION
 % You can uncomment the following lines and run a single simulation for a single firm
 % 
-% thetaVec={[2,15 ,1,1]};
-% nVec={50};
-% mVec={1,2,3,4,5};
-% gVec={1};
-% gammaVec={[1/3, 1/3, 1/3]};
-% mnVec={1};
-% pnVec={0.3};
-% consVec={0};
+thetaVec={[2,15 ,1,1]};
+nVec={15};
+mVec={10};
+gVec={100};
+gammaVec={[1/3, 1/3, 1/3]};
+mnVec={0};
+pnVec={0};
+consVec={0};
 
 
 
@@ -293,7 +293,7 @@ for cn = nVec
                         % If you want many firms, it is far more efficient to
                         % parallelize per firm! Use
                         % parfor i = 1:length(gVec)
-                        parfor i = 1:length(gVec)
+                        for i = 1:length(gVec)
                             g=gVec(i);
                             
                             % Save current timestamp to associate matrix with table

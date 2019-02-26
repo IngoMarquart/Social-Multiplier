@@ -7,11 +7,11 @@
 %%
 
 
-% runtime='20181209 FullSpaceComplete';
-% ResName='20181209-ConsFullSpaceCOMPLETE.csv';
+runtime='20181209 FullSpaceComplete';
+ResName='Update_20181209-ConsFullSpaceCOMPLETE.csv';
 
-runtime='20181119 Con CentInDegree';
-ResName='Update_20181119-Cons-InDegFix.csv';
+% runtime='20181119 Con CentInDegree';
+% ResName='Update_20181119-Cons-InDegFix.csv';
 
 filenameTable=['../DataSave/',runtime,'/'];
 filenamePMats=['../DataSave/',runtime,'/Pmats/'];

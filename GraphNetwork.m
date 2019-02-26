@@ -6,10 +6,19 @@
 % @param: identity, theta, X: nx1 vectors of identity, theta and X
 %% 
 
-function n=GraphNetwork(Gmat, SPMat, identity, theta, X, )
+function n=GraphNetwork(Gmat, SPMat, PMat, identity, theta, X,g, RetStruct)
     GPgraph=graph(Gmat);
     Sgraph=graph(SPMat);
+    Pgraph=digraph(PMat);
     diff=X-theta;
+    n=numel(theta);
+
+    if sum(sum(Gmat)) == ((n^2)-n) % Complete G network
+        GPgraph=Pgraph;
+        useG=0;
+    else
+        useG=1;
+    end
     type=string(ones(size(identity)));
     type(identity==1)="C";
     type(identity==0)="W";
@@ -33,8 +42,9 @@ function n=GraphNetwork(Gmat, SPMat, identity, theta, X, )
     h.NodeCData=identity;
     h.MarkerSize=12;
     layout(h,'force')
+    if useG==1
     highlight(h,Sgraph,'EdgeColor','r','LineWidth',1.5)
-    
+    end
     txt = {'Attention network:',['N=',num2str(n)],['g=',num2str(g)], ...
         ['NrC=',num2str(RetStruct.NrClimbers)],['NrW=',num2str(RetStruct.NrWatchers)],['NrS=',num2str(RetStruct.NrSlackers)],['Skew=',num2str(skewness(theta))], ...
         ['SM=',num2str(RetStruct.SM)],['AvgTheta=',num2str(RetStruct.ThetaMean)],['AvgX=',num2str(RetStruct.XMean)]};

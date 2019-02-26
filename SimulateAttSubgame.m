@@ -612,6 +612,6 @@ returndata.RetStruct=RetStruct;
 %% GRAPH ROUTINES
 %%
 if graphit==1
-    GraphNetwork(Gmat,SPMat,identity,theta,X)
+    GraphNetwork(Gmat,SPMat,P,identity,theta,X,g, RetStruct)
 end
 end
