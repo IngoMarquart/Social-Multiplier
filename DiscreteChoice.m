@@ -40,7 +40,7 @@ for z = 1:nrChoice
     % Private utility, positive part
     PrivUtil=(x_i-theta_i)^2;
     % Calculate a benefit vector for each potential peer
-    PsiVec = Psi(theta_i,x);
+    PsiVec = Psi(theta_i,theta);
     % Make sure no connection to oneself
     PsiVec(i)=-100;
     % Expected benefit

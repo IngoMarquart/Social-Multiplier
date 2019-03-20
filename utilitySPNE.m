@@ -35,9 +35,9 @@ function [util,x]=utilitySPNE(prest,P_t_1,g,delta,theta_i, theta, Psi, ConBen,i,
 
     
     % Get expected x
-    xv=XFOCSPNE(P,delta,theta,g);
+    x=XFOCSPNE(P,delta,theta,g);
     
-    x_i=xv(i);
+    x_i=x(i);
     
     % Private utility
     PrivUtil=(x_i-theta_i)^2;

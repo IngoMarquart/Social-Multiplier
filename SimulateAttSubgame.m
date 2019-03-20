@@ -139,6 +139,10 @@ for t = 2:(T)
     % Copy matrices such that parallel works better
     pmatT=pmat{t};
     pmat_prev=pmat{t-1};
+    pmat_prev2=pmat{t-1};
+    pmat_prev3=pmat{t-1};
+    pmat_prev4=pmat{t-1};
+    pmat_prev5=pmat{t-1};
     
     %%
     % If not using parfor outside of this function (ie. simulating one
@@ -147,7 +151,7 @@ for t = 2:(T)
     % function.
     % parfor i = 1:n
     % for i = 1:n
-    for i = 1:n
+    parfor i = 1:n
         
         % Initialize other stuff
         UCon=0;
@@ -238,7 +242,7 @@ for t = 2:(T)
         if (min(pi_star < 0)) || max(pi_star >1)
             disp(['Pstar out of range. Fixing. Occured with g: ',num2str(g),', identity: ',num2str(identity(i)),', theta: ',num2str(theta_i), ...
                 ' in period ',num2str(t), ...
-                ' with pstar min/max: ',num2str(min(pstar)),', ',num2str(max(pstar))]);
+                ' with pstar min/max: ',num2str(min(pi_star)),', ',num2str(max(pi_star))]);
             pi_star(pi_star<0)=0;
             pi_star(pi_star>1)=1;
         end
@@ -265,16 +269,21 @@ for t = 2:(T)
         UCont_prev=umat(i,t-1);
         if UCont_prev == -UCon
             %disp(['Last period same for i=',num2str(i),' and ',num2str(-UCon)]);
-            pi_star=pmat_prev(i,:)';
-            uvec(i)=UCont_prev;
+           %pi_star=(pmat_prev(i,:)'+pmat_prev2(i,:)'+pmat_prev3(i,:)'+pmat_prev4(i,:)'+pi_star)/5;
+          % pi_star=(pmat_prev(i,:)'+pi_star)/2;
+          % uvec(i)=(UCont_prev-UCon)/2;
+          pi_star=pmat_prev(i,:)';
+          uvec(i)=UCont_prev;
         elseif UCont_prev > -UCon
             %disp(['Last period better for i=',num2str(i),' diff is ',num2str(abs(-UCon-UCont_prev))]);
-            pi_star=pmat_prev(i,:)';
-            uvec(i)=UCont_prev;
+           % pi_star=(pmat_prev(i,:)'+pmat_prev2(i,:)'+pmat_prev3(i,:)'+pmat_prev4(i,:)'+pi_star)/5;
+           % uvec(i)=(UCont_prev-UCon)/2;
+         pi_star=pmat_prev(i,:)';
+         uvec(i)=UCont_prev;
         else
             uvec(i)=-UCon;
         end
-        
+       %uvec(i)=-UCon;
         
         
         % Save P_i and X_i in the matrices
@@ -296,7 +305,7 @@ for t = 2:(T)
     prevpmat=pmat{t-1};
     udif = max(abs(umat(:,t)-umat(:,t-1)));
     xdif = max(abs(xmat(:,t)-xmat(:,t-1)));
-    pdif = max(max(abs(pmatT-prevpmat)));
+    pdif = sum(sum(abs(pmatT-prevpmat)));
     finalt=t;
     
     %%% Uncomment "disp" to see convergence per iteration

@@ -16,7 +16,7 @@
 % Restrict the maximum time periods for the simulation
 T=500;
 % Define a minimum of time periods each simulation runs
-minT=4;
+minT=5;
 % Convexity parameter of Psi wrt. e, set to 1 (unused).
 % Use this if you wish to examine very low values of g, as for
 % very low values of g the differences become so small that
@@ -33,7 +33,7 @@ graphit=0;
 % -1 - Discrete optimizer - Custom, based on mathematical results in paper, fastest algorithm
 globalsearch=-1;
 % Save results. Creates a folder with timestamp and saves aggregate data
-saveit=1;
+saveit=0;
 % If saveadjmat = 1 in addition to saveit=1, then the simulation will create
 % a subfolder "PMats" and save in it all adjacency matrices for the firm
 saveadjmat=0;
@@ -178,14 +178,16 @@ consVec={-1,-0.5,0,0.5,1};
 %% SINGLE SIMULATION
 % You can uncomment the following lines and run a single simulation for a single firm
 % 
-% thetaVec={[2,5 ,1,1]};
-% nVec={20};
-% mVec={100};
-% gVec={0:0.05:10};
-% gammaVec={[1/3, 1/3, 1/3]};
-% mnVec={0};
-% pnVec={0};
-% consVec={0};
+graphit=1;
+thetaVec={[2,5 ,1,1]};
+nVec={20};
+mVec={100};
+gVec={0:0.05:10};
+gVec={0.95};
+gammaVec={[2/3, 1/6, 1/6]};
+mnVec={0};
+pnVec={0};
+consVec={-1};
 
 
 
@@ -293,7 +295,7 @@ for cn = nVec
                         % If you want many firms, it is far more efficient to
                         % parallelize per firm! Use
                         % parfor i = 1:length(gVec)
-                        parfor i = 1:length(gVec)
+                        for i = 1:length(gVec)
                             g=gVec(i);
                             
                             % Save current timestamp to associate matrix with table

@@ -9,6 +9,7 @@ function calcdistance = RolemodelDistance(G)
 	% Symmetrize Network
 	G=(G+G')./2;
 	G(G>0)=1;
+    G(G<0)=0;
 	% Sort centralities
 	Bcent=BonacichCentrality(0,0,1,1,0,G);
 	% Sort the centralities, G and create Graph

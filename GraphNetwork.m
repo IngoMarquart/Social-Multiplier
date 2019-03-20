@@ -7,6 +7,9 @@
 %% 
 
 function n=GraphNetwork(Gmat, SPMat, PMat, identity, theta, X,g, RetStruct)
+
+    PMat(PMat<0.1)=0;
+    SPMat(SPMat<0.1)=0;
     GPgraph=graph(Gmat);
     Sgraph=graph(SPMat);
     Pgraph=digraph(PMat);
@@ -47,7 +50,7 @@ function n=GraphNetwork(Gmat, SPMat, PMat, identity, theta, X,g, RetStruct)
     end
     txt = {'Attention network:',['N=',num2str(n)],['g=',num2str(g)], ...
         ['NrC=',num2str(RetStruct.NrClimbers)],['NrW=',num2str(RetStruct.NrWatchers)],['NrS=',num2str(RetStruct.NrSlackers)],['Skew=',num2str(skewness(theta))], ...
-        ['SM=',num2str(RetStruct.SM)],['AvgTheta=',num2str(RetStruct.ThetaMean)],['AvgX=',num2str(RetStruct.XMean)]};
+        ['Diff=',num2str(RetStruct.DiffMean)],['AvgTheta=',num2str(RetStruct.ThetaMean)],['AvgX=',num2str(RetStruct.XMean)]};
     annotation('textbox',...
         [0.14 0.9 0 0],...
         'String',txt);
