@@ -11,7 +11,6 @@
 % @param: minEqmT - Minimum time periods to run (independent of convergence)
 % @param: maxEqmT - Minimum time periods to run (independent of convergence)
 % @param: globalsearch - Search method
-% @param: convexp - Exponentiate Psi benefit
 % @param: pn,mn - Exogenous social matrix configuration
 % @param: cons - Consolidation
 % @return: firm - a firm
@@ -105,8 +104,10 @@ firm.uMat = zeros(params.n,params.maxT);
 
 %% Populate outcome-level variables
 firm.diffM=zeros(1,params.maxT);
-firm.varSM=zeros(1,params.maxT);
 firm.SM=ones(1,params.maxT);
+firm.varSM=zeros(1,params.maxT);
+firm.maxDiff=zeros(1,params.maxT);
+firm.minDiff=zeros(1,params.maxT);
 firm.skew=repmat(skewness(theta),1,params.maxT);
 firm.CSRatio=repmat((params.gamma(1))/(params.gamma(1)+params.gamma(3)),1,params.maxT);
 % Here we save the consolidation value
@@ -125,7 +126,7 @@ firm.globalsearch=params.globalsearch;
 firm.e=params.e;
 firm.n=params.n;
 firm.maxT=params.maxT;
-
+firm.thetaRepShockVar=params.thetaRepShockVar;
 % Hash the firm to get the ID of starting values.
 firm.firmID=DataHash(firm);
 

@@ -17,7 +17,7 @@ function firm = runTurn(firm)
 firm = agentsAction(firm);
 
 %% Post-turn transformation
-%firm= postTransform(firm);
+firm= postTransform(firm);
 
 %% Calculate aggregate Variables
 firm= calcAggVars(firm);

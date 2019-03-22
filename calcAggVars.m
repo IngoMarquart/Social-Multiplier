@@ -1,9 +1,7 @@
 %%
-% % GraphNetwork
-% This function graphs the G network and highlights the A network on top of it.
-% @param: Gmat - Symmetric G matrix
-% @param: SPmat - Symmetric P matrix
-% @param: identity, theta, X: nx1 vectors of identity, theta and X
+% % calcAggVars
+% This function calculates the aggregate variables needed to be saved in firm
+% @param: firm
 %%
 
 function firm= calcAggVars(firm)
@@ -21,6 +19,8 @@ NrSlackers=length(identity(identity==-1));
 
 %% Populate outcome-level variables
 firm.diffM(firm.T)=mean(X-theta);
+firm.maxDiff(firm.T)=max(X-theta);
+firm.minDiff(firm.T)=min(X-theta);
 firm.varSM(firm.T)=var(X./theta);
 firm.SM(firm.T)=mean(X./theta);
 firm.skew(firm.T)=skewness(theta);

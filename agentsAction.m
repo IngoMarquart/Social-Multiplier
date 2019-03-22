@@ -167,7 +167,7 @@ for t = 2:(firm.maxEqmT)
     finalt=t;
     
     %%% Uncomment "disp" to see convergence per iteration
-    disp([' t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
+    %disp([' t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
     if (((pdif <= 1.0000e-4) && (udif <= 1.0000e-5) && (xdif<= 1.0000e-5)) && (t>2*firm.minEqmT))
         %disp(['Finish on t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
         break;
