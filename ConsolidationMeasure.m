@@ -12,5 +12,9 @@ same=(sortindex(:)==[1:n]');
 sameNeg=(sortindex(:)==[n:-1:1]');
 samplecons.cons=sum(same)./n;
 samplecons.consNeg=-sum(sameNeg)./n;
-
+if samplecons.cons >= abs(samplecons.consNeg)
+    samplecons.fcons=samplecons.cons;
+else
+    samplecons.fcons=samplecons.consNeg;
+end
 end
