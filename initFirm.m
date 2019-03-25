@@ -125,6 +125,7 @@ firm.maxEqmT=params.maxEqmT;
 firm.globalsearch=params.globalsearch;
 firm.e=params.e;
 firm.n=params.n;
+firm.rationality=params.rationality;
 firm.maxT=params.maxT;
 firm.thetaRepShockVar=params.thetaRepShockVar;
 % Hash the firm to get the ID of starting values.

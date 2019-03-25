@@ -11,7 +11,7 @@
 % @return: util - Utility value
 % @return: p_i_star - Attention choice in the space of all n actors
 %%
-function [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice)
+function [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice, rationality)
 
 
 n=length(theta);
@@ -40,7 +40,7 @@ for z = 1:nrChoice
     % Private utility, positive part
     PrivUtil=(x_i-theta_i)^2;
     % Calculate a benefit vector for each potential peer
-    PsiVec = Psi(theta_i,theta);
+    PsiVec = Psi(theta_i,(1-rationality).*theta+rationality.*x);
     % Make sure no connection to oneself
     PsiVec(i)=-100;
     % Expected benefit

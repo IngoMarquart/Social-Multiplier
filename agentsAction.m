@@ -78,11 +78,11 @@ for t = 2:(firm.maxEqmT)
         % Using the current representation of theta by agent i
         % Set up objective function
         if identity(i)==1 % Climber
-            [curUi,curAi]=DiscreteChoice(prevAttention,firm.e,1,theta(i), thetaRep, firm.psiClimber,i,ChoiceCell{i},nrChoices(i));
+            [curUi,curAi]=DiscreteChoice(prevAttention,firm.e,1,theta(i), thetaRep, firm.psiClimber,i,ChoiceCell{i},nrChoices(i), firm.rationality);
         elseif identity(i)==0 % Watcher
-            [curUi,curAi]=DiscreteChoice(prevAttention,firm.e,1,theta(i), thetaRep, firm.psiWatcher,i,ChoiceCell{i},nrChoices(i));
+            [curUi,curAi]=DiscreteChoice(prevAttention,firm.e,1,theta(i), thetaRep, firm.psiWatcher,i,ChoiceCell{i},nrChoices(i), firm.rationality);
         else % Slacker
-            [curUi,curAi]=DiscreteChoice(prevAttention,firm.e,1,theta(i), thetaRep, firm.psiSlacker,i,ChoiceCell{i},nrChoices(i));
+            [curUi,curAi]=DiscreteChoice(prevAttention,firm.e,1,theta(i), thetaRep, firm.psiSlacker,i,ChoiceCell{i},nrChoices(i), firm.rationality);
         end
         % Convention is utility is negative for fmincon
         curUi=-curUi;
