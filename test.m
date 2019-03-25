@@ -1,7 +1,7 @@
 
 params.n=10;
 params.m=1;
-params.e=1.5;
+params.e=100.5;
 params.gamma=[2/3, 1/6, 1/6];
 params.thetaD=[2,5 ,1,1];
 params.cons=0;
