@@ -33,10 +33,10 @@ graphit=0;
 % -1 - Discrete optimizer - Custom, based on mathematical results in paper, fastest algorithm
 globalsearch=-1;
 % Save results. Creates a folder with timestamp and saves aggregate data
-saveit=0;
+saveit=1;
 % If saveadjmat = 1 in addition to saveit=1, then the simulation will create
 % a subfolder "PMats" and save in it all adjacency matrices for the firm
-saveadjmat=0;
+saveadjmat=1;
 % Force matlab to store table out of memory. Slower if enough RAM, but necessary
 % if ResultTable exceeds RAM (leads to crash). 
 longtable=0;
@@ -178,13 +178,13 @@ consVec={-1,-0.5,0,0.5,1};
 %% SINGLE SIMULATION
 % You can uncomment the following lines and run a single simulation for a single firm
 % 
-graphit=1;
-thetaVec={[2,5 ,1,1]};
-nVec={20};
-mVec={100};
+graphit=0;
+thetaVec={[2,5 ,1,1],[5,2 ,1,1]};
+nVec={10,20};
+mVec={100,101,102};
 gVec={0:0.05:10};
-gVec={0.95};
-gammaVec={[2/3, 1/6, 1/6]};
+gVec={0.1,0.5,1,2,100};
+gammaVec={[1/3, 1/3, 1/3],[2/3, 1/6, 1/6]};
 mnVec={0};
 pnVec={0};
 consVec={-1};
