@@ -62,6 +62,11 @@ else % Consolidation > 0: We sort descending, since climbers at the top
     TIVec(sidx,1)=vec;
 end
 
+% Shuffle positions, such that identity vector is random
+
+idx = randperm(size(TIVec,1));
+TIVec=TIVec(idx,:);
+
 % Prepare vectors
 theta=TIVec(:,1);
 identity=TIVec(:,2);
