@@ -178,17 +178,17 @@ consVec={-1,-0.5,0,0.5,1};
 %% SINGLE SIMULATION
 % You can uncomment the following lines and run a single simulation for a single firm
 % 
-graphit=1;
-saveit=0;
-thetaVec={[2,2 ,1,1]};
-nVec={60};
-mVec={10};
+graphit=0;
+saveit=1;
+thetaVec={[8,2 ,1,1],[5,2 ,1,1]};
+nVec={15,20,25,30,35,40,45,50};
+mVec={20,21,22,23,24,25,26,27,28,29,30};
 gVec={0:0.05:10};
-gVec={10.1};
-gammaVec={[1/3, 1/3, 1/3]};
-mnVec={4};
-pnVec={0.15};
-consVec={0};
+gVec={0.1,0.5,0.8,1,2,5,10,100,500,5000};
+gammaVec={[2/3, 1/6, 1/6],[2/3, 0, 1/3]};
+mnVec={0};
+pnVec={0};
+consVec={-1,-0.6,0};
 
 
 
