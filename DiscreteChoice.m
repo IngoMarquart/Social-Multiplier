@@ -37,10 +37,13 @@ for z = 1:nrChoice
     % Get expected x
     x=XFOCSPNE(P,delta,theta,g);
     x_i=x(i);
+    % Calculate boundedly rational or rational choice
+    x=(1-rationality).*theta+rationality.*x;
+    x(i)=x_i;
     % Private utility, positive part
     PrivUtil=(x_i-theta_i)^2;
     % Calculate a benefit vector for each potential peer
-    PsiVec = Psi(theta_i,(1-rationality).*theta+rationality.*x);
+    PsiVec = Psi(theta_i,theta);
     % Make sure no connection to oneself
     PsiVec(i)=-100;
     % Expected benefit

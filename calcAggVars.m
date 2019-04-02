@@ -28,6 +28,9 @@ firm.CSRatio(firm.T)=NrClimbers/(NrClimbers+NrSlackers);
 % The actual consolidation achieved within the sample
 actualCons=ConsolidationMeasure(theta,identity);
 firm.cons(firm.T)=actualCons.fcons;
+firm.NrC=NrClimbers;
+firm.NrW=NrWatchers;
+firm.NrS=NrSlackers;
 
 
 end

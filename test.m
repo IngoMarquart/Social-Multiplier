@@ -1,18 +1,18 @@
 
-params.n=30;
-params.m=1;
-params.e=5.5;
-params.gamma=[2/3, 1/6, 1/6];
+params.n=20;
+params.m=123;
+params.e=1;
+params.gamma=[1/3, 1/3, 1/3];
 params.thetaD=[2,2 ,1,1];
 params.cons=0;
-params.pn=0.2;
-params.mn=4;
+params.pn=0;
+params.mn=5;
 params.maxT=1;
 params.minEqmT=5;
 params.maxEqmT=100;
 params.globalsearch=-1;
 params.thetaRepShockVar=0;
-params.rationality=1;
+params.rationality=0;
 firm=initFirm(params);
 for T=firm.T:firm.maxT
     firm.T=T;

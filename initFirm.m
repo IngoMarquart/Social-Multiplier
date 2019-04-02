@@ -29,6 +29,8 @@ params.maxT=params.maxT+1;
 TIVec = zeros(params.n,2);
 pd = makedist('Beta',params.thetaD(1),params.thetaD(2));
 
+firm.Talpha=params.thetaD(1);
+firm.Tbeta=params.thetaD(2);
 % If exogenous scaling is desired use this and set fourth and third parameters
 %TIVec(:,1) = (random(pd,n,1)-pd.mean).*thetaD(4)+thetaD(3);
 
