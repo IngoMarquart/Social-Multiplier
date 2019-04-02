@@ -1,8 +1,8 @@
 
 %% Simulation config
 graphIt=1; % Graph the last firm
-saveIt=1; % Save simulation results to a new folder
-maxT=2;
+saveIt=0; % Save simulation results to a new folder
+maxT=1;
 
 %% Baseline parameters
 paramsDefault.maxT=maxT; % Time periods for the company to run
@@ -16,20 +16,21 @@ paramsDefault.mn=0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
 
 
 %% List of parameters to run
-nList=[10:5:80];
-mList=1:30;
-eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50];
-consList=[-1,0,1];
+nList=[15];
+mList=[1];
+eList=[100];
+consList=[0];
 
 %% Type settings
 % Probabilities of climbers relative to slackers. 
 % Simulation will check symmetrically for slackers
-PCscale=0.25:0.25:0.5;
+%PCscale=0.25:0.25:0.5;
+PCscale=0.5;
 % Overall probability of watchers. Can also be a vector to check for several levels of watchers
-Wscale=[2/9,2/3];
-
+%Wscale=[2/9,2/3];
+Wscale=1/3;
 %% Theta settings
-thetascale=[2,5];
+thetascale=[2];
 
 %% Create a cell array of parameters to run
 paramsCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault);
@@ -46,14 +47,14 @@ startRow=returnRow(firm,2);
 
 % A cell to keep resulting tables for each firm
 % Sadly, matlab requires this to run a parfor loop
-resultCell={1,NrSims};
+resultCell={NrSims};
 % A cell to keep the last firm for graphing
 graphFirm={1,NrSims};
 
 %% Main loop over firms
 disp(['Preparing for ',num2str(NrSims),' firms over ',num2str(maxT),' periods for a total of ',num2str(maxT*NrSims),' runs.'])
 tic
-parfor i = 1:NrSims
+for i = 1:NrSims
     params=paramsCell{i};
     
     % This is the temporary table to be filled for firm i
@@ -76,7 +77,7 @@ parfor i = 1:NrSims
     resultCell{i}=tableToFill;
     
     % This saves the last firm entirely in a way compatible with parfor
-    if graphIt==1 && i==NrSims
+    if graphIt==1
         graphFirm{i}=firm;
     end
     

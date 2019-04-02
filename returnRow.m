@@ -9,6 +9,7 @@ function row = returnRow(firm,T)
 firmID=string(firm.firmID);
 n=firm.n;
 e=firm.eMat(T);
+m=firm.m;
 diffM=firm.diffM(T);
 SM=firm.SM(T);
 varSM=firm.varSM(T);
@@ -24,5 +25,5 @@ NrW=firm.NrW;
 NrS=firm.NrS;
 Talpha=firm.Talpha;
 Tbeta=firm.Tbeta;
-row=table(firmID,T,n,e,rationality,NrC,NrW,NrS,Talpha,Tbeta,realSkew,realCons,paramCons,SM,varSM,diffM,maxDiff,minDiff,thetaRange);
+row=table(firmID,T,n,m,e,rationality,NrC,NrW,NrS,Talpha,Tbeta,realSkew,realCons,paramCons,SM,varSM,diffM,maxDiff,minDiff,thetaRange);
 end
