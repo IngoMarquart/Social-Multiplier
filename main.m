@@ -41,7 +41,7 @@ Wscale=[2/9,2/3];
 % Wscale=[2/9,1/3,2/3];
 %% Theta settings
 % Archetypes
-thetascale=[2:0.5:7];
+thetascale=[2,5];
 % State Space
 % thetascale=[2:0.5:7];
 
@@ -67,7 +67,7 @@ graphFirm={1,NrSims};
 %% Main loop over firms
 disp(['Preparing for ',num2str(NrSims),' firms over ',num2str(maxT),' periods for a total of ',num2str(maxT*NrSims),' runs.'])
 tic
-for i = 1:NrSims
+parfor i = 1:NrSims
     params=paramsCell{i};
     
     % This is the temporary table to be filled for firm i
