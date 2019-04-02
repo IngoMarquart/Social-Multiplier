@@ -21,6 +21,7 @@ function firm=initFirm(params)
 s = RandStream('mcg16807','Seed',params.m);
 RandStream.setGlobalStream(s);
 
+firm.m=params.m;
 % First period is initialization
 params.maxT=params.maxT+1;
 
