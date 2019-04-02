@@ -1,8 +1,8 @@
 
 %% Simulation config
-graphIt=1; % Graph the last firm
+graphIt=0; % Graph the last firm
 saveIt=1; % Save simulation results to a new folder
-maxT=2;
+maxT=1;
 
 %% Baseline parameters
 paramsDefault.maxT=maxT; % Time periods for the company to run
