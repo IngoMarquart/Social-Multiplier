@@ -6,6 +6,11 @@
 % @return: samplecons - consolidation value
 %%%
 function samplecons = ConsolidationMeasure(theta,identity)
+
+% Sort everything by identity
+[~,idIndex]=sort(identity,'descend');
+theta=theta(idIndex);
+% Get whether theta is sorted
 [~,sortindex]=sort(theta,'descend');
 n=numel(theta);
 same=(sortindex(:)==[1:n]');

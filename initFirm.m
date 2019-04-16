@@ -40,8 +40,8 @@ TIVec(:,1) = random(pd,params.n,1);
 c=sqrt(1/var(TIVec(:,1)));
 % This fixes variance to 1
 TIVec(:,1) =TIVec(:,1).*c;
-% De-mean theta
-TIVec(:,1)=TIVec(:,1)-mean(TIVec(:,1));
+% De-mean theta, set mean to 1
+TIVec(:,1)=TIVec(:,1)-mean(TIVec(:,1))+1;
 % Ensure theta is positive
 % TIVec(:,1)=TIVec(:,1)-min(TIVec(:,1))+1;
 

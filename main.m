@@ -31,16 +31,16 @@ paramsDefault.mn=0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
 
 %% List of parameters to run
 % %% State Space
-nList=[50:10:80];
-mList=[1:30];
-eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
-consList=[-1,-0.5,0,0.5,1];
-% 
-% %% Archetypes
-% nList=[15:5:70];
+% nList=[50:10:80];
 % mList=[1:30];
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
+% 
+% %% Archetypes
+nList=[15:5:70];
+mList=[1:30];
+eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
+consList=[-1,-0.5,0,0.5,1];
 
 %% Single firm
 % nList=[50];
@@ -52,17 +52,17 @@ consList=[-1,-0.5,0,0.5,1];
 % Probabilities of climbers relative to slackers. 
 % Simulation will check symmetrically for slackers
 %% Archetypes
-%PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
+PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 %% State Space
-PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
+%PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 %% Single firm
 %PCscale=0.55; Wscale=1/3;
 
 %% Theta settings
 %% Archetypes
-%thetascale=[2,5];
+thetascale=[2,5];
 %% State Space
-thetascale=[2:0.5:7];
+%thetascale=[2:0.5:7];
 %% Single firm
 %thetascale=[2];
 
