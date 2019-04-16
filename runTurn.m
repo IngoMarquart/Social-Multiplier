@@ -11,7 +11,7 @@ function firm = runTurn(firm)
 %firm = preTransform(firm);
 
 %% CEO Action
-%firm = ceoAction(firm);
+firm = ceoAction(firm);
 
 %% Agents run
 firm = agentsAction(firm);

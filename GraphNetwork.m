@@ -37,7 +37,7 @@ RetStruct.XMean=mean(X);
 RetStruct.DiffMean=mean(diff);
 RetStruct.ThetaMean=mean(theta);
 
-if sum(sum(firm.gMat)) == ((n^2)-n) % Complete G network
+if 1 || sum(sum(firm.gMat)) == ((n^2)-n) % Complete G network
     GPgraph=Pgraph;
     useG=0;
 else
