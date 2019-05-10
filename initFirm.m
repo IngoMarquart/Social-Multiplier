@@ -20,8 +20,9 @@ function firm=initFirm(params)
 % Set the random stream
 s = RandStream('mcg16807','Seed',params.m);
 RandStream.setGlobalStream(s);
-
 firm.m=params.m;
+
+
 % First period is initialization
 params.maxT=params.maxT+1;
 
@@ -136,6 +137,7 @@ firm.n=params.n;
 firm.rationality=params.rationality;
 firm.maxT=params.maxT;
 firm.thetaRepShockVar=params.thetaRepShockVar;
+firm.ceoAct=params.ceoAct;
 % Hash the firm to get the ID of starting values.
 firm.firmID=DataHash(firm);
 

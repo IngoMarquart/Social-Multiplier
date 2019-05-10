@@ -3,14 +3,15 @@
 % Graph firms
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
-graphIt=0;
+graphIt=1;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
 toGraph="NW";
-saveIt=1; % Save simulation results to a new folder
+saveIt=0; % Save simulation results to a new folder
 maxT=1; % Time periods to run
+avgOverT=0; % Average results over all T - uncertainty sample
 % Symmetric handles whether the simulation runs checking
 % left+right skew and slackers<>climbers distributions
 % symmetric=1 checks both left+right skew and opposite C/S ratios
@@ -20,11 +21,12 @@ symmetric=1;
 
 %% Baseline parameters
 paramsDefault.maxT=maxT; % Time periods for the company to run
-paramsDefault.minEqmT=5; % Minimum periods to achieve equilibrium convergence
-paramsDefault.maxEqmT=100; % Maximum period to achieve eqm convergence
+paramsDefault.minEqmT=2; % Minimum periods to achieve equilibrium convergence
+paramsDefault.maxEqmT=10; % Maximum period to achieve eqm convergence
 paramsDefault.globalsearch=-1; % Unused
 paramsDefault.thetaRepShockVar=0; % Standard deviation of shock to theta representations
 paramsDefault.rationality=0; % First-stage rationality of agents
+paramsDefault.ceoAct=0; % whether the CEO adapts
 paramsDefault.pn=0; % P parameter for G network. Set to 0 for full G!
 paramsDefault.mn=0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
 
@@ -35,7 +37,7 @@ paramsDefault.mn=0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
 % mList=[1:30];
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
-% 
+%
 % %% Archetypes
 nList=[15:5:70];
 mList=[1:30];
@@ -43,28 +45,28 @@ eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 consList=[-1,-0.5,0,0.5,1];
 
 %% Single firm
-% nList=[50];
-% mList=[1];
-% eList=[0.1];
+% nList=[40];
+% mList=[4];
+% eList=[10];
 % consList=[0];
 
 %% Type settings
-% Probabilities of climbers relative to slackers. 
+% Probabilities of climbers relative to slackers.
 % Simulation will check symmetrically for slackers
 %% Archetypes
-PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
+% PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 %% State Space
-%PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
+PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 %% Single firm
-%PCscale=0.55; Wscale=1/3;
+% PCscale=0.5; Wscale=1/3;
 
 %% Theta settings
 %% Archetypes
-thetascale=[2,5];
+% thetascale=[2,5];
 %% State Space
-%thetascale=[2:0.5:7];
+thetascale=[2:0.5:7];
 %% Single firm
-%thetascale=[2];
+% thetascale=[2,3,4,5];
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
@@ -83,7 +85,11 @@ startRow=returnRow(firm,2);
 
 % A cell to keep resulting tables for each firm
 % Sadly, matlab requires this to run a parfor loop
+if avgOverT==1
+    resultCell={NrSims/maxT};
+else
 resultCell={NrSims};
+end
 % A cell to keep the last firm for graphing
 graphFirm={NrSims};
 
@@ -110,8 +116,18 @@ parfor i = 1:NrSims
         tableToFill(T-1,:)=row;
     end
     % Fill entirely table into the result cell
-    resultCell{i}=tableToFill;
-    
+    if avgOverT==1
+        row=tableToFill(T-1,:);
+        meanData=mean(tableToFill{:,3:end});
+        row{:,3:end}=meanData;
+        row.varXT=var(tableToFill.avgX);
+                row.varThetaRangeT=var(tableToFill.thetaRange);
+                row.varDiffMeanT=var(tableToFill.diffM);
+
+        resultCell{i}=row;
+    else
+        resultCell{i}=tableToFill;
+    end
     % This saves the last firm entirely in a way compatible with parfor
     if graphIt==1
         graphFirm{i}=firm;
@@ -127,9 +143,11 @@ toc
 % Due to matlab being matlab we had
 % to save results in a cell
 % Convert now to full table
-mainTable=startRow;
-for rows=resultCell
-    mainTable=[mainTable;rows{:}];
+firstT=resultCell{1};
+% Pre-Allocate
+mainTable=repmat(firstT(1,:),NrSims,1);
+parfor i=1:length(resultCell)
+    mainTable(i,:)=resultCell{i}
 end
 % Delete first row and other objects
 mainTable=mainTable(2:height(mainTable),:);
@@ -150,8 +168,29 @@ if graphIt==1
         tsMat=[firm.eMat',firm.diffM'];
         tsO=timeseries(tsMat,'name','SM vs. embedding');
         plot(tsO);
-    else
+        txt = {'SM vs. e:',['N=',num2str(firm.n)],['e=',num2str(firm.eMat(firm.T))], ...
+            ['NrC=',num2str(firm.NrC)],['NrW=',num2str(firm.NrW)],['NrS=',num2str(firm.NrS)],['Skew=',num2str(firm.skew(firm.T))], ...
+            ['AvgDiff=',num2str(firm.diffM(firm.T))]};
+        annotation('textbox',...
+            [0.14 0.9 0 0],...
+            'String',txt);
+    else % Plot average network
+        % Get firm
+        firm=graphFirm{NrSims};
+        % Set first embedding to zero
+        firm.eMat(1)=0;
+        % Create Average Network
+        avgP=maxT-1;
+        aMat=firm.aMat{firm.T};
+        for i=1:(avgP-1)
+            aMat=aMat+firm.aMat{firm.T-i};
+        end
+        rowSum=sum(aMat,2);
+        rowSum=min(1,rowSum.^(-1));
+        aMat=aMat.*rowSum;
+        firm.aMat{firm.T}=aMat;
         
+        GraphNetwork(firm);
     end
 end
 
@@ -164,7 +203,7 @@ dirnameP=['../DataSave/',num2str(runtime),'/Pmats/'];
 dirname=['../DataSave/',num2str(runtime),'/'];
 if saveIt==1
     mkdir(dirnameP);
-
+    
     TableName=strcat(dirname,'Results.csv');
     writetable(mainTable,TableName);
 end

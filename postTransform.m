@@ -16,7 +16,7 @@ function firm=postTransform(firm)
     thetaShock=random(pd,firm.n,firm.n);
     thetaShock=thetaShock-eye(size(thetaShock)).*thetaShock;
     
-    firm.thetaRep=repmat(firm.thetaMat(:,firm.T)',firm.n,1);
+    firm.thetaRep=repmat(firm.thetaMat(:,1)',firm.n,1);
     firm.thetaRep=firm.thetaRep+thetaShock;
     
 
