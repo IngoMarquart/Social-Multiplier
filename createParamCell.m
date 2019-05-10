@@ -5,7 +5,7 @@
 % @param: paramsDefault - starting struct of parameters that are constant
 % @return: pCell - Cell of params structures over which to loop
 %%
-function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault)
+function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric)
 
 %% Create a cell array of type vectors
 gammaVec={};
@@ -15,7 +15,7 @@ for watchP = Wscale
         normC=scale.*(1-watchP);
         normS=(1-scale).*(1-watchP);
         gammaVec{iC}=[normC,watchP,normS];
-        if normC == normS
+        if (normC == normS) || symmetric~=1
             iC=iC+1;
         else
             gammaVec{iC+1}=[normS,watchP,normC];
@@ -33,10 +33,16 @@ for scale = thetascale
     if scale==2
         thetaVec{iz}=[2,scale,1,1];
         iz=iz+1;
-    else
+    elseif symmetric==1
         thetaVec{iz}=[2,scale,1,1];
         thetaVec{iz+1}=[scale,2,1,1];
         iz=iz+2;
+    elseif symmetric==-1
+        thetaVec{iz}=[scale,2,1,1];
+        iz=iz+1;
+    else
+        thetaVec{iz}=[2,scale,1,1];
+        iz=iz+1;
     end
 end
 clear scale iz

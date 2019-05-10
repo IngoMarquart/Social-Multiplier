@@ -12,6 +12,9 @@ e=firm.eMat(T);
 m=firm.m;
 diffM=firm.diffM(T);
 SM=firm.SM(T);
+expSM=firm.expSM(T);
+avgX=firm.avgX(T);
+avgTheta=firm.avgTheta(T);
 varSM=firm.varSM(T);
 rationality=firm.rationality;
 maxDiff=firm.maxDiff(T);
@@ -25,5 +28,5 @@ NrW=firm.NrW;
 NrS=firm.NrS;
 Talpha=firm.Talpha;
 Tbeta=firm.Tbeta;
-row=table(firmID,T,n,m,e,rationality,NrC,NrW,NrS,Talpha,Tbeta,realSkew,realCons,paramCons,SM,varSM,diffM,maxDiff,minDiff,thetaRange);
+row=table(firmID,T,n,m,e,rationality,NrC,NrW,NrS,Talpha,Tbeta,realSkew,realCons,paramCons,avgX,avgTheta,expSM,SM,varSM,diffM,maxDiff,minDiff,thetaRange);
 end

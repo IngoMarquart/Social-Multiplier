@@ -18,8 +18,8 @@ identity=firm.muMat(:,firm.T);
 SPMat=(PMat+PMat')./2;
 SPMat(SPMat>0)=1;
 
-PMat(PMat<0.1)=0;
-SPMat(SPMat<0.1)=0;
+PMat(PMat<0.05)=0;
+SPMat(SPMat<0.05)=0;
 GPgraph=graph(firm.gMat);
 Sgraph=graph(SPMat);
 
@@ -37,7 +37,7 @@ RetStruct.XMean=mean(X);
 RetStruct.DiffMean=mean(diff);
 RetStruct.ThetaMean=mean(theta);
 
-if sum(sum(firm.gMat)) == ((n^2)-n) % Complete G network
+if 1 || sum(sum(firm.gMat)) == ((n^2)-n) % Complete G network
     GPgraph=Pgraph;
     useG=0;
 else
@@ -61,13 +61,19 @@ strX=string(GPgraph.Nodes.X);
 type(:) = strcat(strType,strleer,strtheta(:),strleer,strleer,strX(:),strleer,strdiff(:));
 type(:) = strcat(strtheta(:),strleer,strdiff(:));
 asdf= cellstr(type');
-h=plot(GPgraph,'Layout','force','NodeLabel',asdf);
-%h=plot(GPgraph,'Layout','force');
+
+
+LWidths = 2*GPgraph.Edges.Weight/max(GPgraph.Edges.Weight);
+h=plot(GPgraph,'Layout','force','NodeLabel',asdf,'LineWidth',LWidths);
+
+
+%h.EdgeCData = GPgraph.Edges.Weight;
+
 h.NodeCData=identity;
 h.MarkerSize=10;
 h.Marker='<';
 % h.NodeFontSize=10;
-layout(h,'force');
+layout(h,'force','UseGravity',true,'WeightEffect','inverse');
 if useG==1
     highlight(h,Sgraph,'EdgeColor','r','LineWidth',1.5);
 end
@@ -82,7 +88,6 @@ annotation('textbox',...
 %h.LineWidth=2.2;
 %layout(h,'force','Iterations',5000)
 
-%h.EdgeCData = GPgraph.Edges.Weight;
 
 %Highlight articulation points
 %highlight(h, iC)
