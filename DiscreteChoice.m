@@ -11,7 +11,7 @@
 % @return: util - Utility value
 % @return: p_i_star - Attention choice in the space of all n actors
 %%
-function [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice)
+function [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice, rationality)
 
 
 n=length(theta);
@@ -37,6 +37,9 @@ for z = 1:nrChoice
     % Get expected x
     x=XFOCSPNE(P,delta,theta,g);
     x_i=x(i);
+    % Calculate boundedly rational or rational choice
+    x=(1-rationality).*theta+rationality.*x;
+    x(i)=x_i;
     % Private utility, positive part
     PrivUtil=(x_i-theta_i)^2;
     % Calculate a benefit vector for each potential peer
