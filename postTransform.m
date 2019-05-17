@@ -12,13 +12,14 @@ function firm=postTransform(firm)
     RandStream.setGlobalStream(s);
     
     %% Shock theta representation
+    if firm.thetaRepShockVar>0
     pd = makedist('Normal','mu',0,'sigma',firm.thetaRepShockVar);
     thetaShock=random(pd,firm.n,firm.n);
     thetaShock=thetaShock-eye(size(thetaShock)).*thetaShock;
     
     firm.thetaRep=repmat(firm.thetaMat(:,1)',firm.n,1);
     firm.thetaRep=firm.thetaRep+thetaShock;
-    
+    end
 
 
 end

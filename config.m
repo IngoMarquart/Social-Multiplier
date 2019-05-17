@@ -52,7 +52,7 @@ paramsDefault.mn = 0; % M parameter for G network (Jackson&Rogers 2014 algorithm
 % % Single firm
 nList = [40];
 mList = [4];
-eList = [10];
+eList = [1];
 consList = [0];
 
 %% Type settings
@@ -63,14 +63,14 @@ consList = [0];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
-% PCscale=0.5; Wscale=1/3;
+ PCscale=0.5; Wscale=1/3;
 
 %% Theta settings
 % Archetypes
 % thetascale=[2,5];
 % State Space
-thetascale = [2:0.5:7];
+%thetascale = [2:0.5:7];
 % Single firm
-% thetascale=[2,3,4,5];
+ thetascale=[2];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%

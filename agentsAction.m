@@ -75,7 +75,7 @@ for t = 2:(firm.maxEqmT)
         curAi=prevAttention(i,:)';
 
         
-        if firm.conUtil==1
+        if firm.conUtil==0
         %% Discrete optimization to find focal peer
         % Using the current representation of theta by agent i
         % Set up objective function

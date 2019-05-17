@@ -29,7 +29,7 @@ for z = 1:nrChoice
     prest(z)=1;
     % Recover p_i from p restriction
     p_i = RecoverPi(prest, Choice, n);
-    ebar=e/(e+1);
+    ebar=g/(g+1);
     % Create new P matrix
     P=P_t_1;
     % Assemble new P
@@ -40,7 +40,7 @@ for z = 1:nrChoice
     % Calculate boundedly rational or rational choice
     x=(1-rationality).*theta+rationality.*x;
     %x(i)=x_i;
-    x(i)=(1-ebar).*theta_i+ebar.*p_i*x;
+    x(i)=(1-ebar).*theta_i+ebar.*p_i'*x;
 
     % Private utility, positive part
     PrivUtil=(x_i-theta_i)^2;
