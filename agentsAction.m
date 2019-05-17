@@ -40,6 +40,11 @@ utilityVec=zeros(n,1);
 xdif=100;
 
 
+% Set up global maximizer if needed
+options  =  optimset('Algorithm','sqp','Display', 'none','UseParallel',false);
+gs = GlobalSearch('Display','off','StartPointsToRun','all');
+
+
 % Loop over time periods until convergence
 for t = 2:(firm.maxEqmT)
     
@@ -61,9 +66,6 @@ for t = 2:(firm.maxEqmT)
         
         %% Initialize actor level stuff
         curUi=0;
-        % Constraints
-        A=ConA{i};
-        b=Conb{i};
         % Theta
         theta_i = theta(i);
         % Get theta representation
@@ -71,12 +73,10 @@ for t = 2:(firm.maxEqmT)
         % Initialize a_i vector
         prevAi=prevAttention(i,:)';
         curAi=prevAttention(i,:)';
-        % Initialize  restricted a_i taking into account GMat
-        prevAiRest=prevAi(ChoiceCell{i});
-        curAiRest=prevAiRest;
+
         
-        
-        %% Discrete optimization
+        if firm.conUtil==1
+        %% Discrete optimization to find focal peer
         % Using the current representation of theta by agent i
         % Set up objective function
         if identity(i)==1 % Climber
@@ -88,7 +88,15 @@ for t = 2:(firm.maxEqmT)
         end
         % Convention is utility is negative for fmincon
         curUi=-curUi;
-        
+    else
+        %% Global optimization routine to find focal group 
+        % Initialize  restricted a_i taking into account GMat
+        prevAiRest=prevAi(ChoiceCell{i});
+        curAiRest=prevAiRest;
+        % Constraints
+        A=ConA{i};
+        b=Conb{i};
+    end
         
         
         %% Post optimization checks
@@ -129,15 +137,10 @@ for t = 2:(firm.maxEqmT)
         
         if prevUi == -curUi
             %disp(['Last period same for i=',num2str(i),' and ',num2str(-curUi)]);
-            %curAi=(pmat_prev(i,:)'+pmat_prev2(i,:)'+pmat_prev3(i,:)'+pmat_prev4(i,:)'+curAi)/5;
-            % curAi=(pmat_prev(i,:)'+curAi)/2;
-            % utilityVec(i)=(curUit_prev-curUi)/2;
             curAi=prevAi;
             utilityVec(i)=prevUi;
         elseif prevUi > -curUi
             %disp(['Last period better for i=',num2str(i),' diff is ',num2str(abs(-curUi-curUit_prev))]);
-            % curAi=(pmat_prev(i,:)'+pmat_prev2(i,:)'+pmat_prev3(i,:)'+pmat_prev4(i,:)'+curAi)/5;
-            % utilityVec(i)=(curUit_prev-curUi)/2;
             curAi=prevAi;
             utilityVec(i)=prevUi;
         else

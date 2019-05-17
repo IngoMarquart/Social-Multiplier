@@ -17,6 +17,15 @@ avgOverT = 0; % Average results over all T - uncertainty sample
 % symmetric=0 checks only given C/S ratio and right skew
 % symmetric=-1 checks only given C/S ratio and left skew
 symmetric = 1;
+% Concave Utility switches between focal groups and focal peers
+% conUtil=1 gives concave benefit
+% conUtil=0 gives linear benefit
+% conUtil=-1 checks both cases
+conUtil=0;
+% Concavity parameter if needed
+conParam=0.5;
+
+
 
 %% Baseline parameters
 paramsDefault.maxT = maxT; % Time periods for the company to run
