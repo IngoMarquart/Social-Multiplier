@@ -35,7 +35,8 @@ paramsDefault.mn=0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
 % % State Space
 nList=[50:10:80];
 mList=[1:30];
-eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
+eList=[0.10,  0.50,  1.00, 100,500];
+%eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 consList=[-1,-0.5,0,0.5,1];
 % % Archetypes
 % nList=[15:5:70];
