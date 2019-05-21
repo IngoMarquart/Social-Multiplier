@@ -21,7 +21,7 @@ symmetric = 1;
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=0;
+conUtil=1;
 % Concavity parameter if needed
 conParam=0.5;
 
@@ -50,9 +50,9 @@ paramsDefault.mn = 0; % M parameter for G network (Jackson&Rogers 2014 algorithm
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
 % % Single firm
-nList = [40];
+nList = [30];
 mList = [4];
-eList = [1];
+eList = [50];
 consList = [0];
 
 %% Type settings
