@@ -4,8 +4,8 @@ RandStream.setGlobalStream(s);
 sigma=0;
 trials=100;
 start_theta=[1,3,5];
-a=[0,0,1];
-aStart=[0,0,1];
+a=[0,0,0];
+aStart=[0,0,0];
 theta_i=0;
 e=0.3;
 n=length(start_theta);
@@ -13,10 +13,9 @@ n=length(start_theta);
 
 sigmavec=0:0.5:5;
 hvec=[];
-%for sigma=sigmavec
 pd = makedist('Normal','mu',0,'sigma',sigma);
 thetaShock=random(pd,trials,length(start_theta));
-theta=repmat(start_theta,trials,1)+thetaShock;
+theta=repmat(start_theta,trials,1);%+thetaShock;
 
 
 evec=[0.1:0.1:10];
@@ -74,18 +73,15 @@ PrivUtil=(x-theta_i).^2;
 % Calculate a benefit vector for each potential peer
 PsiVec = max(0,theta'-theta_i);
 % Expected benefit
-% CBenUtil=(a.^(1/3))*(PsiVec.^(1/1)).^(3/2);
-
-
 isoutil=@(x,rho) (x.^(1-rho)-1)/(1-rho);
 exputility=@(x,rho) (1-exp(-(rho.*x)));
-rho=20;
+rho=2;
 CBenUtil=exputility(a,rho)*PsiVec;
-%CBenUtil=(a.^(1/3))*(PsiVec.^(1/3)).^(3);
+%CBenUtil=(a.^(1/3))*(PsiVec).^(3/1);
 % Expected non-alignment cost
 ConfUtil=a*((x-theta').*(x-theta'));
 % Full utility
-NewUtil=-PrivUtil+e^(1).*1.*CBenUtil-e.*ConfUtil;
+NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
 %NewUtil=sqrt(NewUtil);
 util=-mean(NewUtil);
 
