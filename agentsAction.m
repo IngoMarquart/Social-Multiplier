@@ -96,20 +96,27 @@ function firm = agentsAction(firm)
                 b = Conb{i};
                 lb = zeros(size(curAiRest));
                 ub = ones(size(curAiRest));
+%                 lb = zeros(size(curAiRest));
+% ub = ones(size(curAiRest));
+% A = ones(size(curAiRest));
+% b = [1];
+% Aeq = [];
+% beq = [];
                 % Set up objective function
                 if identity(i) == 1% Climber
-                    fnc = @(aiRest)concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiClimber, firm.rationality, firm.conParam);
+                    fnc = @(aiRest)concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiClimber, firm.rationality, firm.conParam, ChoiceCell{i},i);
                 elseif identity(i) == 0% Watcher
-                    fnc = @(aiRest)concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiWatcher, firm.rationality, firm.conParam);
+                    fnc = @(aiRest)concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiWatcher, firm.rationality, firm.conParam, ChoiceCell{i},i);
                 else % Slacker
-                    fnc = @(aiRest)concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiSlacker, firm.rationality, firm.conParam);
+                    fnc = @(aiRest)concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiSlacker, firm.rationality, firm.conParam, ChoiceCell{i},i);
                 end
-
-                %x = fmincon(fnc,aStart,A,b,Aeq,beq,lb,ub,[],options)';
-                problem = createOptimProblem('fmincon', 'x0', curAiRest, 'objective', fnc, ...
-                    'lb', lb, 'ub', ub, ...
-                    'Aineq', A, 'bineq', b, 'options', options);
-                [curAiRest, curUI] = run(gs, problem)';
+% 
+                %x = fmincon(fnc,aStart,A,b,Aeq,beq,lb,ub,[],options)';'nonlcon',@(x) nonLinConstraint(x,firm.maxDegree)
+                problem = createOptimProblem('fmincon', 'x0', curAiRest, 'objective', fnc, ...  
+                   'lb', lb, 'ub', ub, 'Aineq', A, 'bineq', b, 'options', options);
+                [curAiRest, curUi] = run(gs, problem);
+                
+                curAi = RecoverPi(curAiRest, ChoiceCell{i}, n);
             end
 
             %% Post optimization checks

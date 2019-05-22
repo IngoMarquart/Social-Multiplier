@@ -18,8 +18,8 @@ identity=firm.muMat(:,firm.T);
 SPMat=(PMat+PMat')./2;
 SPMat(SPMat>0)=1;
 
-PMat(PMat<0.05)=0;
-SPMat(SPMat<0.05)=0;
+PMat(PMat<0.1)=0;
+SPMat(SPMat<0.1)=0;
 GPgraph=graph(firm.gMat);
 Sgraph=graph(SPMat);
 
@@ -63,7 +63,7 @@ type(:) = strcat(strtheta(:),strleer,strdiff(:));
 asdf= cellstr(type');
 
 
-LWidths = 2*GPgraph.Edges.Weight/max(GPgraph.Edges.Weight);
+LWidths = 4*GPgraph.Edges.Weight/max(GPgraph.Edges.Weight);
 h=plot(GPgraph,'Layout','force','NodeLabel',asdf,'LineWidth',LWidths);
 
 

@@ -13,7 +13,7 @@
 %%
 function [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice, rationality)
 
-
+theta=theta(:);
 n=length(theta);
 % Define One vector
 ez=ones(n,1);
