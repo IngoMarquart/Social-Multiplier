@@ -21,7 +21,7 @@ symmetric = 1;
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=1;
+conUtil=-1;
 % Concavity parameter if needed
 conParam=0.5;
 
@@ -37,6 +37,7 @@ paramsDefault.rationality = 0; % First-stage rationality of agents - can anticip
 paramsDefault.ceoAct = 0; % whether the CEO adapts over time
 paramsDefault.pn = 0; % P parameter for G network. Set to 0 for full G!
 paramsDefault.mn = 0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
+paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 
 %% List of parameters to run
 % % State Space
@@ -50,10 +51,10 @@ paramsDefault.mn = 0; % M parameter for G network (Jackson&Rogers 2014 algorithm
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
 % % Single firm
-nList = [30];
-mList = [4];
-eList = [50];
-consList = [0];
+nList = [10,30];
+mList = [1,2];
+eList = [0.5,1,10,1000];
+consList = [-1,0,1];
 
 %% Type settings
 % Probabilities of climbers relative to slackers.
@@ -63,7 +64,7 @@ consList = [0];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
- PCscale=0.5; Wscale=1/3;
+ PCscale=[0.1,0.5,0.9]; Wscale=1/3;
 
 %% Theta settings
 % Archetypes
@@ -71,6 +72,6 @@ consList = [0];
 % State Space
 %thetascale = [2:0.5:7];
 % Single firm
- thetascale=[2];
+ thetascale=[2,5];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%

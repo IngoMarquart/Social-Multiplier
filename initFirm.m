@@ -140,6 +140,7 @@ firm.thetaRepShockVar=params.thetaRepShockVar;
 firm.ceoAct=params.ceoAct;
 firm.conUtil=params.conUtil;
 firm.conParam=params.conParam;
+firm.maxDegree=params.maxDegree;
 % Hash the firm to get the ID of starting values.
 firm.firmID=DataHash(firm);
 

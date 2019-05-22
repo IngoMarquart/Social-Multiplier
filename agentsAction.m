@@ -60,7 +60,7 @@ function firm = agentsAction(firm)
         % function.
         % parfor i = 1:n
         % for i = 1:n
-        parfor i = 1:n
+        for i = 1:n
 
             %% Initialize actor level stuff
             curUi = 0;
@@ -111,7 +111,7 @@ function firm = agentsAction(firm)
                     fnc = @(aiRest)concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiSlacker, firm.rationality, firm.conParam, ChoiceCell{i},i);
                 end
 % 
-                %x = fmincon(fnc,aStart,A,b,Aeq,beq,lb,ub,[],options)';
+                %x = fmincon(fnc,aStart,A,b,Aeq,beq,lb,ub,[],options)';'nonlcon',@(x) nonLinConstraint(x,firm.maxDegree)
                 problem = createOptimProblem('fmincon', 'x0', curAiRest, 'objective', fnc, ...  
                    'lb', lb, 'ub', ub, 'Aineq', A, 'bineq', b, 'options', options);
                 [curAiRest, curUi] = run(gs, problem);
