@@ -2,13 +2,13 @@
 % Graph firms
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
-graphIt = 1;
+graphIt = 0;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
 toGraph = "NW";
-saveIt = 0; % Save simulation results to a new folder
+saveIt = 1; % Save simulation results to a new folder
 maxT = 1; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 % Symmetric handles whether the simulation runs checking
@@ -51,7 +51,7 @@ paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
 % % Single firm
-nList = [10,30];
+nList = [10,20,30];
 mList = [1,2];
 eList = [0.5,1,10,1000];
 consList = [-1,0,1];
