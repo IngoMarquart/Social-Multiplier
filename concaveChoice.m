@@ -19,7 +19,7 @@ end
 % All other x_j
 x=(1-rationality).*theta+rationality.*ratx;
 % x_i based on this
-x(i)=(1-ebar).*theta_i+ebar.*a_i'*x;
+x(i)=1./(1+e*sumai).*theta_i+(e./(1+e*sumai)).*a_i'*x;
 
 
 %% First stage: Recover utility for the given a_i

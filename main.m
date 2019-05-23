@@ -30,7 +30,7 @@ graphFirm = {NrSims};
 disp(['Preparing for ', num2str(NrSims), ' firms over ', num2str(maxT), ' periods for a total of ', num2str(maxT * NrSims), ' runs.'])
 tic
 
-parfor i = 1:NrSims
+for i = 1:NrSims
     params = paramsCell{i};
 
     % This is the temporary table to be filled for firm i
@@ -89,7 +89,6 @@ parfor i = 1:length(resultCell)
 end
 
 % Delete first row and other objects
-mainTable = mainTable(2:height(mainTable), :);
 clear resultCell
 
 %% Graphing functions

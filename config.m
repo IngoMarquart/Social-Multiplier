@@ -52,8 +52,8 @@ paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 % consList=[-1,-0.5,0,0.5,1];
 % % Single firm
 nList = [10,20,30];
-mList = [1,2];
-eList = [0.5,1,10,1000];
+mList = [1,10,100];
+eList = [0.5,1,10,10000];
 consList = [-1,0,1];
 
 %% Type settings
@@ -64,7 +64,7 @@ consList = [-1,0,1];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
- PCscale=[0.1,0.5,0.9]; Wscale=1/3;
+ PCscale=[0.1,0.5,0,9]; Wscale=1/3;
 
 %% Theta settings
 % Archetypes

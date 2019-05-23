@@ -60,7 +60,7 @@ function firm = agentsAction(firm)
         % function.
         % parfor i = 1:n
         % for i = 1:n
-        for i = 1:n
+        parfor i = 1:n
 
             %% Initialize actor level stuff
             curUi = 0;
