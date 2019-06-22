@@ -2,13 +2,13 @@
 % Graph firms
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
-graphIt = 0;
+graphIt = 1;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
 toGraph = "NW";
-saveIt = 1; % Save simulation results to a new folder
+saveIt = 0; % Save simulation results to a new folder
 maxT = 1; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 % Symmetric handles whether the simulation runs checking
@@ -16,21 +16,21 @@ avgOverT = 0; % Average results over all T - uncertainty sample
 % symmetric=1 checks both left+right skew and opposite C/S ratios
 % symmetric=0 checks only given C/S ratio and right skew
 % symmetric=-1 checks only given C/S ratio and left skew
-symmetric = 1;
+symmetric = 0;
 % Concave Utility switches between focal groups and focal peers
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=-1;
+conUtil=1;
 % Concavity parameter if needed
-conParam=0.5;
+conParam=2;
 
 
 
 %% Baseline parameters
 paramsDefault.maxT = maxT; % Time periods for the company to run
 paramsDefault.minEqmT = 2; % Minimum periods to achieve equilibrium convergence
-paramsDefault.maxEqmT = 10; % Maximum period to achieve eqm convergence
+paramsDefault.maxEqmT = 100; % Maximum period to achieve eqm convergence
 paramsDefault.globalsearch = -1; % Unused
 paramsDefault.thetaRepShockVar = 0; % Standard deviation of shock to theta representations
 paramsDefault.rationality = 0; % First-stage rationality of agents - can anticipate A
@@ -51,10 +51,10 @@ paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
 % % Single firm
-nList = [10,20,30];
-mList = [1,10,100];
-eList = [0.5,1,10,10000];
-consList = [-1,0,1];
+nList = [35];
+mList = [10];
+eList = [0.5,1000,10000];
+consList = [0];
 
 %% Type settings
 % Probabilities of climbers relative to slackers.
@@ -64,7 +64,7 @@ consList = [-1,0,1];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
- PCscale=[0.1,0.5,0,9]; Wscale=1/3;
+ PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
 % Archetypes
@@ -72,6 +72,6 @@ consList = [-1,0,1];
 % State Space
 %thetascale = [2:0.5:7];
 % Single firm
- thetascale=[2,5];
+ thetascale=[2];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%

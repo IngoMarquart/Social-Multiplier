@@ -38,13 +38,13 @@ PsiVec = Psi(theta_i,theta);
 
 isoutil=@(r,rho) (r.^(1-rho))./(1-rho)*PsiVec;
 exputility=@(r,rho) (1-exp(-(rho.*r)))*PsiVec;
-cesutil=@(r,rho) ((r'.^(1/rho))*(PsiVec))- 0.*norm(r,1);
-rho=2;
+cesutil=@(r,rho) ((r'.^(1/rho))*(PsiVec));
+
 
 if sum(a_i>0) > 5
     CBenUtil=0;
 else
-CBenUtil=cesutil(a_i,rho);
+CBenUtil=cesutil(a_i,conParam);
 end
 %% Full utility
 NewUtil=-PrivUtil+e^(1).*1.*CBenUtil-e.*ConfUtil;

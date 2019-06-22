@@ -55,23 +55,29 @@ GPgraph.Nodes.diff=round(diff,3);
 
 strtheta=string(GPgraph.Nodes.theta);
 strType=string(identity);
+strType(identity==1)="I";
+
+strType(identity==0)="R";
+strType(identity==-1)="H";
 strleer="|";
 strdiff=string(GPgraph.Nodes.diff);
 strX=string(GPgraph.Nodes.X);
 type(:) = strcat(strType,strleer,strtheta(:),strleer,strleer,strX(:),strleer,strdiff(:));
 type(:) = strcat(strtheta(:),strleer,strdiff(:));
+type(:)=strType;
 asdf= cellstr(type');
 
 
-LWidths = 4*GPgraph.Edges.Weight/max(GPgraph.Edges.Weight);
+
+LWidths = 6*GPgraph.Edges.Weight/max(GPgraph.Edges.Weight);
 h=plot(GPgraph,'Layout','force','NodeLabel',asdf,'LineWidth',LWidths);
 
 
 %h.EdgeCData = GPgraph.Edges.Weight;
 
 h.NodeCData=identity;
-h.MarkerSize=10;
-h.Marker='<';
+h.MarkerSize=15;
+%h.Marker='<';
 % h.NodeFontSize=10;
 layout(h,'force','UseGravity',true,'WeightEffect','inverse');
 if useG==1
@@ -80,9 +86,9 @@ end
 txt = {'Attention network:',['N=',num2str(n)],['e=',num2str(firm.e)], ...
     ['NrC=',num2str(RetStruct.NrClimbers)],['NrW=',num2str(RetStruct.NrWatchers)],['NrS=',num2str(RetStruct.NrSlackers)],['Skew=',num2str(skewness(theta))], ...
     ['AvgDiff=',num2str(RetStruct.DiffMean)],['AvgTheta=',num2str(RetStruct.ThetaMean)],['AvgX=',num2str(RetStruct.XMean)]};
-annotation('textbox',...
-    [0.14 0.9 0 0],...
-    'String',txt);
+%annotation('textbox',...
+%    [0.14 0.9 0 0],...
+%    'String',txt);
 
 
 %h.LineWidth=2.2;
