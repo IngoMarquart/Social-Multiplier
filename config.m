@@ -9,7 +9,7 @@ graphIt = 0;
 % "SM" graphs x-theta averages over time periods
 toGraph = "SM-stacked";
 saveIt = 1; % Save simulation results to a new folder
-maxT = 150; % Time periods to run
+maxT = 1; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 % Symmetric handles whether the simulation runs checking
 % left+right skew and slackers<>climbers distributions
@@ -21,9 +21,9 @@ symmetric = 1;
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=0;
+conUtil=-1;
 % Concavity parameter if needed
-conParam=0;
+conParam=2;
 
 
 

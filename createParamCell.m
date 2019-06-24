@@ -72,13 +72,20 @@ for m=mList
                             params.conUtil=0;
                             pCell{i}=params;
                             i=i+1;
-                        else % Both
+                        else % Both and Convex benefit
                             params.conUtil=1;
                             pCell{i}=params;
                             i=i+1;
                             params.conUtil=0;
                             pCell{i}=params;
                             i=i+1;
+                            
+                            params.conUtil=1;
+                            params.conParam=1./conParam;
+                            pCell{i}=params;
+                            i=i+1;
+                            
+                           
                         end
                     end
                 end
