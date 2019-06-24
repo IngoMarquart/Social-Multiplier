@@ -41,7 +41,7 @@ exputility=@(r,rho) (1-exp(-(rho.*r)))*PsiVec;
 cesutil=@(r,rho) ((r'.^(1/rho))*(PsiVec));
 
 
-if sum(a_i>0) > 5
+if sum(a_i>0) > 10
     CBenUtil=0;
 else
 CBenUtil=cesutil(a_i,conParam);

@@ -10,6 +10,9 @@ function firm=postTransform(firm)
     % Set the random stream
     s = RandStream('mcg16807','Seed',sum(int32([firm.firmID]))+firm.T);
     RandStream.setGlobalStream(s);
+
+    %% Adaptation // Learning
+    firm.thetaMat(:,firm.T+1)=0.0.*firm.thetaMat(:,firm.T)+1.*firm.xMat(:,firm.T);
     
     %% Shock theta representation
     if firm.thetaRepShockVar>0
@@ -20,6 +23,5 @@ function firm=postTransform(firm)
     firm.thetaRep=repmat(firm.thetaMat(:,1)',firm.n,1);
     firm.thetaRep=firm.thetaRep+thetaShock;
     end
-
 
 end

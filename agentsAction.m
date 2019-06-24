@@ -72,7 +72,7 @@ function firm = agentsAction(firm)
             prevAi = prevAttention(i, :)';
             curAi = prevAttention(i, :)';
 
-            if firm.conUtil == 0
+            if firm.conUtil == 0 || firm.conParam==0
                 %% Discrete optimization to find focal peer
                 % Using the current representation of theta by agent i
                 % Set up objective function

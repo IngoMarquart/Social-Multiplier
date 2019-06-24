@@ -2,28 +2,28 @@
 % Graph firms
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
-graphIt = 1;
+graphIt = 0;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
-toGraph = "NW";
-saveIt = 0; % Save simulation results to a new folder
-maxT = 1; % Time periods to run
+toGraph = "SM-stacked";
+saveIt = 1; % Save simulation results to a new folder
+maxT = 150; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 % Symmetric handles whether the simulation runs checking
 % left+right skew and slackers<>climbers distributions
 % symmetric=1 checks both left+right skew and opposite C/S ratios
 % symmetric=0 checks only given C/S ratio and right skew
 % symmetric=-1 checks only given C/S ratio and left skew
-symmetric = 0;
+symmetric = 1;
 % Concave Utility switches between focal groups and focal peers
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=1;
+conUtil=0;
 % Concavity parameter if needed
-conParam=2;
+conParam=0;
 
 
 
@@ -50,28 +50,33 @@ paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 % mList=[1:30];
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
+% % Archetypes Dynamics
+nList=[10,20,30,50];
+mList=[1:30];
+eList=[0.5,1,2,5,10000];
+consList=[-1,0,1];
 % % Single firm
-nList = [35];
-mList = [10];
-eList = [0.5,1000,10000];
-consList = [0];
+% nList = [20];
+% mList = [3];
+% eList = [0.5,1,2,5,10000];
+% consList = [-1];
 
 %% Type settings
 % Probabilities of climbers relative to slackers.
 % Simulation will check symmetrically for slackers
 % Archetypes
-% PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
+PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
- PCscale=[0.5]; Wscale=1/4;
+%PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
 % Archetypes
-% thetascale=[2,5];
+ thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
 % Single firm
- thetascale=[2];
+% thetascale=[2];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
