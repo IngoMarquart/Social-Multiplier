@@ -41,8 +41,9 @@ function firm = agentsAction(firm)
 
     % Set up global maximizer if needed
     options = optimset('Algorithm', 'sqp', 'Display', 'none', 'UseParallel', false);
+    if firm.conUtil ~= 0
     gs = GlobalSearch('Display', 'off', 'StartPointsToRun', 'all');
-
+    end
     % Loop over time periods until convergence
     for t = 2:(firm.maxEqmT)
 
