@@ -43,6 +43,8 @@ function firm = agentsAction(firm)
     options = optimset('Algorithm', 'sqp', 'Display', 'none', 'UseParallel', false);
     if firm.conUtil ~= 0
     gs = GlobalSearch('Display', 'off', 'StartPointsToRun', 'all');
+    else
+        gs=0;
     end
     % Loop over time periods until convergence
     for t = 2:(firm.maxEqmT)
@@ -61,7 +63,7 @@ function firm = agentsAction(firm)
         % function.
         % parfor i = 1:n
         % for i = 1:n
-        parfor i = 1:n
+        for i = 1:n
 
             %% Initialize actor level stuff
             curUi = 0;
