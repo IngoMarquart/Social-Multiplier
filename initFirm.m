@@ -131,6 +131,7 @@ firm.T=2;
 %% Pass along parameters
 firm.minEqmT=params.minEqmT;
 firm.maxEqmT=params.maxEqmT;
+firm.gamma=params.gamma;
 firm.globalsearch=params.globalsearch;
 firm.e=params.e;
 firm.n=params.n;

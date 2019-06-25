@@ -29,6 +29,11 @@ function row = returnRow(firm, T)
     Talpha = firm.Talpha;
     Tbeta = firm.Tbeta;
     rationality = firm.rationality;
+    ProbC=firm.gamma(1);
+    ProbW=firm.gamma(2);
+    ProbS=firm.gamma(3);
+
     conUtil = firm.conUtil;
-    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, rationality, conUtil);
+    conParam = firm.conParam;
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam);
 end
