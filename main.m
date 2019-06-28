@@ -81,15 +81,7 @@ toc
 % Due to matlab being matlab we had
 % to save results in a cell
 % Convert now to full table
-firstT = resultCell{1};
-% Pre-Allocate
-mainTable = repmat(firstT(1, :), NrSims*maxT, 1);
-asdf=kron(1:NrSims,ones(maxT,1)')';
-for i = 1:length(resultCell)
-    slice=(asdf==i);
-    mainTable(slice, :) = resultCell{i};
-end
-
+mainTable=vertcat(resultCell{:});
 % Delete first row and other objects
 %clear resultCell
 
