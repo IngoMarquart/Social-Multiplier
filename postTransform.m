@@ -12,7 +12,7 @@ function firm=postTransform(firm)
     RandStream.setGlobalStream(s);
 
     %% Adaptation // Learning
-    firm.thetaMat(:,firm.T+1)=0.0.*firm.thetaMat(:,firm.T)+1.*firm.xMat(:,firm.T);
+    firm.thetaMat(:,firm.T+1)=0.75.*firm.thetaMat(:,firm.T)+0.25*firm.xMat(:,firm.T);
     
     %% Shock theta representation
     if firm.thetaRepShockVar>0

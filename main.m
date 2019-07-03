@@ -83,7 +83,7 @@ toc
 % Convert now to full table
 mainTable=vertcat(resultCell{:});
 % Delete first row and other objects
-%clear resultCell
+clear resultCell
 
 %% Graphing functions
 % Graph the last firm if requested

@@ -7,9 +7,9 @@ graphIt = 0;
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
-toGraph = "SM-stacked";
+toGraph = "NW";
 saveIt = 1; % Save simulation results to a new folder
-maxT = 100; % Time periods to run
+maxT = 30; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 % Symmetric handles whether the simulation runs checking
 % left+right skew and slackers<>climbers distributions
@@ -25,9 +25,15 @@ conUtil=0;
 % Concavity parameter if needed
 conParam=0;
 
+% Choose method for underlying network
+% Options: Task, JR, Full
+gMethod="Task";
+
+
 
 
 %% Baseline parameters
+paramsDefault.gMethod="Full";
 paramsDefault.maxT = maxT; % Time periods for the company to run
 paramsDefault.minEqmT = 2; % Minimum periods to achieve equilibrium convergence
 paramsDefault.maxEqmT = 100; % Maximum period to achieve eqm convergence
@@ -51,14 +57,14 @@ paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
 % % Archetypes Dynamics
-nList=[10,20,30,50];
+nList=[20,40,50,60];
 mList=[1:30];
 eList=[0.5,1,2,5,10000];
 consList=[-1,0,1];
 % Single firm
-% nList = [20];
-% mList = [1,3];
-% eList = [1];
+% nList = [40];
+% mList = [3];
+% eList = [1000];
 % consList = [0];
 
 %% Type settings
@@ -69,11 +75,11 @@ PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
-% PCscale=[0.5]; Wscale=1/4;
+%PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
 % Archetypes
- thetascale=[2,5];
+thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
 % Single firm
