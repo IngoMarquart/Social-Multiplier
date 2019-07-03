@@ -41,6 +41,8 @@ function firm = agentsAction(firm)
 
     % Set up global maximizer if needed
     options = optimset('Algorithm', 'sqp', 'Display', 'none', 'UseParallel', false);
+    options = optimoptions('fmincon' ,'Algorithm', 'sqp', 'Display', 'none', 'UseParallel', false);
+    %options = optimoptions('fmincon' ,'Algorithm', 'sqp', 'Display', 'none', 'UseParallel', true);
     if firm.conUtil ~= 0
     gs = GlobalSearch('Display', 'off', 'StartPointsToRun', 'all');
     else
@@ -75,7 +77,7 @@ function firm = agentsAction(firm)
             prevAi = prevAttention(i, :)';
             curAi = prevAttention(i, :)';
 
-            if firm.conUtil == 0 || firm.conParam==0
+            if firm.conUtil == 0 
                 %% Discrete optimization to find focal peer
                 % Using the current representation of theta by agent i
                 % Set up objective function
@@ -187,19 +189,14 @@ function firm = agentsAction(firm)
 
         % Check convergence. Fluctuations should be small enough, and the
         % Simulation has run for many periods already
-        udif = max(abs(utility(:, t) - utility(:, t - 1)));
-        xdif = max(abs(output(:, t) - output(:, t - 1)));
-        pdif = sum(sum(abs(curAttention - prevAttention)));
+        udif = abs(max(abs(utility(:, t) - utility(:, t - 1))));
+        xdif = abs(max(abs(output(:, t) - output(:, t - 1))));
+        pdif = abs(sum(sum(abs(curAttention - prevAttention))));
         finalt = t;
 
         %%% Uncomment "disp" to see convergence per iteration
-        %disp([' t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
-        if (((pdif <= 1.0000e-4) && (udif <= 1.0000e-5) && (xdif <= 1.0000e-5)) && (t > 2 * firm.minEqmT))
-            %disp(['Finish on t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
-            break;
-        end
 
-        if (((pdif <= 1.0000e-6) && (udif <= 1.0000e-6) && (xdif <= 1.0000e-10)) && (t > firm.minEqmT))
+        if (((pdif <= 1.0000e-5) && (udif <= 1.0000e-5) && (xdif <= 1.0000e-5)) && (t > firm.minEqmT))
             %disp(['Finish on t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
             break;
         end
@@ -218,5 +215,7 @@ function firm = agentsAction(firm)
     firm.aMat{firm.T} = attention{finalt};
     % Output
     firm.xMat(:, firm.T) = output(:, finalt);
+    % utility
+    firm.uMat(:, firm.T) = utility(:, finalt);
 
 end

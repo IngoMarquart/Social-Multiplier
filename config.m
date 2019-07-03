@@ -23,11 +23,11 @@ symmetric = 1;
 % conUtil=-1 checks both cases
 conUtil=-1;
 % Concavity parameter if needed
-conParam=2;
+conParam=0.9;
 
 % Choose method for underlying network
 % Options: Task, JR, Full
-gMethod="Task";
+gMethod="Full";
 
 
 
@@ -57,13 +57,18 @@ paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
 % % Archetypes Dynamics
-nList=[20,40,50,60];
+% nList=[20,40,50,60];
+% mList=[1:30];
+% eList=[0.5,1,2,5,10000];
+% consList=[-1,0,1];
+% % Archetypes v
+nList=[10,15,20];
 mList=[1:30];
-eList=[0.5,1,2,5,10000];
+eList=[0.5,1,5,10000];
 consList=[-1,0,1];
 % Single firm
-% nList = [40];
-% mList = [3];
+% nList = [10];
+% mList = [1];
 % eList = [1000];
 % consList = [0];
 
@@ -75,7 +80,7 @@ PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
-%PCscale=[0.5]; Wscale=1/4;
+% PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
 % Archetypes
@@ -83,6 +88,6 @@ thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
 % Single firm
-%thetascale=[2];
+% thetascale=[2];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%

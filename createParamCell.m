@@ -77,6 +77,7 @@ for m=mList
                             pCell{i}=params;
                             i=i+1;
                             params.conUtil=0;
+                            params.conParam=0;
                             pCell{i}=params;
                             i=i+1;
                             

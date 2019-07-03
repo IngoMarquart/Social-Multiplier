@@ -29,7 +29,6 @@ graphFirm = {NrSims};
 %% Main loop over firms
 disp(['Preparing for ', num2str(NrSims), ' firms over ', num2str(maxT), ' periods for a total of ', num2str(maxT * NrSims), ' runs.'])
 tic
-
 % for or parfor
 parfor i = 1:NrSims
     params = paramsCell{i};

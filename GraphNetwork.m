@@ -63,7 +63,7 @@ strleer="|";
 strdiff=string(GPgraph.Nodes.diff);
 strX=string(GPgraph.Nodes.X);
 type(:) = strcat(strType,strleer,strtheta(:),strleer,strleer,strX(:),strleer,strdiff(:));
-type(:) = strcat(strtheta(:),strleer,strdiff(:));
+type(:) = strcat("    ",strtheta(:),strleer,strdiff(:));
 %type(:)=strType;
 asdf= cellstr(type');
 
