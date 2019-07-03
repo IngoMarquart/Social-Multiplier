@@ -11,6 +11,7 @@
 % @param: minEqmT - Minimum time periods to run (independent of convergence)
 % @param: maxEqmT - Minimum time periods to run (independent of convergence)
 % @param: globalsearch - Search method
+% @param: gMethod
 % @param: pn,mn - Exogenous social matrix configuration
 % @param: cons - Consolidation
 % @return: firm - a firm
@@ -86,13 +87,25 @@ firm.psiClimber=@(theta_i,theta_j) -gemA.*(theta_i-theta_j);
 firm.psiSlacker=@(theta_i,theta_j) -gemA.*(theta_j-theta_i);
 
 %% Create G matrix
-%% If pn is set, we create an underlying G Matrix
-if params.pn==0
-    firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
-else
+firm.gMethod=params.gMethod;
+if params.gMethod=="JR" % Jackson Rogers Social network
     firm.gMat=JacksonRogersNW(params.n,params.mn,params.pn, params.m);
-end
+elseif params.gMethod=="Task" % Task network
+   % We need to intialize modularity, cluster and symmetry 
+       % Symmetry: 
+       firm.gSymmetry=0;
+    if rand>0.5
+        firm.gSymmetry=1;
+    end
+    firm.gModularity=0.5*rand();
+    firm.gCluster=randi([2 floor(params.n./3)],1,1);
+    [firm.gMat,~,firm.gLinks]=TaskNetwork(params.n,firm.gCluster,firm.gModularity, firm.gSymmetry, params.m);
+else
 
+    
+        firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
+
+end
 %% Populate firm-level variables.
 % aMat saves the attention choices per time period
 firm.aMat=cell(1,params.maxT);

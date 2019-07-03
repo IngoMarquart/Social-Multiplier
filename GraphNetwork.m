@@ -20,7 +20,7 @@ SPMat(SPMat>0)=1;
 
 PMat(PMat<0.1)=0;
 SPMat(SPMat<0.1)=0;
-GPgraph=graph(firm.gMat);
+GPgraph=digraph(firm.gMat);
 Sgraph=graph(SPMat);
 
 Pgraph=digraph(PMat);
@@ -37,7 +37,7 @@ RetStruct.XMean=mean(X);
 RetStruct.DiffMean=mean(diff);
 RetStruct.ThetaMean=mean(theta);
 
-if 1 || sum(sum(firm.gMat)) == ((n^2)-n) % Complete G network
+if sum(sum(firm.gMat)) == ((n^2)-n) % Complete G network
     GPgraph=Pgraph;
     useG=0;
 else
@@ -68,10 +68,13 @@ type(:) = strcat(strtheta(:),strleer,strdiff(:));
 asdf= cellstr(type');
 
 
-
+if useG==0
 LWidths = 6*GPgraph.Edges.Weight/max(GPgraph.Edges.Weight);
 h=plot(GPgraph,'Layout','force','NodeLabel',asdf,'LineWidth',LWidths);
+else
+    h=plot(GPgraph,'Layout','force','NodeLabel',asdf);
 
+end
 
 %h.EdgeCData = GPgraph.Edges.Weight;
 
@@ -81,7 +84,7 @@ h.MarkerSize=15;
 % h.NodeFontSize=10;
 layout(h,'force','UseGravity',true,'WeightEffect','inverse');
 if useG==1
-    highlight(h,Sgraph,'EdgeColor','r','LineWidth',1.5);
+    highlight(h,Pgraph,'EdgeColor','r','LineWidth',4);
 end
 txt = {'Attention network:',['N=',num2str(n)],['e=',num2str(firm.e)], ...
     ['NrC=',num2str(RetStruct.NrClimbers)],['NrW=',num2str(RetStruct.NrWatchers)],['NrS=',num2str(RetStruct.NrSlackers)],['Skew=',num2str(skewness(theta))], ...

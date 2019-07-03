@@ -32,8 +32,24 @@ function row = returnRow(firm, T)
     ProbC=firm.gamma(1);
     ProbW=firm.gamma(2);
     ProbS=firm.gamma(3);
+    thetaStartStr=string(strcat(num2str(sort(firm.thetaMat(:,1)'),"%.2f,")));
+    thetaStr=string(strcat(num2str(sort(firm.thetaMat(:,T)'),"%.2f,")));
+    xStr=string(strcat(num2str(sort(firm.xMat(:,T)'),"%.2f,")));
 
     conUtil = firm.conUtil;
     conParam = firm.conParam;
-    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam);
+    if firm.gMethod=="Task"
+       gMethod=firm.gMethod;
+       gSymmetry=firm.gSymmetry;
+       gClusters=firm.gCluster;
+       gModularity=firm.gModularity;
+       gLinks=firm.gLinks;
+    else
+         gMethod=firm.gMethod;
+       gSymmetry=0;
+       gClusters=0;
+       gModularity=0;
+       gLinks=0;      
+    end
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod, gSymmetry, gClusters, gModularity, gLinks,thetaStartStr,thetaStr,xStr);
 end
