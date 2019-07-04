@@ -22,17 +22,42 @@ if avgOverT == 1
 else
     resultCell = {NrSims};
 end
-
 % A cell to keep the last firm for graphing
 graphFirm = {NrSims};
 
 %% Main loop over firms
 disp(['Preparing for ', num2str(NrSims), ' firms over ', num2str(maxT), ' periods for a total of ', num2str(maxT * NrSims), ' runs.'])
 tic
-% for or parfor
-parfor i = 1:NrSims
-    params = paramsCell{i};
+
+% Pre-allocate main table
+mainTable=repmat(startRow,NrSims,1);
+
+% Overall counter
+counter=1;
+nrBlocks=ceil(NrSims/maxCellLength);
+
+for block=1:nrBlocks
+    % Create result cell for block
+    resultCell = cell(1,maxCellLength);
+    % Maximal end point
+    endi=counter+maxCellLength;
     
+    % Last block may be partial
+    if endi>= NrSims
+        endi=NrSims+1;
+        
+    end
+    cellLength=endi-counter;
+    
+    % Restrict param cell slice since it is broadcast variable
+    % in parfor loop
+    blockParamsCell=paramsCell(counter:endi-1);
+
+% for or parfor
+parfor i = 1:cellLength
+    
+    % Fill in parameters
+    params = blockParamsCell{i};
     % This is the temporary table to be filled for firm i
     tableToFill = repmat(startRow, maxT, 1);
     
@@ -74,15 +99,22 @@ parfor i = 1:NrSims
     %    disp(['Iteration m=',num2str(params.m),', n=',num2str(params.n),', e=',num2str(params.e),', cons=',num2str(params.cons),', theta=',num2str(params.thetaD),', gamma=',num2str(params.gamma)])
     %end
 end
-
-toc
 %% Create resulting Table
 % Due to matlab being matlab we had
 % to save results in a cell
 % Convert now to full table
-mainTable=vertcat(resultCell{:});
-% Delete first row and other objects
-clear resultCell
+
+    addTable=vertcat(resultCell{:});
+    % Delete first row and other objects
+    mainTable(counter:endi-1,:)=addTable;
+    clear resultCell
+    clear addTable
+    counter=endi;
+    
+end
+toc
+
+
 
 %% Graphing functions
 % Graph the last firm if requested

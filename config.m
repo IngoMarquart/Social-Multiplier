@@ -11,6 +11,7 @@ toGraph = "NW";
 saveIt = 1; % Save simulation results to a new folder
 maxT = 1; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
+maxCellLength=1000; % Split simulation runs into blocks for memory
 % Symmetric handles whether the simulation runs checking
 % left+right skew and slackers<>climbers distributions
 % symmetric=1 checks both left+right skew and opposite C/S ratios
@@ -66,9 +67,9 @@ nList=[10,15,20];
 mList=[1:30];
 eList=[0.5,1,5,10000];
 consList=[-1,0,1];
-% Single firm
+% % Single firm
 % nList = [10];
-% mList = [1];
+% mList = [1:40];
 % eList = [1000];
 % consList = [0];
 
