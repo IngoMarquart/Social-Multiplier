@@ -83,9 +83,9 @@ h.MarkerSize=15;
 %h.Marker='<';
 h.NodeFontSize=10;
 layout(h,'force','UseGravity',true,'WeightEffect','inverse');
-[~,b]=max(GPgraph.Nodes.theta);
-layout(h,'layered','Direction','right','Sources',[b]);
-layout(h,'circle','Center',[b]);
+%[~,b]=max(GPgraph.Nodes.theta);
+%layout(h,'layered','Direction','right','Sources',[b]);
+%layout(h,'circle','Center',[b]);
 
 if useG==1
     highlight(h,Pgraph,'EdgeColor','r','LineWidth',4);

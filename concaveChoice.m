@@ -56,14 +56,5 @@ NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
 util=-NewUtil;
 
 
-% grad=zeros(n,1);
-% v=conParam;
-% if nargout > 1 % gradient required
-%    for j=1:n
-%        grad(j)=e.*v.*(a_i(j).^(v-1)).*(PsiVec(j)-(x(i)-x(j)).^2) ...
-%            -2*(x(i)-theta_i).*e.*x(j) ...
-%            -2*(e^2).*(a_i.^v)'*((x(i)-x).*x);
-%    end
-% end
-% grad=grad(ChoiceCell);
+
 end
