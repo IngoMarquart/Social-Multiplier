@@ -42,17 +42,16 @@ TIVec(:,1) = random(pd,params.n,1);
 c=sqrt(1/var(TIVec(:,1)));
 % This fixes variance to 1
 TIVec(:,1) =TIVec(:,1).*c;
-% De-mean theta, set mean to 1
+% De-mean theta, set mean to 1 (hence SM=AvgX)
 TIVec(:,1)=TIVec(:,1)-mean(TIVec(:,1))+1;
-% Ensure theta is positive
-% TIVec(:,1)=TIVec(:,1)-min(TIVec(:,1))+1;
+
 
 %% Generate identities
 R = mnrnd(params.n,params.gamma);
 TIVec(:,2) = [1.*ones(1,R(1)), 0.*ones(1,R(2)), -1.*ones(1,R(3))]';
 
 %% Prepare consolidation
-% We will sort a number of thetas by their size.
+% We will sort a proportion of thetas by their size.
 nrSort=round(abs(params.cons)*params.n);
 % Randomly select thetas
 [~,idx]=datasample(TIVec(:,1),nrSort,'Replace',false);
@@ -67,10 +66,29 @@ else % Consolidation > 0: We sort descending, since climbers at the top
     TIVec(sidx,1)=vec;
 end
 
-% Shuffle positions, such that identity vector is random
+%% Shuffling of positions
+% For now, identities are ordered. Under consolidation, so are thetas.
+% Shuffling is required if:
+% - Jackson Rogers is used for G, since early nodes have larger density,
+% otherwise G correlates with theta
+% - Task network is desired to be independent of skill levels
 
-idx = randperm(size(TIVec,1));
-TIVec=TIVec(idx,:);
+if params.shufflePositions=="Random" % Shuffle with probability half
+    firm.shufflePositions="RandomOrdered";
+    if rand>0.5
+        idx = randperm(size(TIVec,1));
+        TIVec=TIVec(idx,:);
+        firm.shufflePositions="RandomShuffled";
+    end
+elseif params.shufflePositions=="None" % Never shuffle
+    %Do nothing
+    firm.shufflePositions="None";
+else % Default: Shuffle
+    firm.shufflePositions="Shuffled";
+    idx = randperm(size(TIVec,1));
+    TIVec=TIVec(idx,:);
+end
+
 
 % Prepare vectors
 theta=TIVec(:,1);
@@ -91,9 +109,9 @@ firm.gMethod=params.gMethod;
 if params.gMethod=="JR" % Jackson Rogers Social network
     firm.gMat=JacksonRogersNW(params.n,params.mn,params.pn, params.m);
 elseif params.gMethod=="Task" % Task network
-   % We need to intialize modularity, cluster and symmetry 
-       % Symmetry: 
-       firm.gSymmetry=0;
+    % We need to intialize modularity, cluster and symmetry
+    % Symmetry:
+    firm.gSymmetry=0;
     if rand>0.5
         firm.gSymmetry=1;
     end
@@ -101,10 +119,10 @@ elseif params.gMethod=="Task" % Task network
     firm.gCluster=randi([2 floor(params.n./3)],1,1);
     [firm.gMat,~,firm.gLinks]=TaskNetwork(params.n,firm.gCluster,firm.gModularity, firm.gSymmetry, params.m);
 else
-
     
-        firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
-
+    
+    firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
+    
 end
 %% Populate firm-level variables.
 % aMat saves the attention choices per time period
