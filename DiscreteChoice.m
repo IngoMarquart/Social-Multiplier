@@ -35,7 +35,7 @@ for z = 1:nrChoice
     % Assemble new P
     P(i,:)=p_i';
     % Get expected x
-    x=XFOCSPNE(P,1,theta,g);
+    x=XFOCSPNE(P_t_1,1,theta,g);
 
     % Calculate boundedly rational or rational choice
     x=(1-rationality).*theta+rationality.*x;
@@ -52,7 +52,7 @@ for z = 1:nrChoice
     % Expected non-alignment cost
     ConfUtil=p_i'*((x(i).*ez-x).*(x(i).*ez-x));
     % Full utility
-    NewUtil=-PrivUtil+g^(1).*1.*CBenUtil-g.*1.*ConfUtil;
+    NewUtil=-PrivUtil+g.*CBenUtil-g.*ConfUtil;
     % If this choice is better than the previous one, do this
     if NewUtil > util
        p_i_star=p_i;

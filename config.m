@@ -22,18 +22,18 @@ symmetric = 0;
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=0;
+conUtil=1;
 % Concavity parameter if needed
 conParam=1.5;
 
 %% Choose method for underlying network G
 % Options: Task, JR, Full
-gMethod="Task";
+gMethod="Full";
 
 %% Shuffle positions:
 % Essentially determines if G is independent of theta by shuffling
 % Options: Random, None, All
-ShufflePositions="Random";
+ShufflePositions="All";
 
 
 %% List of parameters to run
@@ -48,10 +48,10 @@ ShufflePositions="Random";
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
 % % Archetypes Dynamics
-nList=[20,40,50,60];
-mList=[1:2400];
-eList=[0.5,1,2,5,10000];
-consList=[-1,0,1];
+% nList=[20,40,50,60];
+% mList=[1:2400];
+% eList=[0.5,1,2,5,10000];
+% consList=[-1,0,1];
 % % Archetypes v
 % nList=[10,15,20];
 % mList=[1:30];
@@ -64,8 +64,8 @@ consList=[-1,0,1];
 % consList=[-1,0,1];
 % % Single firm
 nList = [10];
-mList = [1:30];
-eList = [1,5,1000];
+mList = [2];
+eList = [1000];
 consList = [0];
 
 %% Type settings
