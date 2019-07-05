@@ -2,13 +2,13 @@
 % Graph firms
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
-graphIt = 1;
+graphIt = 0;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
 toGraph = "NW";
-saveIt = 0; % Save simulation results to a new folder
+saveIt = 1; % Save simulation results to a new folder
 maxT = 1; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 maxCellLength=100000; % Split simulation runs into blocks for memory
@@ -17,7 +17,7 @@ maxCellLength=100000; % Split simulation runs into blocks for memory
 % symmetric=1 checks both left+right skew and opposite C/S ratios
 % symmetric=0 checks only given C/S ratio and right skew
 % symmetric=-1 checks only given C/S ratio and left skew
-symmetric = 0;
+symmetric = 1;
 % Concave Utility switches between focal groups and focal peers
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
@@ -49,7 +49,7 @@ ShufflePositions="Random";
 % consList=[-1,-0.5,0,0.5,1];
 % % Archetypes Dynamics
 nList=[20,40,50,60];
-mList=[1:2400];
+mList=[1:1200];
 eList=[0.5,1,2,5,10000];
 consList=[-1,0,1];
 % % Archetypes v
@@ -63,28 +63,28 @@ consList=[-1,0,1];
 % eList=[0.5,1,5,10000];
 % consList=[-1,0,1];
 % % Single firm
-nList = [10];
-mList = [1:30];
-eList = [1,5,1000];
-consList = [0];
+% nList = [10];
+% mList = [1:30];
+% eList = [1,5,1000];
+% consList = [0];
 
 %% Type settings
 % Probabilities of climbers relative to slackers.
 % Simulation will check symmetrically for slackers
 % Archetypes
-% PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
+PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
-PCscale=[0.5]; Wscale=1/4;
+% PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
 % Archetypes
-% thetascale=[2,5];
+thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
 % Single firm
-thetascale=[2];
+% thetascale=[2];
 
 
 
