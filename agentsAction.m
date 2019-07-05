@@ -82,11 +82,11 @@ for t = 2:(firm.maxEqmT)
             % Using the current representation of theta by agent i
             % Set up objective function
             if identity(i) == 1% Climber
-                [curUi, curAi] = DiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality);
+                [curUi, curAi] = ConvexDiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
             elseif identity(i) == 0% Watcher
-                [curUi, curAi] = DiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality);
+                [curUi, curAi] = ConvexDiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
             else % Slacker
-                [curUi, curAi] = DiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality);
+                [curUi, curAi] = ConvexDiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
             end
             
             % Convention is utility is set to negative, same as fmincon
@@ -145,10 +145,10 @@ for t = 2:(firm.maxEqmT)
                 % Convention is utility is set to negative, same as fmincon
                 curUi2 = -curUi2;
                 
-                %aiRest=curAi(ChoiceCell{i});
-                %aiRest2=curAi2(ChoiceCell{i});
-                %concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiWatcher, firm.rationality, firm.conParam, ChoiceCell{i},i);
-                %concaveChoice(aiRest2, prevAttention, theta, theta(i), firm.e, firm.psiWatcher, firm.rationality, firm.conParam, ChoiceCell{i},i);
+                aiRest=curAi(ChoiceCell{i});
+                aiRest2=curAi2(ChoiceCell{i});
+                concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiClimber, firm.rationality, firm.conParam, ChoiceCell{i},i);
+                concaveChoice(aiRest2, prevAttention, theta, theta(i), firm.e, firm.psiClimber, firm.rationality, firm.conParam, ChoiceCell{i},i);
                 
                 if round(-curUi2,2) > round(-curUi,2)
                     %disp(['Convex Discrete utility for agent ',num2str(i),' is higher with ',num2str(-curUi2),' > ',num2str(-curUi)]);

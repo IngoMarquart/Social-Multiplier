@@ -50,7 +50,7 @@ else
 CBenUtil=((a_i'.^(conParam))*(PsiVec));
 end
 %% Full utility
-NewUtil=-PrivUtil+e.*1.*CBenUtil-e.*ConfUtil;
+NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
 
 % return negative value for minimizer
 util=-NewUtil;
