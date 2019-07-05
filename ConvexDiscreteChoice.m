@@ -11,7 +11,7 @@
 % @return: util - Utility value
 % @return: p_i_star - Attention choice in the space of all n actors
 %%
-function [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice, rationality)
+function [util,p_i_star]=ConvexDiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice, rationality, conParam)
 
 theta=theta(:);
 n=length(theta);
@@ -36,11 +36,12 @@ for z = 1:nrChoice
     P(i,:)=p_i';
     % Get expected x
     x=XFOCSPNE(P,1,theta,g);
-
+    
     % Calculate boundedly rational or rational choice
     x=(1-rationality).*theta+rationality.*x;
     %x(i)=x_i;
     x(i)=(1-ebar).*theta_i+ebar.*p_i'*x;
+
     % Private utility, positive part
     PrivUtil=(x(i)-theta_i)^2;
     % Calculate a benefit vector for each potential peer
@@ -49,10 +50,20 @@ for z = 1:nrChoice
     PsiVec(i)=-100;
     % Expected benefit
     CBenUtil=p_i'*(PsiVec);
+    cesutil=@(r,rho) ((r'.^(rho))*(PsiVec));
+    if sum(p_i>0) > 10
+    CBenUtil=0;
+    elseif conParam==0
+    CBenUtil=cesutil(p_i,1);
+    else
+    CBenUtil=cesutil(p_i,conParam);
+    end
+    
     % Expected non-alignment cost
     ConfUtil=p_i'*((x(i).*ez-x).*(x(i).*ez-x));
     % Full utility
     NewUtil=-PrivUtil+g^(1).*1.*CBenUtil-g.*1.*ConfUtil;
+    
     % If this choice is better than the previous one, do this
     if NewUtil > util
        p_i_star=p_i;

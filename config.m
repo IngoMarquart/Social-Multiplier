@@ -2,13 +2,13 @@
 % Graph firms
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
-graphIt = 0;
+graphIt = 1;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
 toGraph = "NW";
-saveIt = 1; % Save simulation results to a new folder
+saveIt = 0; % Save simulation results to a new folder
 maxT = 1; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 maxCellLength=1000; % Split simulation runs into blocks for memory
@@ -24,7 +24,7 @@ symmetric = 1;
 % conUtil=-1 checks both cases
 conUtil=-1;
 % Concavity parameter if needed
-conParam=0.9;
+conParam=1.5;
 
 % Choose method for underlying network
 % Options: Task, JR, Full
@@ -63,32 +63,32 @@ paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 % eList=[0.5,1,2,5,10000];
 % consList=[-1,0,1];
 % % Archetypes v
-nList=[10,15,20];
-mList=[1:30];
-eList=[0.5,1,5,10000];
-consList=[-1,0,1];
+% nList=[10,15,20];
+% mList=[1:30];
+% eList=[0.5,1,5,10000];
+% consList=[-1,0,1];
 % % Single firm
-% nList = [10];
-% mList = [1:40];
-% eList = [1000];
-% consList = [0];
+nList = [10];
+mList = [1:30];
+eList = [1,5,1000];
+consList = [0];
 
 %% Type settings
 % Probabilities of climbers relative to slackers.
 % Simulation will check symmetrically for slackers
 % Archetypes
-PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
+% PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % Single firm
-% PCscale=[0.5]; Wscale=1/4;
+PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
 % Archetypes
-thetascale=[2,5];
+% thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
 % Single firm
-% thetascale=[2];
+thetascale=[2];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
