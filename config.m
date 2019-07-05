@@ -22,7 +22,7 @@ symmetric = 1;
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=-1;
+conUtil=1;
 % Concavity parameter if needed
 conParam=0.6;
 
@@ -51,6 +51,11 @@ ShufflePositions="All";
 % nList=[20,40,50,60];
 % mList=[1:2400];
 % eList=[0.5,1,2,5,10000];
+% consList=[-1,0,1];
+% % Archetypes v
+% nList=[10,15,20];
+% mList=[1:30];
+% eList=[0.5,1,5,10000];
 % consList=[-1,0,1];
 % % Archetypes v
 nList=[10,20];
