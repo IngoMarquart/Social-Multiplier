@@ -13,7 +13,7 @@ n = firm.n;
 theta = firm.thetaMat(:, firm.T);
 identity = firm.muMat(:, firm.T);
 % Realize current embedding
-firm.e = firm.eMat(firm.T);
+e=firm.e;
 
 %% Generate choice sets
 ChoiceCell = {};

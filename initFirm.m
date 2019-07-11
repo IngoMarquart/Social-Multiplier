@@ -118,12 +118,29 @@ elseif params.gMethod=="Task" % Task network
     firm.gModularity=0.5*rand();
     firm.gCluster=randi([2 floor(params.n./3)],1,1);
     [firm.gMat,~,firm.gLinks]=TaskNetwork(params.n,firm.gCluster,firm.gModularity, firm.gSymmetry, params.m);
-else
-    
-    
+else  
     firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
+end
+
+%% Generate CEO type
+
+if params.ceoAct=="Random" % Shuffle CEO Type
+    type=unidrnd(4,1,1);
+    switch type
+        case 1 % Double
+            params.ceoAct="Double";
+        case 2 % Half
+            params.ceoAct="Half";
+        case 3 % Zero
+            params.ceoAct="Zero";
+        case 4 % off
+            params.ceoAct="Off";    
+    end
+    firm.ceoAct=params.ceoAct;
     
 end
+
+
 %% Populate firm-level variables.
 % aMat saves the attention choices per time period
 firm.aMat=cell(1,params.maxT);

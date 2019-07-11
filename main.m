@@ -22,36 +22,43 @@ if avgOverT == 1
 else
     resultCell = {NrSims};
 end
-% A cell to keep the last firm for graphing
-graphFirm = {NrSims};
+
 
 %% Main loop over firms
 disp(['Preparing for ', num2str(NrSims), ' firms over ', num2str(maxT), ' periods for a total of ', num2str(maxT * NrSims), ' runs.'])
+
+%% Take into account T
+NrSims=maxT * NrSims;
+
 tic
 
 % Pre-allocate main table
 mainTable=repmat(startRow,NrSims,1);
 
 % Overall counter
-counter=1;
-nrBlocks=ceil(NrSims/maxCellLength);
+counter=0;
+
+% The number of blocks required for a given maxCellLength
+% Each Cell includes T rows
+nrBlocks=ceil(NrSims/(maxCellLength*maxT));
 
 for block=1:nrBlocks
     % Create result cell for block
     resultCell = cell(1,maxCellLength);
     % Maximal end point
     endi=counter+maxCellLength;
-    
-    % Last block may be partial
-    if endi>= NrSims
-        endi=NrSims+1;
-        
-    end
     cellLength=endi-counter;
+    % Last block may be partial as we can only have
+    % NrSims/maxT firms
+    if endi> NrSims/maxT
+        endi=ceil(NrSims/maxT);
+        cellLength=endi-counter;
+    end
+    
     
     % Restrict param cell slice since it is broadcast variable
     % in parfor loop
-    blockParamsCell=paramsCell(counter:endi-1);
+    blockParamsCell=paramsCell(counter+1:endi);
 
 % for or parfor
 for i = 1:cellLength
@@ -90,8 +97,8 @@ for i = 1:cellLength
     end
     
     % This saves the last firm entirely in a way compatible with parfor
-    if graphIt == 1
-        graphFirm{i} = firm;
+    if graphIt == 1 && endi>=NrSims/maxT
+        graphFirm = firm;
     end
     
     % Rough progress display
@@ -105,8 +112,10 @@ end
 % Convert now to full table
 
     addTable=vertcat(resultCell{:});
-    % Delete first row and other objects
-    mainTable(counter:endi-1,:)=addTable;
+    % Derive Index for Table
+    sStart=(counter)*maxT+1;
+    sEnd=(endi)*maxT;
+    mainTable(sStart:sEnd,:)=addTable;
     clear resultCell
     clear addTable
     counter=endi;
@@ -121,10 +130,10 @@ toc
 if graphIt == 1
     
     if toGraph == "NW"
-        GraphNetwork(graphFirm{NrSims});
+        GraphNetwork(graphFirm);
     elseif toGraph == "SM"
         % Get firm
-        firm = graphFirm{NrSims};
+        firm = graphFirm;
         % Set first embedding to zero
         firm.eMat(1) = 0;
         % Normalize embedding
@@ -133,11 +142,12 @@ if graphIt == 1
         tsMat = table(firm.avgTheta', firm.avgX');
         tsTheta=timeseries(firm.avgTheta(2:end)','name','AvgTheta');
         tsX=timeseries(firm.avgX(2:end)','name','AvgX');
-
+        tseBar=timeseries(firm.eMat(2:end)','name','Ebar');
         %tsO = timeseries(tsMat, 'name', 'SM over time');
         plot(tsTheta,'-xb','Displayname','Average Theta')
         hold on
         plot(tsX,'-.xm','Displayname','Average X')
+        plot(tseBar,'Displayname','E Bar')
         legend('show','Location','NorthEast')
         txt = {['N=', num2str(firm.n)], ['ebar=', num2str(firm.eMat(firm.T))], ...
             ['NrC=', num2str(firm.NrC)], ['NrW=', num2str(firm.NrW)], ['NrS=', num2str(firm.NrS)], ['Skew=', num2str(firm.skew(firm.T))], ...

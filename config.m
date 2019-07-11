@@ -7,11 +7,18 @@ graphIt = 0;
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
-toGraph = "NW";
+toGraph = "SM";
 saveIt = 1; % Save simulation results to a new folder
-maxT = 1; % Time periods to run
+
+%% Dynamics
+maxT = 100; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
-maxCellLength=10000; % Split simulation runs into blocks for memory
+maxCellLength=100000; % Split simulation runs into blocks for memory
+% Whether or not the CEO doubles or halves e at T/2
+% Random, Double, Half, Zero, Off
+ceoAct="Random";
+
+%% Skew handling
 % Symmetric handles whether the simulation runs checking
 % left+right skew and slackers<>climbers distributions
 % symmetric=1 checks both left+right skew and opposite C/S ratios
@@ -22,7 +29,7 @@ symmetric = 1;
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=1;
+conUtil=0;
 % Concavity parameter if needed
 conParam=0.6;
 
@@ -47,20 +54,10 @@ ShufflePositions="All";
 % mList=[1:30];
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
-% % Archetypes Dynamics
-% nList=[20,40,50,60];
-% mList=[1:2400];
-% eList=[0.5,1,2,5,10000];
-% consList=[-1,0,1];
-% % Archetypes v
-% nList=[10,15,20];
-% mList=[1:30];
-% eList=[0.5,1,5,10000];
-% consList=[-1,0,1];
-% % Archetypes v
-nList=[10,20];
-mList=[1:15];
-eList=[0.5,1,5,10000];
+% Archetypes Dynamics
+nList=[20,40,60];
+mList=[1:50];
+eList=[0.5,1,2,5,10000];
 consList=[-1,0,1];
 % % Archetypes v
 % nList=[10,15,20];
@@ -69,8 +66,8 @@ consList=[-1,0,1];
 % consList=[-1,0,1];
 % % Single firm
 % nList = [10];
-% mList = [1:30];
-% eList = [1,5,1000];
+% mList = [4];
+% eList = [1];
 % consList = [0];
 
 %% Type settings
@@ -101,7 +98,7 @@ paramsDefault.maxEqmT = 100; % Maximum period to achieve eqm convergence
 paramsDefault.globalsearch = -1; % Unused
 paramsDefault.thetaRepShockVar = 0; % Standard deviation of shock to theta representations
 paramsDefault.rationality = 0; % First-stage rationality of agents - can anticipate A
-paramsDefault.ceoAct = 0; % whether the CEO adapts over time
+paramsDefault.ceoAct = ceoAct; % whether the CEO adapts over time
 paramsDefault.pn = 0; % P parameter for G network. Set to 0 for full G!
 paramsDefault.mn = 0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
 paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
