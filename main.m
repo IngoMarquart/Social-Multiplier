@@ -42,7 +42,7 @@ counter=0;
 % Each Cell includes T rows
 nrBlocks=ceil(NrSims/(maxCellLength*maxT));
 
-parfor block=1:nrBlocks
+for block=1:nrBlocks
     % Create result cell for block
     resultCell = cell(1,maxCellLength);
     % Maximal end point
@@ -61,7 +61,7 @@ parfor block=1:nrBlocks
     blockParamsCell=paramsCell(counter+1:endi);
 
 % for or parfor
-for i = 1:cellLength
+parfor i = 1:cellLength
     
     % Fill in parameters
     params = blockParamsCell{i};
