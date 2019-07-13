@@ -42,7 +42,7 @@ counter=0;
 % Each Cell includes T rows
 nrBlocks=ceil(NrSims/(maxCellLength*maxT));
 
-for block=1:nrBlocks
+parfor block=1:nrBlocks
     % Create result cell for block
     resultCell = cell(1,maxCellLength);
     % Maximal end point
