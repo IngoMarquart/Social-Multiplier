@@ -11,12 +11,12 @@ toGraph = "SM";
 saveIt = 1; % Save simulation results to a new folder
 
 %% Dynamics
-maxT = 100; % Time periods to run
+maxT = 1; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 maxCellLength=100000; % Split simulation runs into blocks for memory
 % Whether or not the CEO doubles or halves e at T/2
 % Random, Double, Half, Zero, Off
-ceoAct="Random";
+ceoAct="Off";
 
 %% Skew handling
 % Symmetric handles whether the simulation runs checking
@@ -31,11 +31,11 @@ symmetric = 1;
 % conUtil=-1 checks both cases
 conUtil=0;
 % Concavity parameter if needed
-conParam=0.6;
+conParam=0;
 
 %% Choose method for underlying network G
 % Options: Task, JR, Full
-gMethod="Full";
+gMethod="TaskAssembly";
 
 %% Shuffle positions:
 % Essentially determines if G is independent of theta by shuffling
@@ -56,7 +56,7 @@ ShufflePositions="All";
 % consList=[-1,-0.5,0,0.5,1];
 % Archetypes Dynamics
 nList=[20,40,60];
-mList=[100:150];
+mList=[1:5000];
 eList=[0.5,1,2,5,10000];
 consList=[-1,0,1];
 % % Archetypes v

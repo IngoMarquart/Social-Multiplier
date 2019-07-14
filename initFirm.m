@@ -118,7 +118,15 @@ elseif params.gMethod=="Task" % Task network
     firm.gModularity=0.5*rand();
     firm.gCluster=randi([2 floor(params.n./3)],1,1);
     [firm.gMat,~,firm.gLinks]=TaskNetwork(params.n,firm.gCluster,firm.gModularity, firm.gSymmetry, params.m);
-else  
+elseif params.gMethod=="TaskAssembly"
+    % We need to intialize modularity, cluster and symmetry
+    % Forward/Backward Symmetry:
+    firm.gSymmetry=rand;
+    % Modularity - number of ties
+    firm.gModularity=rand();
+    firm.gCluster=randi([2 floor(params.n./3)],1,1);
+    [firm.gMat,~,firm.gLinks]=TaskNetworkAss(params.n,firm.gCluster,firm.gModularity, firm.gSymmetry, params.m);
+else
     firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
 end
 
@@ -134,12 +142,12 @@ if params.ceoAct=="Random" % Shuffle CEO Type
         case 3 % Zero
             params.ceoAct="Zero";
         case 4 % off
-            params.ceoAct="Off";    
+            params.ceoAct="Off";
     end
     firm.ceoAct=params.ceoAct;
-    firm.startCeoAct=params.ceoAct;
+    
 end
-
+firm.startCeoAct=params.ceoAct;
 
 %% Populate firm-level variables.
 % aMat saves the attention choices per time period
