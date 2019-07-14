@@ -38,6 +38,7 @@ function row = returnRow(firm, T)
     conParam = firm.conParam;
     ShufflePositions=firm.shufflePositions;
     ceoType=firm.ceoAct;
+    startCeoType=firm.startCeoAct;
     if firm.gMethod=="Task"
        gMethod=firm.gMethod;
        gSymmetry=firm.gSymmetry;
@@ -51,5 +52,5 @@ function row = returnRow(firm, T)
        gModularity=0;
        gLinks=0;      
     end
-    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod, gSymmetry, gClusters, gModularity, gLinks,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType);
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod, gSymmetry, gClusters, gModularity, gLinks,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType);
 end

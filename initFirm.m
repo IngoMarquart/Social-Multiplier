@@ -137,7 +137,7 @@ if params.ceoAct=="Random" % Shuffle CEO Type
             params.ceoAct="Off";    
     end
     firm.ceoAct=params.ceoAct;
-    
+    firm.startCeoAct=params.ceoAct;
 end
 
 

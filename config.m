@@ -56,7 +56,7 @@ ShufflePositions="All";
 % consList=[-1,-0.5,0,0.5,1];
 % Archetypes Dynamics
 nList=[20,40,60];
-mList=[1:50];
+mList=[100:150];
 eList=[0.5,1,2,5,10000];
 consList=[-1,0,1];
 % % Archetypes v
@@ -64,7 +64,7 @@ consList=[-1,0,1];
 % mList=[1:30];
 % eList=[0.5,1,5,10000];
 % consList=[-1,0,1];
-% % Single firm
+% % % Single firm
 % nList = [10];
 % mList = [4];
 % eList = [1];
@@ -77,7 +77,7 @@ consList=[-1,0,1];
 PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
-% Single firm
+% % Single firm
 % PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
@@ -85,7 +85,7 @@ PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
-% Single firm
+% % Single firm
 % thetascale=[2];
 
 

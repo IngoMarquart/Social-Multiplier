@@ -11,7 +11,7 @@ function firm = ceoAction(firm)
 if firm.T>=floor(firm.maxT/2)
     switch firm.ceoAct
         case "Double"
-            firm.e=2*firm.e;
+            firm.e=100000;
 
         case "Half"
             firm.e=firm.e/2;
@@ -21,6 +21,7 @@ if firm.T>=floor(firm.maxT/2)
 
     end
     % We allow for only one CEO action
+    firm.startCeoAct=firm.ceoAct;
     firm.ceoAct="Off";
 end
 

@@ -27,7 +27,7 @@ firm = agentsAction(firm);
 %% Post-turn transformation
 firm= postTransform(firm);
 firm.eMat(firm.T)=firm.e;
-
+firm.eMat(firm.T+1)=firm.e;
 
 %% Calculate aggregate Variables
 firm= calcAggVars(firm);
