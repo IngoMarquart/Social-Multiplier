@@ -8,7 +8,14 @@
 % @param: randomseed - Randomseed to set.
 %%
 
-function [G,cluster,links]=TaskNetworkAss(n,cluster,modularity, fwRate, randomseed)
+function [G,cluster,links]=TaskNetworkAss(n,cluster,modularity, assembly, gSymmetry, randomseed)
+
+if gSymmetry==1
+    fwRate=0.5;
+else 
+    fwRate=1;
+end
+
 % Set random seed
 s = RandStream('mcg16807','Seed',randomseed);
 RandStream.setGlobalStream(s);
@@ -37,9 +44,12 @@ numOneG=numel(find(G==1));
 if modularity >0
     % modularity -> percentage of links that should be nonzero
     links=floor(numOneG*modularity);
+    linksAss=round(links.*assembly);
+    linksRan=links-linksAss;
+    %% Assembly line process
     % How many links should be to forward vs. backward direction
-    linksFW=round(links.*fwRate);
-    linksBW=round(links.*(1-fwRate));
+    linksFW=round(linksAss.*fwRate);
+    linksBW=round(linksAss.*(1-fwRate));
     % Get linear indecies
     fillFW=find(G==1);
     % Permute forward links and backward links
@@ -62,6 +72,15 @@ if modularity >0
     bwMat=bwMat-eye(n,n).*bwMat;
     % Add both matrices
     G=G+fwMat+bwMat;
+    
+    %% Random Links
+    % Collect zero
+    zeroG=find(G==0);
+    numZeroG=numel(find(G==0));
+        % Index those onto zero elements
+    gIndex=zeroG(randperm(numZeroG,linksRan));
+    % Set G to 1
+    G(gIndex)=1;
 end
 
 % Delete diagonals

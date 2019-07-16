@@ -61,7 +61,7 @@ for block=1:nrBlocks
     blockParamsCell=paramsCell(counter+1:endi);
     
     % for or parfor
-    parfor i = 1:cellLength
+    for i = 1:cellLength
         
         % Fill in parameters
         params = blockParamsCell{i};

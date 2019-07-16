@@ -2,13 +2,13 @@
 % Graph firms
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
-graphIt = 0;
+graphIt = 1;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
-toGraph = "SM";
-saveIt = 1; % Save simulation results to a new folder
+toGraph = "NW";
+saveIt = 0; % Save simulation results to a new folder
 
 %% Dynamics
 maxT = 1; % Time periods to run
@@ -40,7 +40,7 @@ gMethod="TaskAssembly";
 %% Shuffle positions:
 % Essentially determines if G is independent of theta by shuffling
 % Options: Random, None, All
-ShufflePositions="All";
+ShufflePositions="None";
 
 
 %% List of parameters to run
@@ -56,7 +56,7 @@ ShufflePositions="All";
 % consList=[-1,-0.5,0,0.5,1];
 % Archetypes Dynamics
 nList=[20,40,60];
-mList=[1:5000];
+mList=[1:2000];
 eList=[0.5,1,2,5,10000];
 consList=[-1,0,1];
 % % Archetypes v
@@ -65,10 +65,10 @@ consList=[-1,0,1];
 % eList=[0.5,1,5,10000];
 % consList=[-1,0,1];
 % % % Single firm
-% nList = [10];
-% mList = [4];
-% eList = [1];
-% consList = [0];
+nList = [10];
+mList = [4];
+eList = [1000];
+consList = [0];
 
 %% Type settings
 % Probabilities of climbers relative to slackers.
@@ -77,8 +77,8 @@ consList=[-1,0,1];
 PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
-% % Single firm
-% PCscale=[0.5]; Wscale=1/4;
+% Single firm
+PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
 % Archetypes
@@ -86,7 +86,7 @@ thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
 % % Single firm
-% thetascale=[2];
+thetascale=[2];
 
 
 

@@ -115,17 +115,23 @@ elseif params.gMethod=="Task" % Task network
     if rand>0.5
         firm.gSymmetry=1;
     end
+    firm.gAssembly=0;
     firm.gModularity=0.5*rand();
     firm.gCluster=randi([2 floor(params.n./3)],1,1);
     [firm.gMat,~,firm.gLinks]=TaskNetwork(params.n,firm.gCluster,firm.gModularity, firm.gSymmetry, params.m);
 elseif params.gMethod=="TaskAssembly"
     % We need to intialize modularity, cluster and symmetry
     % Forward/Backward Symmetry:
-    firm.gSymmetry=rand;
+    firm.gSymmetry=0;
+    if rand>0.5
+        firm.gSymmetry=1;
+    end
+    % Assemblyliness
+    firm.gAssembly=rand;
     % Modularity - number of ties
     firm.gModularity=rand();
     firm.gCluster=randi([2 floor(params.n./3)],1,1);
-    [firm.gMat,~,firm.gLinks]=TaskNetworkAss(params.n,firm.gCluster,firm.gModularity, firm.gSymmetry, params.m);
+    [firm.gMat,~,firm.gLinks]=TaskNetworkAss(params.n,firm.gCluster,firm.gModularity,firm.gAssembly, firm.gSymmetry, params.m);
 else
     firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
 end

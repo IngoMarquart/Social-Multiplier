@@ -45,6 +45,7 @@ if firm.gMethod=="Task" || firm.gMethod=="TaskAssembly"
     gClusters=firm.gCluster;
     gModularity=firm.gModularity;
     gLinks=firm.gLinks;
+    gAssembly=firm.gAssembly;
 else
     gMethod=firm.gMethod;
     gSymmetry=0;
@@ -52,5 +53,5 @@ else
     gModularity=0;
     gLinks=0;
 end
-row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod, gSymmetry, gClusters, gModularity, gLinks,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType);
+row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod, gSymmetry, gClusters, gModularity, gLinks,gAssembly,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType);
 end
