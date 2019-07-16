@@ -23,9 +23,11 @@ else
     resultCell = {NrSims};
 end
 
+graphFirm=cell(1,1);
 
 %% Main loop over firms
 disp(['Preparing for ', num2str(NrSims), ' firms over ', num2str(maxT), ' periods for a total of ', num2str(maxT * NrSims), ' runs.'])
+
 
 %% Take into account T
 NrSims=maxT * NrSims;
@@ -61,6 +63,7 @@ for block=1:nrBlocks
     blockParamsCell=paramsCell(counter+1:endi);
     
     % for or parfor
+    % Currently GRAPHING REQUIRES FOR
     for i = 1:cellLength
         
         % Fill in parameters
@@ -98,7 +101,7 @@ for block=1:nrBlocks
         
         % This saves the last firm entirely in a way compatible with parfor
         if graphIt == 1 && endi>=NrSims/maxT
-            graphFirm = firm;
+            graphFirm{1} = firm;
         end
         
         % Rough progress display
@@ -128,7 +131,7 @@ toc
 %% Graphing functions
 % Graph the last firm if requested
 if graphIt == 1
-    
+    graphFirm=graphFirm{1};
     if toGraph == "NW"
         GraphNetwork(graphFirm);
     elseif toGraph == "SM"

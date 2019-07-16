@@ -74,15 +74,29 @@ end
 % - Task network is desired to be independent of skill levels
 
 if params.shufflePositions=="Random" % Shuffle with probability half
-    firm.shufflePositions="RandomOrdered";
+    
     if rand>0.5
         idx = randperm(size(TIVec,1));
         TIVec=TIVec(idx,:);
         firm.shufflePositions="RandomShuffled";
+    elseif rand>0.5
+        % sort by theta
+        [~,idx]=sort(TIVec(:,1),'ascend');
+        TIVec=TIVec(idx,:);
+        firm.shufflePositions="RandomTheta";
+    else
+        [~,idx]=sort(TIVec(:,2),'descend');
+        TIVec=TIVec(idx,:);
+        firm.shufflePositions="RandomMu";
     end
-elseif params.shufflePositions=="None" % Never shuffle
-    %Do nothing
-    firm.shufflePositions="None";
+elseif params.shufflePositions=="Mu" % ordered by type
+    [~,idx]=sort(TIVec(:,2),'descend');
+    TIVec=TIVec(idx,:);
+    firm.shufflePositions="Mu";
+elseif params.shufflePositions=="Theta" % Order by Theta
+    [~,idx]=sort(TIVec(:,1),'ascend');
+    TIVec=TIVec(idx,:);
+    firm.shufflePositions="Theta";
 else % Default: Shuffle
     firm.shufflePositions="Shuffled";
     idx = randperm(size(TIVec,1));
