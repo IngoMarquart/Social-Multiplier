@@ -21,9 +21,9 @@ if firm.T>=floor(firm.maxT/2)
 
     end
     % We allow for only one CEO action
-    firm.startCeoAct=firm.ceoAct;
+    
     firm.ceoAct="Off";
 end
-
+firm.startCeoAct=firm.ceoAct;
 
 end
