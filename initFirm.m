@@ -121,7 +121,14 @@ firm.psiSlacker=@(theta_i,theta_j) -gemA.*(theta_j-theta_i);
 %% Create G matrix
 firm.gMethod=params.gMethod;
 if params.gMethod=="JR" % Jackson Rogers Social network
-    firm.gMat=JacksonRogersNW(params.n,params.mn,params.pn, params.m);
+    p=min(0.1,rand);
+    m=ceil(rand*min(10,params.n));
+    Mnr=ceil(m/(p*params.n));
+    firm.gMn=round(Mnr*rand);
+    firm.gMr=Mnr-firm.gMn;
+    firm.gPn=p;
+    firm.gPr=p;
+    firm.gMat=JacksonRogersNW(params.n,firm.gMn,firm.gPn,firm.gMr,firm.gPr, params.m);
 elseif params.gMethod=="Task" % Task network
     % We need to intialize modularity, cluster and symmetry
     % Symmetry:
@@ -221,4 +228,70 @@ firm.maxDegree=params.maxDegree;
 % Hash the firm to get the ID of starting values.
 firm.firmID=DataHash(firm);
 
+
+%% Calculate network measures on G
+n=params.n;
+G=firm.gMat;
+if G==G'
+    GPgraph=graph(G);
+else
+    GPgraph=digraph(G);
+end
+
+% Network density 
+PC=(n*(n-1))./2; 
+EC=height(GPgraph.Edges); 
+firm.gDensity=EC/PC; 
+
+% Average path length
+% We calculate each path length separately for each
+% connected component in the symmetric graph of A
+% an then use a weighted average
+bincell = conncomp(GPgraph, 'OutputForm', 'cell');
+nrsubgraphs = length(bincell);
+nrNodes=zeros(1,nrsubgraphs);
+sumDist=zeros(1,nrsubgraphs);
+nrEdges=zeros(1,nrsubgraphs);
+weightfactor=zeros(1,nrsubgraphs);
+for ii = 1:nrsubgraphs
+    subg=subgraph(GPgraph, bincell{ii});
+    DM=distances(subg);
+    nrNodes(ii)=length(DM);
+    sumDist(ii)=sum(sum(DM));
+    weightfactor(ii)=nrNodes(ii)/n;
+    nrEdges(ii)=(nrNodes(ii).*(nrNodes(ii)-1));
+    % Zero weight for single nodes (Path Length not defined)
+    if(nrNodes(ii) == 1)
+        weightfactor(ii)=0;
+        nrEdges(ii)=1;
+    end
+    % Renormalize weights to sum to one
+    weightfactor=weightfactor./sum(weightfactor);
+   
+end
+% Average path length is given by the sum of distances divided by the 
+firm.gAvgPathLength=((1./nrEdges).*weightfactor)*sumDist';
+firm.gNrComponents=nrsubgraphs;
+
+% Largest eigenvector
+firm.gMaxEV=max(eig(G));
+
+% Clustering & average Degree
+deg = sum(G, 2); %Determine node degrees 
+cn = diag(G*triu(G)*G); %Number of triangles for each node
+%The local clustering coefficient of each node 
+c = zeros(size(deg)); 
+c(deg > 1) = 2 * cn(deg > 1) ./ (deg(deg > 1).*(deg(deg > 1) - 1));
+firm.gAvgClustering=mean(c);
+firm.gAvgDegree=mean(deg);
+
+
+% Diameter
+d=distances(GPgraph);
+d(~isfinite(d))=1000;
+% Eccentricity
+ev=max(d,[],2);
+% Radius and diameter
+firm.gRadius=min(ev(ev>0));
+firm.gDiameter=max(ev(ev>0));
 end

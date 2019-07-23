@@ -64,7 +64,7 @@ for block=1:nrBlocks
     
     % for or parfor
     % Currently GRAPHING REQUIRES FOR
-    for i = 1:cellLength
+    parfor i = 1:cellLength
         
         % Fill in parameters
         params = blockParamsCell{i};
@@ -101,7 +101,7 @@ for block=1:nrBlocks
         
         % This saves the last firm entirely in a way compatible with parfor
         if graphIt == 1 && endi>=NrSims/maxT
-            graphFirm{1} = firm;
+            graphFirm = firm;
         end
         
         % Rough progress display

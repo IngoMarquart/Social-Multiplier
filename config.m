@@ -35,7 +35,7 @@ conParam=0;
 
 %% Choose method for underlying network G
 % Options: Task, JR, Full
-gMethod="TaskAssembly";
+gMethod="JR";
 
 %% Shuffle positions:
 % Essentially determines if G is independent of theta by shuffling
@@ -77,7 +77,7 @@ consList=[-1,0,1];
 PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
-% % % Single firm
+% % % % Single firm
 % PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
@@ -85,7 +85,7 @@ PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
-% % % Single firm
+% % % % Single firm
 % thetascale=[2];
 
 

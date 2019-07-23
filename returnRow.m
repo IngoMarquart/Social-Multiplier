@@ -39,6 +39,14 @@ conParam = firm.conParam;
 ShufflePositions=firm.shufflePositions;
 ceoType=firm.ceoAct;
 startCeoType=firm.startCeoAct;
+gAvgPathLength=firm.gAvgPathLength;
+gDensity=firm.gDensity;
+gMaxEV=firm.gMaxEV;
+gAvgClustering=firm.gAvgClustering;
+gAvgDegree=firm.gAvgDegree;
+gRadius=firm.gRadius;
+gDiameter=firm.gDiameter;
+gNrComponents=firm.gNrComponents;
 if firm.gMethod=="Task" || firm.gMethod=="TaskAssembly"
     gMethod=firm.gMethod;
     gSymmetry=firm.gSymmetry;
@@ -46,12 +54,27 @@ if firm.gMethod=="Task" || firm.gMethod=="TaskAssembly"
     gModularity=firm.gModularity;
     gLinks=firm.gLinks;
     gAssembly=firm.gAssembly;
+    gMn=0;
+    gMr=0;
+    gPn=0;
+    gPr=0;
 else
     gMethod=firm.gMethod;
     gSymmetry=0;
     gClusters=0;
     gModularity=0;
     gLinks=0;
+    gAssembly=0;
+        gMn=0;
+    gMr=0;
+    gPn=0;
+    gPr=0;
+    if firm.gMethod=="JR"
+    gMn=firm.gMn;
+    gMr=firm.gMr;
+    gPn=firm.gPn;
+    gPr=firm.gPr;
+    end
 end
-row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod, gSymmetry, gClusters, gModularity, gLinks,gAssembly,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType);
+row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType);
 end

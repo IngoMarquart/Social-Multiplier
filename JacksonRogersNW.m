@@ -7,19 +7,19 @@
 % @param: randomseed - Randomseed to set.
 %% 
 
-function G=JacksonRogersNW(n,mn,pn, randomseed)
+function G=JacksonRogersNW(n,mn,pn,mr,pr, randomseed)
 
     % Set random seed 
     s = RandStream('mcg16807','Seed',randomseed);
     RandStream.setGlobalStream(s);
     % Assumption in Jackson and Rogers, pr=pn
-    pr=pn;
+    %pr=pn;
     % Set n-based default values
     if mn==0
         mr=min(round(n/12),3);
         mn=min(round(n/12),3);
     else
-        mr=mn;
+        %mr=mn;
     end
 
 
