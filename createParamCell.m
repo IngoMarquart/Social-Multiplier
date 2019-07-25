@@ -5,7 +5,7 @@
 % @param: paramsDefault - starting struct of parameters that are constant
 % @return: pCell - Cell of params structures over which to loop
 %%
-function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric,conUtil,conParam)
+function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric,conUtil,conParam,ceoActStartT)
 
 %% Create a cell array of type vectors
 gammaVec={};
@@ -54,6 +54,7 @@ for m=mList
         for e=eList
             for cons=consList
                 for theta=thetaVec
+                    for ceoStartT=ceoActStartT
                     for gamma=gammaVec
                         params=paramsDefault;
                         params.n=n;
@@ -62,6 +63,7 @@ for m=mList
                         params.gamma=gamma{:};
                         params.thetaD=theta{:};
                         params.cons=cons;
+                        params.ceoStartT=ceoStartT;
                         params.conParam=conParam;
                         % Check which concavity to use for social benefit
                         if conUtil == 1 % Concave Benefit
@@ -88,6 +90,7 @@ for m=mList
                             
                            
                         end
+                    end
                     end
                 end
             end

@@ -160,16 +160,16 @@ end
 %% Generate CEO type
 
 if params.ceoAct=="Random" % Shuffle CEO Type
-    type=unidrnd(4,1,1);
+    type=unidrnd(2,1,1);
     switch type
         case 1 % Double
             params.ceoAct="Double";
         case 2 % Half
-            params.ceoAct="Half";
-        case 3 % Zero
             params.ceoAct="Zero";
-        case 4 % off
-            params.ceoAct="Off";
+            % case 3 % Zero
+            %     params.ceoAct="Half";
+            % case 4 % off
+            %     params.ceoAct="Off";
     end
     firm.ceoAct=params.ceoAct;
     
@@ -215,6 +215,8 @@ firm.T=2;
 firm.minEqmT=params.minEqmT;
 firm.maxEqmT=params.maxEqmT;
 firm.gamma=params.gamma;
+firm.ceoStartT=params.ceoStartT;
+firm.learningRate=params.learningRate;
 firm.globalsearch=params.globalsearch;
 firm.e=params.e;
 firm.n=params.n;
@@ -238,10 +240,10 @@ else
     GPgraph=digraph(G);
 end
 
-% Network density 
-PC=(n*(n-1))./2; 
-EC=height(GPgraph.Edges); 
-firm.gDensity=EC/PC; 
+% Network density
+PC=(n*(n-1))./2;
+EC=height(GPgraph.Edges);
+firm.gDensity=EC/PC;
 
 % Average path length
 % We calculate each path length separately for each
@@ -267,9 +269,9 @@ for ii = 1:nrsubgraphs
     end
     % Renormalize weights to sum to one
     weightfactor=weightfactor./sum(weightfactor);
-   
+    
 end
-% Average path length is given by the sum of distances divided by the 
+% Average path length is given by the sum of distances divided by the
 firm.gAvgPathLength=((1./nrEdges).*weightfactor)*sumDist';
 firm.gNrComponents=nrsubgraphs;
 
@@ -277,10 +279,10 @@ firm.gNrComponents=nrsubgraphs;
 firm.gMaxEV=max(eig(G));
 
 % Clustering & average Degree
-deg = sum(G, 2); %Determine node degrees 
+deg = sum(G, 2); %Determine node degrees
 cn = diag(G*triu(G)*G); %Number of triangles for each node
-%The local clustering coefficient of each node 
-c = zeros(size(deg)); 
+%The local clustering coefficient of each node
+c = zeros(size(deg));
 c(deg > 1) = 2 * cn(deg > 1) ./ (deg(deg > 1).*(deg(deg > 1) - 1));
 firm.gAvgClustering=mean(c);
 firm.gAvgDegree=mean(deg);
