@@ -163,9 +163,9 @@ if params.ceoAct=="Random" % Shuffle CEO Type
     type=unidrnd(2,1,1);
     switch type
         case 1 % Double
-            params.ceoAct="Double";
+            params.ceoAct="Embed";
         case 2 % Half
-            params.ceoAct="Zero";
+            params.ceoAct="Decouple";
             % case 3 % Zero
             %     params.ceoAct="Half";
             % case 4 % off

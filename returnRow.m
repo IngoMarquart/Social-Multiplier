@@ -46,6 +46,8 @@ gAvgClustering=firm.gAvgClustering;
 gAvgDegree=firm.gAvgDegree;
 gRadius=firm.gRadius;
 gDiameter=firm.gDiameter;
+ceoStartT=firm.ceoStartT;
+learningRate=firm.learningRate;
 gNrComponents=firm.gNrComponents;
 if firm.gMethod=="Task" || firm.gMethod=="TaskAssembly"
     gMethod=firm.gMethod;
@@ -76,5 +78,5 @@ else
     gPr=firm.gPr;
     end
 end
-row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType);
+row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType,ceoStartT,learningRate);
 end

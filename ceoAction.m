@@ -10,13 +10,13 @@ function firm = ceoAction(firm)
 % Act whenever half time point is reached
 if firm.T>=firm.ceoStartT
     switch firm.ceoAct
-        case "Full"
+        case "Embed"
             firm.e=100000;
             firm.startCeoAct=firm.ceoAct;
         case "Half"
             firm.e=firm.e/2;
             firm.startCeoAct=firm.ceoAct;
-        case "Zero"
+        case "Decouple"
             firm.e=0;
             firm.startCeoAct=firm.ceoAct;
     end

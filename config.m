@@ -8,7 +8,7 @@ graphIt = 0;
 % "AVGNW" graphs the attention network averaged over all periods
 % "SM" graphs x-theta averages over time periods
 toGraph = "NW";
-saveIt = 0; % Save simulation results to a new folder
+saveIt = 1; % Save simulation results to a new folder
 
 %% Dynamics
 maxT = 150; % Time periods to run
@@ -17,7 +17,7 @@ maxCellLength=100000; % Split simulation runs into blocks for memory
 % Whether or not the CEO doubles or halves e at T/2
 % Random, Double, Half, Zero, Off
 ceoAct="Random";
-ceoActStartT=[1,3,10,20,50];
+ceoActStartT=[2,4,15,50];
 learningRate=0.25;
 
 %% Skew handling
@@ -57,9 +57,9 @@ ShufflePositions="Random";
 % eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
 % consList=[-1,-0.5,0,0.5,1];
 % Archetypes Dynamics
-nList=[40,60];
-mList=[1:2000];
-eList=[0,0.5,1,2];
+nList=[40];
+mList=[1];
+eList=[0,0.5,1];
 consList=[-1,0,1];
 % % Archetypes v
 % nList=[10,15,20];
@@ -67,20 +67,22 @@ consList=[-1,0,1];
 % eList=[0.5,1,5,10000];
 % consList=[-1,0,1];
 % % % Single firm
-nList = [10];
-mList = [4];
-eList = [1000];
-consList = [0];
+% nList = [10];
+% mList = [4];
+% eList = [1];
+% consList = [0];
 
 %% Type settings
 % Probabilities of climbers relative to slackers.
 % Simulation will check symmetrically for slackers
 % Archetypes
 PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
+PCscale=0.25:0.25:0.5; Wscale=[1/3];
+
 % State Space
 %PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
 % % % % Single firm
-PCscale=[0.5]; Wscale=1/4;
+% PCscale=[0.5]; Wscale=1/4;
 
 %% Theta settings
 % Archetypes
@@ -88,7 +90,7 @@ thetascale=[2,5];
 % State Space
 %thetascale = [2:0.5:7];
 % % % % Single firm
-thetascale=[2];
+% thetascale=[2];
 
 
 
