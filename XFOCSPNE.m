@@ -9,7 +9,7 @@
 %% 
 
 function x=XFOCSPNE(P,delta,theta,g)
-
+    theta=theta(:);
     % Create Laplacian matrix
     n=length(theta);
     DP=eye(n,n).*sum(P,2);

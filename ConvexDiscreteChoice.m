@@ -2,16 +2,16 @@
 % DiscreteChoice
 % Assuming that each actor picks only one peer, this function find the one
 % giving the most utility
-% @param: P_t_1 - Attention matrix of last time period
-% @param: g,delta - Embedding and scaling variable
+% @param: a_t_1 - Attention matrix of last time period
+% @param: e,delta - Embedding and scaling variable
 % @param: theta_i, theta - theta vector and theta of i
 % @param: Psi - Expected benefit function handle
 % @param: Choice - Vector given the indecies of valid peers (where connection in G exists)
 % @param: nrChoice - Number of choices
 % @return: util - Utility value
-% @return: p_i_star - Attention choice in the space of all n actors
+% @return: a_i_star - Attention choice in the space of all n actors
 %%
-function [util,p_i_star]=DiscreteChoice(P_t_1,g,delta,theta_i, theta, Psi,i,Choice,nrChoice, rationality)
+function [util,a_i_star]=ConvexDiscreteChoice(a_t_1,e,delta,theta_i, theta, Psi,i,Choice,nrChoice, rationality, conParam)
 
 theta=theta(:);
 n=length(theta);
@@ -20,7 +20,7 @@ ez=ones(n,1);
 
 % Default values
 util=0;
-p_i_star=zeros(n,1);
+a_i_star=zeros(n,1);
 
 % Iterate over choice sets
 for z = 1:nrChoice
@@ -28,19 +28,20 @@ for z = 1:nrChoice
     prest=zeros(nrChoice,1);
     prest(z)=1;
     % Recover p_i from p restriction
-    p_i = RecoverPi(prest, Choice, n);
-    ebar=g/(g+1);
+    a_i = RecoverPi(prest, Choice, n);
+    ebar=e/(e+1);
     % Create new P matrix
-    P=P_t_1;
+    a=a_t_1;
     % Assemble new P
-    P(i,:)=p_i';
+    a(i,:)=a_i';
     % Get expected x
-    x=XFOCSPNE(P_t_1,1,theta,g);
-
+    x=XFOCSPNE(a_t_1,1,theta,e);
+    
     % Calculate boundedly rational or rational choice
     x=(1-rationality).*theta+rationality.*x;
     %x(i)=x_i;
-    x(i)=(1-ebar).*theta_i+ebar.*p_i'*x;
+    x(i)=(1-ebar).*theta_i+ebar.*a_i'*x;
+    
     % Private utility, positive part
     PrivUtil=(x(i)-theta_i)^2;
     % Calculate a benefit vector for each potential peer
@@ -48,15 +49,25 @@ for z = 1:nrChoice
     % Make sure no connection to oneself
     PsiVec(i)=-100;
     % Expected benefit
-    CBenUtil=p_i'*(PsiVec);
+    if sum(a_i>0) > 10
+        CBenUtil=0;
+    elseif conParam==0
+        %    CBenUtil=cesutil(a_i,1);
+        CBenUtil=((a_i'.^(1))*(PsiVec));
+    else
+        %CBenUtil=cesutil(a_i,conParam);
+        CBenUtil=((a_i'.^(conParam))*(PsiVec));
+    end
+    
     % Expected non-alignment cost
-    ConfUtil=p_i'*((x(i).*ez-x).*(x(i).*ez-x));
+    ConfUtil=a_i'*((x(i).*ez-x).*(x(i).*ez-x));
     % Full utility
-    NewUtil=-PrivUtil+g.*CBenUtil-g.*ConfUtil;
+    NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
+    
     % If this choice is better than the previous one, do this
     if NewUtil > util
-       p_i_star=p_i;
-       util=NewUtil;
+        a_i_star=a_i;
+        util=NewUtil;
     end
 end
 

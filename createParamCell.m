@@ -5,7 +5,7 @@
 % @param: paramsDefault - starting struct of parameters that are constant
 % @return: pCell - Cell of params structures over which to loop
 %%
-function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric)
+function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric,conUtil,conParam,ceoActStartT)
 
 %% Create a cell array of type vectors
 gammaVec={};
@@ -54,6 +54,7 @@ for m=mList
         for e=eList
             for cons=consList
                 for theta=thetaVec
+                    for ceoStartT=ceoActStartT
                     for gamma=gammaVec
                         params=paramsDefault;
                         params.n=n;
@@ -62,8 +63,34 @@ for m=mList
                         params.gamma=gamma{:};
                         params.thetaD=theta{:};
                         params.cons=cons;
-                        pCell{i}=params;
-                        i=i+1;
+                        params.ceoStartT=ceoStartT;
+                        params.conParam=conParam;
+                        % Check which concavity to use for social benefit
+                        if conUtil == 1 % Concave Benefit
+                            params.conUtil=1;
+                            pCell{i}=params;
+                            i=i+1;
+                        elseif conUtil == 0 % Linear Benefit
+                            params.conUtil=0;
+                            pCell{i}=params;
+                            i=i+1;
+                        else % Both and Convex benefit
+                            params.conUtil=1;
+                            pCell{i}=params;
+                            i=i+1;
+                            params.conUtil=0;
+                            params.conParam=0;
+                            pCell{i}=params;
+                            i=i+1;
+                            
+                            params.conUtil=1;
+                            params.conParam=1./conParam;
+                            pCell{i}=params;
+                            i=i+1;
+                            
+                           
+                        end
+                    end
                     end
                 end
             end

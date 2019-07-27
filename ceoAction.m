@@ -6,28 +6,23 @@
 % @return: firm - a firm
 %%
 function firm = ceoAction(firm)
-if firm.T>2
-    window=1;
-    dr=1;
-    diffM=firm.diffM(firm.T-1);
-    ebar=firm.eMat(firm.T-1)./(firm.eMat(firm.T-1)+1);
-    
-    
-    diffM=firm.diffM;
-    if dr==1
-    diffM(1)=diffM(2);
-     if firm.T<=window
-         diffMIndicator=mean(diffM(1:firm.T-1));
-     else
-         diffMIndicator=mean(diffM((firm.T-window):(firm.T-1)));
-     end
-    else
-    diffMIndicator=diffM(firm.T-1)-diffM(firm.T-2);
+
+% Act whenever half time point is reached
+if firm.T>=firm.ceoStartT
+    switch firm.ceoAct
+        case "Embed"
+            firm.e=100000;
+            firm.startCeoAct=firm.ceoAct;
+        case "Half"
+            firm.e=firm.e/2;
+            firm.startCeoAct=firm.ceoAct;
+        case "Decouple"
+            firm.e=0;
+            firm.startCeoAct=firm.ceoAct;
     end
+    % We allow for only one CEO action
     
-    new_ebar=min(0.99,max(0,(ebar)+(min(ebar,(1-ebar))./2)*sign(diffMIndicator)));
-    firm.eMat(firm.T)=-new_ebar./(new_ebar-1);
-    %firm.eMat(firm.T)=max(0.01,(firm.eMat(firm.T-1)+((1-ebar)./1.01)*sign(diffMIndicator)));
+    firm.ceoAct="Off";
 end
 
 
