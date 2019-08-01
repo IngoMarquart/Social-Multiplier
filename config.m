@@ -11,13 +11,13 @@ toGraph = "NW";
 saveIt = 1; % Save simulation results to a new folder
 
 %% Dynamics
-maxT = 150; % Time periods to run
+maxT = 100; % Time periods to run
 avgOverT = 0; % Average results over all T - uncertainty sample
 maxCellLength=100000; % Split simulation runs into blocks for memory
 % Whether or not the CEO doubles or halves e at T/2
 % Random, Double, Half, Zero, Off
 ceoAct="Random";
-ceoActStartT=[2,4,15,50];
+ceoActStartT=[2,3,4,10,15,50,100];
 learningRate=0.25;
 
 %% Skew handling
@@ -42,7 +42,7 @@ gMethod="Full";
 %% Shuffle positions:
 % Essentially determines if G is independent of theta by shuffling
 % Options: Random, Mu, Theta, Shuffled(default)
-ShufflePositions="Random";
+ShufflePositions="Shuffled";
 
 
 %% List of parameters to run
@@ -58,8 +58,8 @@ ShufflePositions="Random";
 % consList=[-1,-0.5,0,0.5,1];
 % Archetypes Dynamics
 nList=[40];
-mList=[1];
-eList=[0,0.5,1];
+mList=[1:100];
+eList=[1];
 consList=[-1,0,1];
 % % Archetypes v
 % nList=[10,15,20];

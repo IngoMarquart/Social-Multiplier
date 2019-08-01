@@ -160,16 +160,16 @@ end
 %% Generate CEO type
 
 if params.ceoAct=="Random" % Shuffle CEO Type
-    type=unidrnd(2,1,1);
+    type=unidrnd(3,1,1);
     switch type
-        case 1 % Double
+        case 1 % Embed
             params.ceoAct="Embed";
-        case 2 % Half
+        case 2 % Embed
             params.ceoAct="Decouple";
-            % case 3 % Zero
-            %     params.ceoAct="Half";
-            % case 4 % off
-            %     params.ceoAct="Off";
+        %case 3 % Off
+       %     params.ceoAct="Off";
+        case 3 % lowEmbed
+            params.ceoAct="LowEmbed";
     end
     firm.ceoAct=params.ceoAct;
     

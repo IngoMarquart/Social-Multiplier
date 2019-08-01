@@ -13,8 +13,8 @@ if firm.T>=firm.ceoStartT
         case "Embed"
             firm.e=100000;
             firm.startCeoAct=firm.ceoAct;
-        case "Half"
-            firm.e=firm.e/2;
+        case "LowEmbed"
+            firm.e=2;
             firm.startCeoAct=firm.ceoAct;
         case "Decouple"
             firm.e=0;
