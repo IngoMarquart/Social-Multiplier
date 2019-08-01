@@ -1,22 +1,26 @@
-# SocArch
+# What raises the social multiplier? Embedding versus decoupling as formal design choices shaping informal networks
 
-"Shaping the social architecture of a start-up: What raises the social multiplier?" 
-Author: Ingo Marquarts, Nghi Truong, Matthew Bothner, Richard Haynes
+Authors: Ingo Marquarts, Nghi Truong, Richard Haynes, Matthew Bothner
 
-This simulation calculates the subgame perfect Nash equilibrum of the game studied in the paper.
-mainSPNE.m is the start script, which sets up to generate a large dataset of such equilibria.
-It alls SimulateAttSubgame.m with different random seeds and parameters.
+Github repository for the paper
 
-The variable names do not reflect current changes in the paper.
+## Abstract
 
-It was attempted to refactor all functionality into its own matlab .m files. This means the natural way to read this code is by starting in mainSPNE.m, for the grouped runs, and then SimulateAttSubgame.m, for each single run of a firm.
+What design-choice should a newly-appointed CEO choose to shape informal networks among her employees, so that their performance is better than if they worked in isolation? What formal intervention, in other words, should she pursue to raise the social multiplier—that part of her organization’s productivity brought forward by social influence? To address this question, we propose an agent-based network model that contrasts two opposing design-choices: embedding and decoupling. Embedding is a formal intervention geared towards raising productivity by increasing peer monitoring and thus ratcheting up social pressure. Conversely, decoupling seeks to curtail social influence and thus reduce distraction. Our analyses reveal four main patterns. First, decoupling is preferable to embedding for an organization whose skill-level distribution is left-skewed and whose employees are more likely to self-enhance (by fixating on less-skilled colleagues) than to self-improve (by eying those with more skill). Second, attempts to rewire informal networks are increasingly irrelevant under what Blau (1977) termed positive consolidation: when skill is concentrated more among self-improvers than among self-enhancers. Third, the mixture of embedding and negative consolidation can catalyze the emergence of two anomalous types of opinion leaders: corrupted role-models—unexpectedly poised to destroy an otherwise well-designed organization; and inspiring underdogs—surprisingly capable of revitalizing an organization otherwise derailed by obsessive status seeking. Fourth, social multipliers are rapidly self-reinforcing, imposing pressure on social planners to act quickly. Our results cast new light on the emergence of attention networks and carry implications for research at the intersection of formal and informal structure.
 
-# Optimization algorithms
+# Readme
 
-Note how there are different ways to derive the equilibrium, global, local and discrete, in ascending order of speed. Global requires the matlab global optimization toolbox. It is robust, and finds the global optimum, but not fast enough to calculate the whole state space. 
 
-Local is faster, but we can not formally guarantee that the equilibrium wrt. to attention is unique. Tests indicate that the local optimization algorithm fails if n<10, thus a hard-coded fallback is included.
+This simulation calculates the subgame perfect Nash equilibrum of the game studied in the paper, under full and bounded rationality. 
 
-Both algorithms are run purely numerically without further inputs such as the Hessian. This is on purpose, as we want the simulation to validate our analytical results from first-order assumptions.
+Consider options in config.m to set up the simulation. Run it in main.m
 
-The discrete algorithm is very fast. It is based on results we derive in the model, in particular that peer choice is unique, leading to a simple linear algebra & decision problem. 
+Note the following points
+
+- For graphing, parfor loops in main.m should be disabled
+
+- For non-convex utility (v<1), the Matlab global optimization toolpackage is required, and will be used automatically
+
+- Non-convex utility is difficult to compute, so smaller samples are recommended. To reproduce the state space, set v=1.
+
+- Samples used in the paper are given as configuration settings. Please comment and uncomment accordingly in config.m, then run main.m
