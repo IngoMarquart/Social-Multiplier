@@ -52,10 +52,8 @@ for z = 1:nrChoice
     if sum(a_i>0) > 10
         CBenUtil=0;
     elseif conParam==0
-        %    CBenUtil=cesutil(a_i,1);
         CBenUtil=((a_i'.^(1))*(PsiVec));
     else
-        %CBenUtil=cesutil(a_i,conParam);
         CBenUtil=((a_i'.^(conParam))*(PsiVec));
     end
     

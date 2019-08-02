@@ -11,7 +11,6 @@ X=firm.xMat(:,firm.T);
 theta=firm.thetaMat(:,firm.T);
 identity=firm.muMat(:,firm.T);
 
-%% TODO fix here
 NrClimbers=length(identity(identity==1));
 NrWatchers=length(identity(identity==0));
 NrSlackers=length(identity(identity==-1));

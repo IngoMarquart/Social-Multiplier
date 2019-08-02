@@ -31,23 +31,14 @@ ConfUtil=a_i'*((x-x(i)).*(x-x(i)));
 %% Concave Social Benefit function
 % Calculate a benefit vector for each potential peer
 PsiVec = Psi(theta_i,theta);
+
 % Expected benefit
-% CBenUtil=(a.^(1/3))*(PsiVec.^(1/1)).^(3/2);
-
-
-%isoutil=@(r,rho) (r.^(1-rho))./(1-rho)*PsiVec;
-%exputility=@(r,rho) (1-exp(-(rho.*r)))*PsiVec;
-%cesutil=@(r,rho) ((r'.^(rho))*(PsiVec));
-
-
 if sum(a_i>0) > 10
     CBenUtil=0;
 elseif conParam==0
-%    CBenUtil=cesutil(a_i,1);
-CBenUtil=((a_i'.^(1))*(PsiVec));
+    CBenUtil=((a_i'.^(1))*(PsiVec));
 else
-%CBenUtil=cesutil(a_i,conParam);
-CBenUtil=((a_i'.^(conParam))*(PsiVec));
+    CBenUtil=((a_i'.^(conParam))*(PsiVec));
 end
 %% Full utility
 NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;

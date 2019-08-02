@@ -4,7 +4,6 @@
 %%
 % @param firm - a firm
 % @return firm - a firm
-% TODO: Fix optimization
 %%
 function firm = agentsAction(firm)
 
@@ -116,7 +115,7 @@ for t = 2:(firm.maxEqmT)
                 fnc = @(aiRest)concaveChoice(aiRest, prevAttention, theta, theta(i), firm.e, firm.psiSlacker, firm.rationality, firm.conParam, ChoiceCell{i},i);
             end
             %
-            %x = fmincon(fnc,aStart,A,b,Aeq,beq,lb,ub,[],options)';'nonlcon',@(x) nonLinConstraint(x,firm.maxDegree)
+      
             problem = createOptimProblem('fmincon', 'x0', curAiRest, 'objective', fnc, ...
                 'lb', lb, 'ub', ub, 'Aineq', A, 'bineq', b, 'options', options);
             [curAiRest, curUi] = run(gs, problem);
