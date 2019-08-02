@@ -3,21 +3,21 @@
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
 % Please disable all parfor loops in main.m
-graphIt = 0;
+graphIt = 1;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "SM" graphs x-theta averages over time periods
 toGraph = "NW";
 % This saves the results into the folder ../Datasave/
-saveIt = 1; % Save simulation results to a new folder
+saveIt = 0; % Save simulation results to a new folder
 
 %% Dynamics
 maxT = 1; % Time periods to run
 % Whether or not the CEO doubles or halves e at T/2
 % Random, Double, Half, Zero, Off
-ceoAct="Random";
+ceoAct="Off";
 % Times where the CEO intervenes
-ceoActStartT=[2,3,4,10,15,50,100];
+ceoActStartT=[1];
 % The learning Rate delta
 learningRate=0.25;
 

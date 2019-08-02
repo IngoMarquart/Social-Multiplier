@@ -63,8 +63,9 @@ for block=1:nrBlocks
     blockParamsCell=paramsCell(counter+1:endi);
     
     % for or parfor
+    % SET TO PARFOR FOR LARGE SAMPLE
     % Currently GRAPHING REQUIRES FOR
-    parfor i = 1:cellLength
+    for i = 1:cellLength
         
         % Fill in parameters
         params = blockParamsCell{i};
@@ -131,7 +132,7 @@ toc
 %% Graphing functions
 % Graph the last firm if requested
 if graphIt == 1
-    graphFirm=graphFirm{1};
+    %graphFirm=graphFirm{1};
     if toGraph == "NW"
         GraphNetwork(graphFirm);
     elseif toGraph == "SM"
