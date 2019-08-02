@@ -1,6 +1,5 @@
 # What raises the social multiplier? Embedding versus decoupling as formal design choices shaping informal networks
 
-Authors: Ingo Marquarts, Nghi Truong, Richard Haynes, Matthew Bothner
 
 Github repository for the paper
 
