@@ -7,19 +7,19 @@ graphIt = 1;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "SM" graphs x-theta averages over time periods
-toGraph = "NW";
+toGraph = "SM";
 % This saves the results into the folder ../Datasave/
 saveIt = 0; % Save simulation results to a new folder
 
 %% Dynamics
-maxT = 1; % Time periods to run
+maxT = 50; % Time periods to run
 % Whether or not the CEO doubles or halves e at T/2
 % Random, Double, Half, Zero, Off
 ceoAct="Off";
 % Times where the CEO intervenes
 ceoActStartT=[1];
 % The learning Rate delta
-learningRate=0.25;
+learningRate=0.5;
 
 %% Skew handling
 % Symmetric handles whether the simulation runs checking
@@ -27,7 +27,7 @@ learningRate=0.25;
 % symmetric=1 checks both left+right skew and opposite C/S ratios
 % symmetric=0 checks only given C/S ratio and right skew
 % symmetric=-1 checks only given C/S ratio and left skew
-symmetric = 1;
+symmetric = 0;
 
 %% V Parameter
 % SETTING THIS TO 1 REQUIRES GLOBAL OPTIMIZATION TOOLPACKAGE
@@ -57,7 +57,7 @@ ShufflePositions="Shuffled";
 
 
 %% Single firm
- nList = [30]; % Number of workers
+ nList = [50]; % Number of workers
  mList = [4]; % Random Seeds / Iterations
  eList = [1]; % Embedding levels
  consList = [0]; % Consolidation levels
