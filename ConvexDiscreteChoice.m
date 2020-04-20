@@ -35,7 +35,7 @@ for z = 1:nrChoice
     % Assemble new P
     a(i,:)=a_i';
     % Get expected x
-    x=XFOCSPNE(a_t_1,1,theta,e);
+    x=XFOCSPNE(a_t_1,theta,e);
     
     % Calculate boundedly rational or rational choice
     x=(1-rationality).*theta+rationality.*x;

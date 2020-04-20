@@ -13,11 +13,16 @@ n = firm.n;
 theta = firm.thetaMat(:, firm.T);
 priorTheta = firm.thetaMat(:, firm.T-1);
 % Row of  prior outputs
-priorX = firms.xMat(:, firm.T-1);
+priorX = firm.xMat(:, firm.T-1);
 identity = firm.muMat(:, firm.T);
 % Realize current embedding
 e=firm.e;
-
+% Set end point
+if firm.rationality==0
+    endpoint=2;
+else
+    endpoint=firm.maxEqmT;
+end
 %% Generate choice sets
 ChoiceCell = {};
 nrChoices = zeros(1, n);
@@ -30,29 +35,21 @@ Conb = {};
 
 %% Create Convergence matrices
 % Saving
-attention = cell(1, firm.maxEqmT);
+attention = cell(1, endpoint);
 % In this we will save the X-values
-output = repmat(theta, 1, firm.maxEqmT);
+output = repmat(theta, 1, endpoint);
 % Initialize p_matrix
 attention{1} = zeros(n, n);
 % Initialize u_matrix
-utility = zeros(n, firm.maxEqmT);
+utility = zeros(n, endpoint);
 % Variable for convergence behavior
 utilityVec = zeros(n, 1);
-% Initital convergence difference
-xdif = 100;
 
-% Set up global maximizer if needed
-options = optimset('Algorithm', 'sqp', 'Display', 'none', 'UseParallel', false);
-options = optimoptions('fmincon' ,'Algorithm', 'sqp', 'Display', 'none', 'UseParallel', false);
-%options = optimoptions('fmincon' ,'Algorithm', 'sqp', 'Display', 'none', 'UseParallel', true);
-if firm.conUtil ~= 0
-    gs = GlobalSearch('Display', 'off', 'StartPointsToRun', 'all');
-else
-    gs=0;
-end
+
+
 % Loop over time periods until convergence
-for t = 2:(firm.maxEqmT)
+
+for t = 2:(endpoint)
     
     % Initialize cell content for period t
     attention{t} = zeros(n, n);
@@ -73,9 +70,8 @@ for t = 2:(firm.maxEqmT)
         %% Initialize actor level stuff
         curUi = 0;
         % Theta
-        theta_i = theta(i);
         % Get theta representation
-        thetaRep = firm.thetaRep(i, :)';
+        thetaRep = theta;
         % Initialize a_i vector
         prevAi = prevAttention(i, :)';
         curAi = prevAttention(i, :)';
@@ -84,11 +80,11 @@ for t = 2:(firm.maxEqmT)
         % Using the current representation of theta by agent i
         % Set up objective function
         if identity(i) == 1% Climber
-            [curUi, curAi] = ConvexDiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
+            [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
         elseif identity(i) == 0% Watcher
-            [curUi, curAi] = ConvexDiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
+            [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
         else % Slacker
-            [curUi, curAi] = ConvexDiscreteChoice(prevAttention, firm.e, 1, theta(i), thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
+            [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
         end
         
         % Convention is utility is set to negative, same as fmincon
@@ -145,10 +141,15 @@ for t = 2:(firm.maxEqmT)
         curAttention(i, :) = curAi';
     end
     
+    
     % curAttention now has all period best-replies
-    % calculate the  current x
-    % based on real theta
-    x = XFOCSPNE(curAttention, 1, theta, firm.e);
+    % PFT Version: x_t_1 for j != i
+    x_pft=XFOCPFT(priorX,curAttention,theta,e);
+    % FOC Version: x anticipated based on a_t_1
+    x_rat=XFOCSPNE(curAttention,theta,e);
+    % Calculate boundedly rational or rational choice
+    % X corresponds to x(t-1) or x(t)
+    x=(1-firm.rationality).*x_pft+firm.rationality.*x_rat;
     
     % Save values to matrices
     output(:, t) = x;

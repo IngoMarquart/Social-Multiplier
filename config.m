@@ -3,13 +3,13 @@
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
 % Please disable all parfor loops in main.m
-graphIt = 1;
+graphIt = 0;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "SM" graphs x-theta averages over time periods
 toGraph = "SM";
 % This saves the results into the folder ../Datasave/
-saveIt = 0; % Save simulation results to a new folder
+saveIt = 1; % Save simulation results to a new folder
 
 %% Dynamics
 maxT = 50; % Time periods to run
@@ -18,8 +18,7 @@ maxT = 50; % Time periods to run
 ceoAct="Off";
 % Times where the CEO intervenes
 ceoActStartT=[1];
-% The learning Rate delta
-learningRate=0.5;
+
 
 %% Skew handling
 % Symmetric handles whether the simulation runs checking
@@ -27,7 +26,7 @@ learningRate=0.5;
 % symmetric=1 checks both left+right skew and opposite C/S ratios
 % symmetric=0 checks only given C/S ratio and right skew
 % symmetric=-1 checks only given C/S ratio and left skew
-symmetric = 0;
+symmetric = 1;
 
 %% V Parameter
 % SETTING THIS TO 1 REQUIRES GLOBAL OPTIMIZATION TOOLPACKAGE
@@ -57,13 +56,14 @@ ShufflePositions="Shuffled";
 
 
 %% Single firm
- nList = [50]; % Number of workers
- mList = [4]; % Random Seeds / Iterations
- eList = [1]; % Embedding levels
- consList = [0]; % Consolidation levels
- PCscale=[0.5]; Wscale=1/4; % Ratio of Improvers/Enhancers and P(Assessors)
- thetascale=[2]; % Parameters of Beta Distribution
-
+%  nList = [6]; % Number of workers
+%  mList = [4]; % Random Seeds / Iterations
+%  eList = [0.99]; % Embedding levels
+%  consList = [0]; % Consolidation levels
+%  PCscale=[0.5]; Wscale=1/4; % Ratio of Improvers/Enhancers and P(Assessors)
+%  thetascale=[2]; % Parameters of Beta Distribution
+% % The learning Rate delta
+% learningRates=[0,0.2,0.5,0.7,1];
 
 %% State Space
 %nList=[50:10:80];
@@ -75,12 +75,13 @@ ShufflePositions="Shuffled";
 
 
 %% Archetypes
-% nList=[15:5:70];
-% mList=[1:30];
-% eList=[0.10,  0.30,  0.50,  0.70, 0.90, 1.00, 5.00, 50,100,500];
-% consList=[-1,-0.5,0,0.5,1];
-% PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
-%thetascale=[2,5];
+nList=[20:10:70];
+mList=[1:60];
+eList=[0.01,  0.1,  0.25,  0.5, 0.75, 0.9, 0.99];
+consList=[-1,-0.5,0,0.5,1];
+PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
+thetascale=[2,5];
+learningRates=[0,0.1,0.2,0.5,0.7,0.9,1];
 
 
 %% Archetypes Dynamics
@@ -117,5 +118,5 @@ paramsDefault.pn = 0; % P parameter for G network. Set to 0 for full G!
 paramsDefault.mn = 0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
 paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 paramsDefault.shufflePositions=ShufflePositions;
-paramsDefault.learningRate=learningRate;
+%paramsDefault.learningRate=learningRate;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%

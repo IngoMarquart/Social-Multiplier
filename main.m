@@ -64,7 +64,7 @@ config;
 
 
 %% Create a cell array of parameters to run
-paramsCell = createParamCell(PCscale, Wscale, thetascale, mList, nList, eList, consList, paramsDefault, symmetric, conUtil, conParam,ceoActStartT);
+paramsCell = createParamCell(PCscale, Wscale, thetascale, mList, nList, eList, consList, paramsDefault, symmetric, conUtil, conParam,ceoActStartT,learningRates);
 % Nr of simulations
 NrFirms = length(paramsCell);
 
@@ -82,12 +82,12 @@ resultCell = {NrFirms};
 % If graphing, we want to hold an entire firm object in memory.
 graphFirm=cell(1,1);
 
-%% Main loop over firms
-disp(['Preparing for ', num2str(NrSims), ' firms over ', num2str(maxT), ' periods for a total of ', num2str(maxT * NrSims), ' runs.'])
 
 
 % Nr of simulation runs amounts to T*NrFirms
 NrSims=maxT * NrFirms;
+%% Main loop over firms
+disp(['Preparing for ', num2str(NrFirms), ' firms over ', num2str(maxT), ' periods for a total of ', num2str(NrSims), ' runs.'])
 
 tic
 
@@ -137,7 +137,7 @@ for block=1:nrBlocks
     % for or parfor
     % SET TO PARFOR FOR LARGE SAMPLE
     % Currently GRAPHING REQUIRES FOR
-    for i = 1:cellLength
+    parfor i = 1:cellLength
         
         % Fill in parameters
         params = blockParamsCell{i};
@@ -211,7 +211,7 @@ if graphIt == 1
         % Set first embedding to zero
         firm.eMat(1) = 0;
         % Normalize embedding
-        firm.eMat = firm.eMat ./ (1 + firm.eMat);
+        firm.eMat = firm.eMat;
         aggDiff=mean(firm.xMat)-mean(firm.thetaMat(:,1));
         tsMat = table(firm.avgTheta', firm.avgX');
         tsTheta=timeseries(firm.avgTheta(2:end)','name','AvgTheta');
@@ -236,7 +236,7 @@ if graphIt == 1
             firm=firm{1};
             Theta=[firm.avgTheta(2:end)'];
             X=[firm.avgX(2:end)'];
-            firm.eMat = firm.eMat ./ (1 + firm.eMat);
+            firm.eMat = firm.eMat;
             tsTheta=timeseries(Theta,'name','AvgTheta');
             tsX=timeseries(X,'name','AvgX');
             tsSM=timeseries(X-Theta(1),'name','SM');

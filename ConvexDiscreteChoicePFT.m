@@ -11,7 +11,7 @@
 % @return: util - Utility value
 % @return: a_i_star - Attention choice in the space of all n actors
 %%
-function [util,a_i_star]=ConvexDiscreteChoicePFT(a_t_1,x_t_1,e,theta_i, theta, Psi,i,Choice,nrChoice, rationality, conParam)
+function [util,a_i_star]=ConvexDiscreteChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam)
 
 theta=theta(:);
 n=length(theta);
@@ -29,24 +29,30 @@ for z = 1:nrChoice
     prest(z)=1;
     % Recover p_i from p restriction
     a_i = RecoverPi(prest, Choice, n);
-    ebar=e/(e+1);
     % Create new P matrix
     a=a_t_1;
     % Assemble new P
     a(i,:)=a_i';
     % Get expected x
-    x_pft=XFOCPFT(x_t_1,a,theta,e);
-    x_rat=XFOCSPNE(a,theta,e)
+    
+    % PFT Version: x_t_1 for j != i
+    x_pft=x_t_1;
+    x_pft_foc=XFOCPFT(x_t_1,a,theta,e);
+    x_pft(i)=x_pft_foc(i);
+    % FOC Version: x anticipated based on a_t_1
+    x_rat=XFOCSPNE(a,theta,e);
     
     % Calculate boundedly rational or rational choice
-    x=(1-x_pft).*theta+rationality.*x_rat;
+    % X corresponds to x(t-1) or x(t)
+    x=(1-rationality).*x_pft+rationality.*x_rat;
+    
     %x(i)=x_i;
-    x(i)=(1-ebar).*theta_i+ebar.*a_i'*x;
+    %x(i)=(1-ebar).*theta_i+ebar.*a_i'*x;
     
     % Private utility, positive part
-    PrivUtil=(x(i)-theta_i)^2;
+    PrivUtil=(x(i)-theta(i))^2;
     % Calculate a benefit vector for each potential peer
-    PsiVec = Psi(theta_i,theta);
+    PsiVec = Psi(theta(i),theta);
     % Make sure no connection to oneself
     PsiVec(i)=-100;
     % Expected benefit
@@ -61,7 +67,7 @@ for z = 1:nrChoice
     % Expected non-alignment cost
     ConfUtil=a_i'*((x(i).*ez-x).*(x(i).*ez-x));
     % Full utility
-    NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
+    NewUtil=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
     
     % If this choice is better than the previous one, do this
     if NewUtil > util

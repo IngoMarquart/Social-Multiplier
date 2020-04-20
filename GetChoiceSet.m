@@ -4,7 +4,7 @@
 % @param: G,n - G network of n actors
 % @return: ChoiceCell - n-dimensional cell containing vectors detailing the indecies of neighbors of i
 % @return: NrChoices - number of choices for actor i
-%% 
+%%
 
 function [ChoiceCell, NrChoices]=GetChoiceSet(G,n)
 

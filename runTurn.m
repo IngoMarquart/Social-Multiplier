@@ -22,7 +22,7 @@ if firm.e>=1.0000e+14
     firm.e=1.0000e+14;
 end
 %% Agents run
-firm = agentsAction(firm);
+firm = agentsActionPFT(firm);
 
 %% Post-turn transformation
 firm= postTransform(firm);
