@@ -197,7 +197,13 @@ firm.uMat = zeros(params.n,params.maxT);
 %% Populate outcome-level variables
 firm.diffM=zeros(1,params.maxT);
 firm.SM=ones(1,params.maxT);
-firm.varSM=zeros(1,params.maxT);
+firm.sumX=zeros(1,params.maxT);
+firm.maxX=zeros(1,params.maxT);
+firm.minX=zeros(1,params.maxT);
+firm.maxTheta=zeros(1,params.maxT);
+firm.minTheta=zeros(1,params.maxT);
+firm.varX=zeros(1,params.maxT);
+firm.varTheta=zeros(1,params.maxT);
 firm.maxDiff=zeros(1,params.maxT);
 firm.minDiff=zeros(1,params.maxT);
 firm.skew=repmat(skewness(theta),1,params.maxT);

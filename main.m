@@ -21,9 +21,9 @@
 %   over maxT time periods.
 %   Results from each time period t are saved as a row in tableToFill.
 %   All these T rows for each firm are then saved in resultCell. This is
-%   necessary to run firms in parallel. 
+%   necessary to run firms in parallel.
 %   Therefore, resultCell{i} holds all maxT
-%   results for firm i. 
+%   results for firm i.
 %   After the simulation block, the cell is reduced (syncronously) to a
 %   table called mainTable. This is the final return object.
 % 3. Reduction into mainTable
@@ -110,7 +110,7 @@ nrBlocks=ceil(NrFirms/maxCellLength);
 % This is because of how we reduce to a table (see below)
 counterStartFirm=0;
 
-% We now run each block of firms separately. 
+% We now run each block of firms separately.
 % Our counting variable scheme is essentially
 for block=1:nrBlocks
     % Create result cell for block
@@ -120,7 +120,7 @@ for block=1:nrBlocks
     % In which case the length of this block is just
     % maxCellLength=endi-counter
     cellLength=counterEndFirm-counterStartFirm;
-    % However, the last block may be partial. There may be less than 
+    % However, the last block may be partial. There may be less than
     % maxCellLength firms to run.
     if counterEndFirm> NrSims/maxT
         counterEndFirm=ceil(NrSims/maxT);
@@ -169,11 +169,13 @@ for block=1:nrBlocks
             graphFirm = firm;
         end
         
-        % Rough progress display
-        %if  mod(i,(floor(NrSims*0.1)))==0
-        %    disp(['Iteration m=',num2str(params.m),', n=',num2str(params.n),', e=',num2str(params.e),', cons=',num2str(params.cons),', theta=',num2str(params.thetaD),', gamma=',num2str(params.gamma)])
-        %end
+        
     end
+    
+    % Rough progress display
+    disp(['Finished Iteration Block start=',num2str(counterStartFirm),', end=',num2str(counterEndFirm),' in block ',num2str(block),'/',num2str(nrBlocks)])
+    
+    
     %% Create resulting Table
     % After finishing each block, we reduce resultCell into a table
     % First, concat all results from current block

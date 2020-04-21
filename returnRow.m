@@ -12,13 +12,18 @@ e = firm.eMat(T);
 m = firm.m;
 diffM = firm.diffM(T);
 SM = firm.SM(T);
-expSM = firm.expSM(T);
 avgX = firm.avgX(T);
 avgTheta = firm.avgTheta(T);
-varSM = firm.varSM(T);
 rationality = firm.rationality;
 maxDiff = firm.maxDiff(T);
 minDiff = firm.minDiff(T);
+sumX=firm.sumX;
+maxX=firm.maxX;
+minX=firm.minX;
+maxTheta=firm.maxTheta;
+minTheta=firm.minTheta;
+varX=firm.varX;
+varTheta=firm.varTheta;
 thetaRange = firm.thetaRange;
 realSkew = firm.skew(T);
 realCons = firm.cons(T);
@@ -67,16 +72,19 @@ else
     gModularity=0;
     gLinks=0;
     gAssembly=0;
-        gMn=0;
+    gMn=0;
     gMr=0;
     gPn=0;
     gPr=0;
     if firm.gMethod=="JR"
-    gMn=firm.gMn;
-    gMr=firm.gMr;
-    gPn=firm.gPn;
-    gPr=firm.gPr;
+        gMn=firm.gMn;
+        gMr=firm.gMr;
+        gPn=firm.gPn;
+        gPr=firm.gPr;
     end
 end
-row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, expSM, SM, varSM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType,ceoStartT,learningRate);
+if firm.gMethod == "Full"
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType,ceoStartT,learningRate);
+else
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType,ceoStartT,learningRate);
 end

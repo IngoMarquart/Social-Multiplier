@@ -40,11 +40,15 @@ for z = 1:nrChoice
     x_pft_foc=XFOCPFT(x_t_1,a,theta,e);
     x_pft(i)=x_pft_foc(i);
     % FOC Version: x anticipated based on a_t_1
+    if rationality > 0
     x_rat=XFOCSPNE(a,theta,e);
-    
+        x=(1-rationality).*x_pft+rationality.*x_rat;
+
+    else
+       x=x_pft; 
+    end
     % Calculate boundedly rational or rational choice
     % X corresponds to x(t-1) or x(t)
-    x=(1-rationality).*x_pft+rationality.*x_rat;
     
     %x(i)=x_i;
     %x(i)=(1-ebar).*theta_i+ebar.*a_i'*x;

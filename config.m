@@ -56,7 +56,7 @@ ShufflePositions="Shuffled";
 
 
 %% Single firm
-%  nList = [6]; % Number of workers
+%  nList = [50]; % Number of workers
 %  mList = [4]; % Random Seeds / Iterations
 %  eList = [0.99]; % Embedding levels
 %  consList = [0]; % Consolidation levels
@@ -75,13 +75,13 @@ ShufflePositions="Shuffled";
 
 
 %% Archetypes
-nList=[20:10:70];
+nList=[20:10:50];
 mList=[1:60];
 eList=[0.01,  0.1,  0.25,  0.5, 0.75, 0.9, 0.99];
 consList=[-1,-0.5,0,0.5,1];
 PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
 thetascale=[2,5];
-learningRates=[0,0.1,0.2,0.5,0.7,0.9,1];
+learningRates=[0,0.2,0.5,0.8,1];
 
 
 %% Archetypes Dynamics
@@ -104,7 +104,7 @@ learningRates=[0,0.1,0.2,0.5,0.7,0.9,1];
 
 
 %% Baseline parameters
-maxCellLength=100000; % Split simulation runs into blocks for memory
+maxCellLength=10000; % Split simulation runs into blocks for memory
 avgOverT = 0; % Average results over all T - uncertainty sample
 paramsDefault.gMethod=gMethod;
 paramsDefault.maxT = maxT; % Time periods for the company to run

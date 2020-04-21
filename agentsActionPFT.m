@@ -11,7 +11,7 @@ function firm = agentsActionPFT(firm)
 n = firm.n;
 % Row of thetas and prior thetas
 theta = firm.thetaMat(:, firm.T);
-priorTheta = firm.thetaMat(:, firm.T-1);
+%priorTheta = firm.thetaMat(:, firm.T-1);
 % Row of  prior outputs
 priorX = firm.xMat(:, firm.T-1);
 identity = firm.muMat(:, firm.T);
@@ -146,37 +146,42 @@ for t = 2:(endpoint)
     % PFT Version: x_t_1 for j != i
     x_pft=XFOCPFT(priorX,curAttention,theta,e);
     % FOC Version: x anticipated based on a_t_1
-    x_rat=XFOCSPNE(curAttention,theta,e);
     % Calculate boundedly rational or rational choice
     % X corresponds to x(t-1) or x(t)
-    x=(1-firm.rationality).*x_pft+firm.rationality.*x_rat;
-    
+    if firm.rationality > 0
+        x_rat=XFOCSPNE(a,theta,e);
+        x=(1-firm.rationality).*x_pft+firm.rationality.*x_rat;
+        
+    else
+        x=x_pft;
+    end
     % Save values to matrices
     output(:, t) = x;
     attention{t} = curAttention;
     utility(:, t) = utilityVec(:);
-    
-    % Check convergence. Fluctuations should be small enough, and the
-    % Simulation has run for many periods already
-    udif = abs(max(abs(utility(:, t) - utility(:, t - 1))));
-    xdif = abs(max(abs(output(:, t) - output(:, t - 1))));
-    pdif = abs(sum(sum(abs(curAttention - prevAttention))));
     finalt = t;
-    
-    %%% Uncomment "disp" to see convergence per iteration
-    
-    if (((pdif <= 1.0000e-5) && (udif <= 1.0000e-5) && (xdif <= 1.0000e-5)) && (t > firm.minEqmT))
-        %disp(['Finish on t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
-        break;
+    if firm.rationality > 0
+        % Check convergence. Fluctuations should be small enough, and the
+        % Simulation has run for many periods already
+        udif = abs(max(abs(utility(:, t) - utility(:, t - 1))));
+        xdif = abs(max(abs(output(:, t) - output(:, t - 1))));
+        pdif = abs(sum(sum(abs(curAttention - prevAttention))));
+        
+        
+        %%% Uncomment "disp" to see convergence per iteration
+        
+        if (((pdif <= 1.0000e-5) && (udif <= 1.0000e-5) && (xdif <= 1.0000e-5)) && (t > firm.minEqmT))
+            %disp(['Finish on t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
+            break;
+        end
+        
+        % If half-time is achieved and p values fluctuate only by tiny amounts,
+        % end the simulation
+        if ((abs(pdif) <= 1.0000e-6 * t) && (t >= endpoint / 2))
+            warning('Convergence achieved due to half-time');
+            break;
+        end
     end
-    
-    % If half-time is achieved and p values fluctuate only by tiny amounts,
-    % end the simulation
-    if ((abs(pdif) <= 1.0000e-6 * t) && (t >= firm.maxEqmT / 2))
-        warning('Convergence achieved due to half-time');
-        break;
-    end
-    
 end
 
 %% Update Firm
