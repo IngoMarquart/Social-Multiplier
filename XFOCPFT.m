@@ -13,16 +13,18 @@ theta=theta(:); % Make sure column vector
 x_t_1=x_t_1(:); % Make sure column vector
 
 % New utility
-%n=length(theta);
-%D=eye(n,n).*sum(A,2);
-%O=eye(n,n)-e.*D;
-%x=O*theta+e*A*x_t_1;
+n=length(theta);
+ebar=e./(1-e);
+D=eye(n,n).*sum(A,2);
+O=eye(n,n)+ebar.*D;
+F=theta+ebar*A*x_t_1;
+x=O\F;
 
 % Old utility
-n=length(theta);
-D=eye(n,n).*sum(A,2);
-O=eye(n,n)+e.*D;
-x=O\(theta+e.*A*x_t_1);
+% n=length(theta);
+% D=eye(n,n).*sum(A,2);
+% O=eye(n,n)+e.*D;
+% x=O\(theta+e.*A*x_t_1);
 %x=(eye(n,n)+e.*(eye(n,n).*sum(A,2)))\(theta+e.*A*x_t_1);
 
 

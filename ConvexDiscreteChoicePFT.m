@@ -67,10 +67,11 @@ for z = 1:nrChoice
     ConfUtil=a_i'*((x(i).*ez-x).*(x(i).*ez-x));
     
     % Full utility new model
-    %NewUtil=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
+    NewUtil=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
     
     % Full utility old model
-    NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
+    %NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
+    
     % If this choice is better than the previous one, do this
     if NewUtil > util
         a_i_star=a_i;
