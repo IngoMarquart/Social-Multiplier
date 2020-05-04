@@ -11,9 +11,19 @@
 function x=XFOCPFT(x_t_1,A,theta,e)
 theta=theta(:); % Make sure column vector
 x_t_1=x_t_1(:); % Make sure column vector
+
+% New utility
+%n=length(theta);
+%D=eye(n,n).*sum(A,2);
+%O=eye(n,n)-e.*D;
+%x=O*theta+e*A*x_t_1;
+
+% Old utility
 n=length(theta);
 D=eye(n,n).*sum(A,2);
-O=eye(n,n)-e.*D;
-x=O*theta+e*A*x_t_1;
+O=eye(n,n)+e.*D;
+x=O\(theta+e.*A*x_t_1);
+%x=(eye(n,n)+e.*(eye(n,n).*sum(A,2)))\(theta+e.*A*x_t_1);
+
 
 end

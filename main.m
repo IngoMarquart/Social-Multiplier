@@ -133,7 +133,6 @@ for block=1:nrBlocks
     % it with the loop counter only. Hence, here we slice off the
     % corresponding cellLength firms.
     blockParamsCell=paramsCell(counterStartFirm+1:counterEndFirm);
-    
     % for or parfor
     % SET TO PARFOR FOR LARGE SAMPLE
     % Currently GRAPHING REQUIRES FOR
@@ -213,7 +212,7 @@ if graphIt == 1
         % Set first embedding to zero
         firm.eMat(1) = 0;
         % Normalize embedding
-        firm.eMat = firm.eMat;
+        firm.eMat = firm.eMat./(1+firm.eMat);
         aggDiff=mean(firm.xMat)-mean(firm.thetaMat(:,1));
         tsMat = table(firm.avgTheta', firm.avgX');
         tsTheta=timeseries(firm.avgTheta(2:end)','name','AvgTheta');

@@ -12,7 +12,7 @@ toGraph = "SM";
 saveIt = 1; % Save simulation results to a new folder
 
 %% Dynamics
-maxT = 50; % Time periods to run
+maxT = 500; % Time periods to run
 % Whether or not the CEO doubles or halves e at T/2
 % Random, Double, Half, Zero, Off
 ceoAct="Off";
@@ -54,16 +54,16 @@ ShufflePositions="Shuffled";
 %% Per firm
 % comments and uncomment desired
 
-
-%% Single firm
-%  nList = [50]; % Number of workers
-%  mList = [4]; % Random Seeds / Iterations
-%  eList = [0.99]; % Embedding levels
-%  consList = [0]; % Consolidation levels
+% 
+% %% Single firm
+%  nList = [5]; % Number of workers
+%  mList = [5]; % Random Seeds / Iterations
+%  eList = [1000]; % Embedding levels
+%  consList = [-1]; % Consolidation levels
 %  PCscale=[0.5]; Wscale=1/4; % Ratio of Improvers/Enhancers and P(Assessors)
 %  thetascale=[2]; % Parameters of Beta Distribution
 % % The learning Rate delta
-% learningRates=[0,0.2,0.5,0.7,1];
+% learningRates=[0];
 
 %% State Space
 %nList=[50:10:80];
@@ -75,13 +75,15 @@ ShufflePositions="Shuffled";
 
 
 %% Archetypes
-nList=[20:10:50];
-mList=[1:60];
-eList=[0.01,  0.1,  0.25,  0.5, 0.75, 0.9, 0.99];
-consList=[-1,-0.5,0,0.5,1];
-PCscale=0.25:0.25:0.5; Wscale=[2/9,2/3];
+%nList=[20:10:40];
+nList=[40];
+mList=[1:40];
+%eList=[0.01,  0.1,  0.25,  0.5, 0.75, 0.9, 0.99];
+eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
+consList=[-1,0,1];
+PCscale=0.25:0.25:0.5; Wscale=[2/9]; % "2/3"
 thetascale=[2,5];
-learningRates=[0,0.2,0.5,0.8,1];
+learningRates=[0,0.01,0.05,0.1,0.2,0.35,0.5,0.8,1];
 
 
 %% Archetypes Dynamics

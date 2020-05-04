@@ -166,8 +166,8 @@ if params.ceoAct=="Random" % Shuffle CEO Type
             params.ceoAct="Embed";
         case 2 % Embed
             params.ceoAct="Decouple";
-        %case 3 % Off
-       %     params.ceoAct="Off";
+            %case 3 % Off
+            %     params.ceoAct="Off";
         case 3 % lowEmbed
             params.ceoAct="LowEmbed";
     end
@@ -198,6 +198,8 @@ firm.uMat = zeros(params.n,params.maxT);
 firm.diffM=zeros(1,params.maxT);
 firm.SM=ones(1,params.maxT);
 firm.sumX=zeros(1,params.maxT);
+firm.avgTheta=zeros(1,params.maxT);
+firm.avgX=zeros(1,params.maxT);
 firm.maxX=zeros(1,params.maxT);
 firm.minX=zeros(1,params.maxT);
 firm.maxTheta=zeros(1,params.maxT);

@@ -24,6 +24,7 @@ a_i_star=zeros(n,1);
 
 % Iterate over choice sets
 for z = 1:nrChoice
+    
     % Create a prest
     prest=zeros(nrChoice,1);
     prest(z)=1;
@@ -43,15 +44,9 @@ for z = 1:nrChoice
     if rationality > 0
     x_rat=XFOCSPNE(a,theta,e);
         x=(1-rationality).*x_pft+rationality.*x_rat;
-
     else
        x=x_pft; 
     end
-    % Calculate boundedly rational or rational choice
-    % X corresponds to x(t-1) or x(t)
-    
-    %x(i)=x_i;
-    %x(i)=(1-ebar).*theta_i+ebar.*a_i'*x;
     
     % Private utility, positive part
     PrivUtil=(x(i)-theta(i))^2;
@@ -70,9 +65,12 @@ for z = 1:nrChoice
     
     % Expected non-alignment cost
     ConfUtil=a_i'*((x(i).*ez-x).*(x(i).*ez-x));
-    % Full utility
-    NewUtil=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
     
+    % Full utility new model
+    %NewUtil=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
+    
+    % Full utility old model
+    NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
     % If this choice is better than the previous one, do this
     if NewUtil > util
         a_i_star=a_i;
