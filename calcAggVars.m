@@ -40,4 +40,21 @@ firm.NrW=NrWatchers;
 firm.NrS=NrSlackers;
 
 
+%% Network stuff
+
+Pgraph=digraph(PMat);
+firm.pgrank=centrality(Pgraph,'pagerank');
+firm.pgrank=firm.pgrank(:);
+firm.indegree=centrality(Pgraph,'indegree');
+firm.indegree=firm.indegree(:);
+firm.peerX=PMat*X;
+firm.peerX=firm.peerX(:);
+[firm.peer,~]=find(PMat');
+firm.peer=firm.peer(:);
+if length(firm.peer) > firm.n
+    firm.peer=zeros(firm.n,1);
+    firm.peerMu=zeros(firm.n,1);
+else
+   firm.peerMu=identity(firm.peer); 
+   firm.peerMu=firm.peerMu(:);
 end

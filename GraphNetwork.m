@@ -12,6 +12,7 @@ function n=GraphNetwork(firm)
 PMat=firm.aMat{firm.T};
 X=firm.xMat(:,firm.T);
 theta=firm.thetaMat(:,firm.T);
+thetaOne=firm.thetaMat(:,1);
 identity=firm.muMat(:,firm.T);
 
 % Symmetrize network
@@ -21,16 +22,16 @@ PMat(PMat<0.1)=0;
 if firm.gMat==firm.gMat'
     GPgraph=graph(firm.gMat);
     SPMat=(PMat+PMat')./2;
-    SPMat(SPMat>0)=1;
-SPMat(SPMat<0.1)=0;
+    %SPMat(SPMat>0)=1;
+    SPMat(SPMat<0.1)=0;
     Pgraph=graph(SPMat);
-
 else
     GPgraph=digraph(firm.gMat);
     Pgraph=digraph(PMat);
 end
 
 diff=X-theta;
+diffOne=X-thetaOne;
 n=numel(theta);
 
 
@@ -38,10 +39,12 @@ n=numel(theta);
 RetStruct.NrClimbers=length(identity(identity==1));
 RetStruct.NrWatchers=length(identity(identity==0));
 RetStruct.NrSlackers=length(identity(identity==-1));
-RetStruct.TSkew=skewness(theta);
+RetStruct.TSkew=skewness(thetaOne);
 RetStruct.XMean=mean(X);
 RetStruct.DiffMean=mean(diff);
+RetStruct.DiffMeanOne=mean(diffOne);
 RetStruct.ThetaMean=mean(theta);
+RetStruct.ThetaMeanOne=mean(thetaOne);
 
 if sum(sum(firm.gMat)) == ((n^2)-n) % Complete G network
     GPgraph=Pgraph;
@@ -57,7 +60,7 @@ GPgraph.Nodes.Type=identity;
 GPgraph.Nodes.X=X;
 GPgraph.Nodes.Num=[1: length(identity)]';
 GPgraph.Nodes.theta=round(theta,3);
-GPgraph.Nodes.diff=round(diff,3);
+GPgraph.Nodes.diff=round(diffOne,3);
 
 strtheta=string(GPgraph.Nodes.theta);
 strType=string(identity);
@@ -98,7 +101,7 @@ if useG==1
 end
 txt = {'Attention network:',['N=',num2str(n)],['e=',num2str(firm.e)], ...
     ['NrC=',num2str(RetStruct.NrClimbers)],['NrW=',num2str(RetStruct.NrWatchers)],['NrS=',num2str(RetStruct.NrSlackers)],['Skew=',num2str(skewness(theta))], ...
-    ['AvgDiff=',num2str(RetStruct.DiffMean)],['AvgTheta=',num2str(RetStruct.ThetaMean)],['AvgX=',num2str(RetStruct.XMean)]};
+    ['avg(X(T)-Theta(1))=',num2str(RetStruct.DiffMeanOne)],['avg(X(T)-Theta(T))=',num2str(RetStruct.DiffMean)],['AvgTheta(T)=',num2str(RetStruct.ThetaMean)],['AvgTheta(1)=',num2str(RetStruct.ThetaMeanOne)],['AvgX=',num2str(RetStruct.XMean)]};
 annotation('textbox',...
     [0.14 0.9 0 0],...    
     'String',txt);

@@ -60,9 +60,21 @@
 % run outsources config.m in path
 config;
 
+mListTotal=[1:620];
+mIterations=4;
+maxT = 200
+identifier='PFT-TopBottom'; % Use "runtime" for a timestamp
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
 
+nrMBlocks=ceil(size(mListTotal,2)/mIterations);
 
+for bigSet = 1:nrMBlocks
+
+mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
+
+disp(['Preparing for iteration set ', num2str(bigSet)])
 %% Create a cell array of parameters to run
 paramsCell = createParamCell(PCscale, Wscale, thetascale, mList, nList, eList, consList, paramsDefault, symmetric, conUtil, conParam,ceoActStartT,learningRates);
 % Nr of simulations
@@ -198,6 +210,7 @@ for block=1:nrBlocks
 end
 toc
 
+clear blockParamsCell paramsCell
 
 
 %% Graphing functions
@@ -284,12 +297,23 @@ end
 runtime = posixtime(datetime);
 
 % Define here the directories to save data
-dirnameP = ['../DataSave/', num2str(runtime), '/Pmats/'];
-dirname = ['../DataSave/', num2str(runtime), '/'];
+if identifier=="time-of-run"
+    dirname = ['../DataSave/', num2str(runtime), '-',num2str(mList(1)),'-',num2str(mList(end)),'/'];
+else
+    %dirname = ['../DataSave/', identifier, '-',num2str(mList(1)),'-',num2str(mList(end)),'/'];
+    dirname = ['../DataSave/', identifier,'-',num2str(bigSet),'/'];
+
+end
+
 
 if saveIt == 1
-    mkdir(dirnameP);
+    mkdir(dirname);
     
     TableName = strcat(dirname, 'Results.csv');
     writetable(mainTable, TableName);
+    clear mainTable
+end
+
+
+
 end

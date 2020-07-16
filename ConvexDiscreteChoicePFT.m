@@ -42,10 +42,10 @@ for z = 1:nrChoice
     x_pft(i)=x_pft_foc(i);
     % FOC Version: x anticipated based on a_t_1
     if rationality > 0
-    x_rat=XFOCSPNE(a,theta,e);
+        x_rat=XFOCSPNE(a,theta,e);
         x=(1-rationality).*x_pft+rationality.*x_rat;
     else
-       x=x_pft; 
+        x=x_pft;
     end
     
     % Private utility, positive part

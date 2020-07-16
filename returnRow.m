@@ -36,9 +36,21 @@ Tbeta = firm.Tbeta;
 ProbC=firm.gamma(1);
 ProbW=firm.gamma(2);
 ProbS=firm.gamma(3);
-thetaStartStr=string(strcat(num2str(sort(firm.thetaMat(:,1)'),"%.2f,")));
-thetaStr=string(strcat(num2str(sort(firm.thetaMat(:,T)'),"%.2f,")));
-xStr=string(strcat(num2str(sort(firm.xMat(:,T)'),"%.2f,")));
+
+
+thetaStartStr=string(strcat(num2str(firm.thetaMat(:,1)',"%.2f,")));
+thetaStr=string(strcat(num2str(firm.thetaMat(:,T)',"%.2f,")));
+xStr=string(strcat(num2str(firm.xMat(:,T)',"%.2f,")));
+muStr=string(strcat(num2str(firm.muMat(:,T)',"%.2f,")));
+
+
+pgrank=string(strcat(num2str(firm.pgrank',"%.2f,")));
+indegree=string(strcat(num2str(firm.indegree',"%.2f,")));
+peerX=string(strcat(num2str(firm.peerX',"%.2f,")));
+peer=string(strcat(num2str(firm.peer',"%.0f,")));
+peerMu=string(strcat(num2str(firm.peerMu',"%.0f,")));
+
+
 conUtil = firm.conUtil;
 conParam = firm.conParam;
 ShufflePositions=firm.shufflePositions;
@@ -83,8 +95,9 @@ else
         gPr=firm.gPr;
     end
 end
+
 if firm.gMethod == "Full"
-    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType,ceoStartT,learningRate);
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,ShufflePositions,thetaStartStr,thetaStr,xStr,muStr,ceoType,startCeoType,ceoStartT,learningRate,pgrank,indegree,peer,peerX,peerMu);
 else
-    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,ceoType,startCeoType,ceoStartT,learningRate);
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,muStr,ceoType,startCeoType,ceoStartT,learningRate,pgrank,indegree,peer,peerX,peerMu);
 end
