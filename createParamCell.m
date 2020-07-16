@@ -14,6 +14,9 @@ for watchP = Wscale
     for scale = PCscale
         normC=scale.*(1-watchP);
         normS=(1-scale).*(1-watchP);
+        if normC<0 || normC>1 || normS <0 ||normS>1 || watchP<0 || watchP>1
+            error("Type probabilities out of bounds. Check config!")
+        end
         gammaVec{iC}=[normC,watchP,normS];
         if (normC == normS) || symmetric~=1
             iC=iC+1;
