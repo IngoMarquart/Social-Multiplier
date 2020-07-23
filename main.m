@@ -63,7 +63,7 @@ config;
 mListTotal=[1:620];
 mIterations=4;
 maxT = 200
-identifier='PFT-TopBottom'; % Use "runtime" for a timestamp
+identifier='PFT-ZeroOthers'; % Use "runtime" for a timestamp
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
