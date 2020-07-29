@@ -78,12 +78,12 @@ ShufflePositions="Shuffled";
 %% Archetypes
 %nList=[20:10:40];
 nList=[30];
-eList=[0.1,0.5, 0.8, 0.9,0.99,0.999];
+eList=[0.1,0.5, 0.8, 0.9,0.99,0.999,0.9999];
 %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
 consList=[0];
-PCscale=[0,0.25,0.5]; Wscale=[0]; % "2/3"
-thetascale=[2,5,10];
-learningRates=[0,0.01,0.05,0.1,0.2,0.3,0.5,0.7,1];
+PCscale=[0,0.25,0.5]; Wscale=[0,1/10,3/10,1/2]; % "2/3"
+thetascale=[2,10];
+learningRates=[0,0.05,0.1,0.2,0.3,0.5,0.7,1];
 % 
 
 %% Archetypes Dynamics

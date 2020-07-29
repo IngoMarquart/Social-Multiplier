@@ -4,14 +4,14 @@
 config;
 
 
-toGraph="SM";
+toGraph="SM-firm";
 
-maxT=10000;
+maxT=100;
 m=5;
-e=0.5;
+e=0.95;
 alpha=0.9;
-theta=[1,2,3,4,5];
-mu=[0,1,0,-1,0];
+theta=[1,2,3,4,10];
+mu=[1,1,-1,1,1];
 
 
 theta=theta(:);
@@ -23,9 +23,10 @@ nList = [n]; % Number of workers
 mList = [m]; % Random Seeds / Iterations
 eList = [e]; % Embedding levels
 consList = [0]; % Consolidation levels
-PCscale=[0.5]; Wscale=1/4; % Ratio of Improvers/Enhancers and P(Assessors)
+PCscale=[0.75]; Wscale=0; % Ratio of Improvers/Enhancers and P(Assessors)
 thetascale=[2]; % Parameters of Beta Distribution
 paramsDefault.maxT=maxT;
+paramsDefault.shockTypes=1;
 % The learning Rate delta
 learningRates=[1-alpha];
 graphIt=1;
@@ -78,9 +79,9 @@ if graphIt == 1
         % Normalize embedding
         %firm.eMat = firm.eMat./(1+firm.eMat);
         aggDiff=mean(firm.xMat-firm.thetaMat(:,1));
-
+        
         finalDiff=mean(firm.xMat(:,firm.T)-firm.thetaMat(:,T));
-
+        
         tsMat = table(firm.avgTheta', firm.avgX');
         tsTheta=timeseries(firm.avgTheta(2:end)','name','AvgTheta');
         tsX=timeseries(firm.avgX(2:end)','name','AvgX');
@@ -90,6 +91,42 @@ if graphIt == 1
         hold on
         plot(tsX,'-.xm','Displayname','Average X')
         %plot(tseBar,'Displayname','E Bar')
+        legend('show','Location','NorthEast')
+        txt = {['N=', num2str(firm.n)], ['ebar=', num2str(firm.eMat(firm.T))], ...
+            ['NrC=', num2str(firm.NrC)], ['NrW=', num2str(firm.NrW)], ['NrS=', num2str(firm.NrS)], ['Skew=', num2str(firm.skew(firm.T))], ...
+            ['avg(T)[X(t)-Theta(1)]=', num2str(mean(aggDiff))],['X(T)-Theta(1)=', num2str(aggDiff(firm.T))],['X(T)-Theta(T)=', num2str(finalDiff)]};
+        annotation('textbox', ...
+            [0.14 0.9 0 0], ...
+            'String', txt);
+        hold off
+    elseif toGraph == "SM-firm"
+        % Get firm
+        firm = graphFirm;
+        % Set first embedding to zero
+        firm.eMat(1) = 0;
+        % Normalize embedding
+        %firm.eMat = firm.eMat./(1+firm.eMat);
+        aggDiff=mean(firm.xMat-firm.thetaMat(:,1));
+        
+        finalDiff=mean(firm.xMat(:,firm.T)-firm.thetaMat(:,T));
+        
+        tsMat = table(firm.xMat);
+        tsTheta=timeseries(firm.avgTheta(2:end)','name','AvgTheta');
+        tsX=timeseries(firm.avgX(2:end)','name','AvgX');
+        tseBar=timeseries(firm.eMat(2:end)','name','Ebar');
+        tsO = timeseries(tsMat, 'name', 'X');
+        xMat=firm.xMat';
+        [a,nrN]=size(xMat)
+        for k=1:nrN     
+            type=firm.muMat(k,1);
+            plot(xMat(:,k), 'color', rand(1,3), 'LineWidth', 2, 'DisplayName', sprintf('Worker: %i', type));
+            hold on;          
+            legend('-DynamicLegend');          
+            legend('show');          
+            drawnow;          
+        end
+        plot(tsTheta,'-xb','Displayname','Average Theta')
+        plot(tsX,'-.xm','Displayname','Average X')
         legend('show','Location','NorthEast')
         txt = {['N=', num2str(firm.n)], ['ebar=', num2str(firm.eMat(firm.T))], ...
             ['NrC=', num2str(firm.NrC)], ['NrW=', num2str(firm.NrW)], ['NrS=', num2str(firm.NrS)], ['Skew=', num2str(firm.skew(firm.T))], ...
@@ -120,18 +157,3 @@ if graphIt == 1
     end
     
 end
-
-% %% Saving mechanics
-% % Current runtime
-% runtime = posixtime(datetime);
-% 
-% % Define here the directories to save data
-% dirnameP = ['../DataSave/', num2str(runtime), '/Pmats/'];
-% dirname = ['../DataSave/', num2str(runtime), '/'];
-% 
-% if saveIt == 1
-%     mkdir(dirnameP);
-%     
-%     TableName = strcat(dirname, 'Results.csv');
-%     writetable(mainTable, TableName);
-% end

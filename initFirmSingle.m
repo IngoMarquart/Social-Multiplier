@@ -29,7 +29,7 @@ firm.T=2;
 identity=mu;
 firm.Talpha=0;
 firm.Tbeta=0;
-firm.shufflePositions=0;
+firm.shufflePositions="Shuffled";
 %% Create helper functions
 % Calculate range of theta
 firm.thetaRange = abs(max(theta)-min(theta));
@@ -153,6 +153,7 @@ firm.n=params.n;
 firm.rationality=params.rationality;
 firm.maxT=params.maxT;
 firm.thetaRepShockVar=params.thetaRepShockVar;
+firm.shockTypes=params.shockTypes;
 firm.ceoAct=params.ceoAct;
 firm.conUtil=params.conUtil;
 firm.conParam=params.conParam;

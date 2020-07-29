@@ -14,6 +14,13 @@ RandStream.setGlobalStream(s);
 %% Adaptation // Learning
 firm.thetaMat(:,firm.T+1)=(1-firm.learningRate).*firm.thetaMat(:,firm.T)+firm.learningRate.*firm.xMat(:,firm.T);
 
+%% Shock Types
+if firm.shockTypes==1
+    [~,identity]=reform_identities(firm.n, firm.gamma, firm.shufflePositions, firm.thetaMat(:,firm.T));
+    firm.muMat(:,firm.T+1)=identity;
+    
+end
+
 %% Shock theta representation
 if firm.thetaRepShockVar>0
     pd = makedist('Normal','mu',0,'sigma',firm.thetaRepShockVar);

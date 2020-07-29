@@ -228,6 +228,7 @@ firm.learningRate=params.learningRate;
 firm.globalsearch=params.globalsearch;
 firm.e=params.e;
 firm.n=params.n;
+firm.shockTypes=params.shockTypes;
 firm.rationality=params.rationality;
 firm.maxT=params.maxT;
 firm.thetaRepShockVar=params.thetaRepShockVar;

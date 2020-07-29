@@ -23,7 +23,7 @@
 %   All these T rows for each firm are then saved in resultCell. This is
 %   necessary to run firms in parallel.
 %   Therefore, resultCell{i} holds all maxT
-%   results for firm i.
+%   period results for firm i.
 %   After the simulation block, the cell is reduced (syncronously) to a
 %   table called mainTable. This is the final return object.
 % 3. Reduction into mainTable
@@ -45,7 +45,15 @@
 %   ---> time periods
 %   But mainTable saves a row for each time period. Thus, some index
 %   juggling is necessary.
-% 5. Working with parallel objects - code complexity.
+%   5. Periodical saves
+%   This simulation runs for long time on most machines. Things can happen
+%   during that time. Hence, we save the results into a file after
+%   mIterations of m, out of total of mListTotal iterations. m is simply
+%   the random seed of each iteration. Each iteration therefore runs all
+%   parameterized firms once, and after doing that mIteration times, we
+%   save to file. This also allows to run larger parameter spaces over many
+%   different random seeds with limited memory - set mIterations low!
+%   A. Working with parallel objects - code complexity.
 %   Matlabs parallel programming model is quite simple, hence, at the time of
 %   writing this program, limited.
 %   You will note that we try to pre-allocate all tables and cells.
@@ -61,19 +69,19 @@
 config;
 
 mListTotal=[1:620];
-mIterations=4;
-maxT = 200
-identifier='PFT-ZeroOthers'; % Use "runtime" for a timestamp
+mIterations=2;
+maxT = 800;
+identifier='PFT-Shock2'; % Use "runtime" for a timestamp
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
 
 nrMBlocks=ceil(size(mListTotal,2)/mIterations);
 
-for bigSet = 1:nrMBlocks
+for bigSet = 7:nrMBlocks
 
 mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
-
+paramsDefault.shockTypes=1;
 disp(['Preparing for iteration set ', num2str(bigSet)])
 %% Create a cell array of parameters to run
 paramsCell = createParamCell(PCscale, Wscale, thetascale, mList, nList, eList, consList, paramsDefault, symmetric, conUtil, conParam,ceoActStartT,learningRates);
