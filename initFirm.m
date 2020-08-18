@@ -39,12 +39,11 @@ firm.Tbeta=params.thetaD(2);
 
 % We scale automatically by fixing variance.
 TIVec(:,1) = random(pd,params.n,1);
-c=sqrt(1/var(TIVec(:,1)));
+c=sqrt(1/var(TIVec(:,1)))*params.thetaVar;
 % This fixes variance to 1
 TIVec(:,1) =TIVec(:,1).*c;
-% De-mean theta, set mean to 1 (hence SM=AvgX)
-TIVec(:,1)=TIVec(:,1)-mean(TIVec(:,1))+1;
-
+% De-mean theta, set mean to thetaMean
+TIVec(:,1)=TIVec(:,1)-mean(TIVec(:,1))+params.thetaMean;
 
 %% Generate identities
 R = mnrnd(params.n,params.gamma);

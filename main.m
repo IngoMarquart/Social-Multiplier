@@ -62,15 +62,23 @@ config;
 
 mListTotal=[1:620];
 mIterations=4;
-maxT = 200
-identifier='PFT-OnlyAssessors'; % Use "runtime" for a timestamp
+identifier='PFT-Normed'; % Use "runtime" for a timestamp
+
+
+% Calculate maximal variance such that range stays positive
+% a=2;
+%b=max(thetascale);
+%c_var=(a*b)/((a+b+1)*(a+b)^2);
+%c=sqrt(1/c_var);
+%paramsDefault.thetaVar=(paramsDefault.thetaMean*2)/c;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
 
-nrMBlocks=ceil(size(mListTotal,2)/mIterations);
+nrMBlocks=ceil(size(mListTotal,2)/mIterations)
 
-for bigSet = 1:nrMBlocks
+
+for bigSet = 50:nrMBlocks
 
 mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
 

@@ -12,7 +12,7 @@ toGraph = "SM";
 saveIt = 1; % Save simulation results to a new folder
 
 %% Dynamics
-maxT = 300; % Time periods to run
+maxT = 200; % Time periods to run
 % Whether or not the CEO doubles or halves e at T/2
 % Random, Double, Half, Zero, Off
 ceoAct="Off";
@@ -53,7 +53,8 @@ ShufflePositions="Shuffled";
 %% List of parameters to run
 %% Per firm
 % comments and uncomment desired
-
+thetaVar=1;
+thetaMean=0;
 % 
 %% Single firm
 %  nList = [5]; % Number of workers
@@ -78,12 +79,12 @@ ShufflePositions="Shuffled";
 %% Archetypes
 %nList=[20:10:40];
 nList=[30];
-eList=[0.1,0.5, 0.8, 0.9,0.99,0.999];
+eList=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99];
 %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
 consList=[0];
-PCscale=[0]; Wscale=[1]; % "2/3"
-thetascale=[2,5,10];
-learningRates=[0,0.01,0.05,0.1,0.2,0.3,0.5,0.7,1];
+PCscale=[0,0.25,0.5]; Wscale=[0,1/3,1/2]; % "2/3"
+thetascale=[2,15];
+learningRates=[0,0.05,0.1,0.3,0.5,1];
 % 
 
 %% Archetypes Dynamics
@@ -120,5 +121,8 @@ paramsDefault.pn = 0; % P parameter for G network. Set to 0 for full G!
 paramsDefault.mn = 0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
 paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
 paramsDefault.shufflePositions=ShufflePositions;
+paramsDefault.thetaVar=thetaVar;
+paramsDefault.thetaMean=thetaMean;
+
 %paramsDefault.learningRate=learningRate;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%

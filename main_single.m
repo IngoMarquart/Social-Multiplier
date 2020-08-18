@@ -6,12 +6,12 @@ config;
 
 toGraph="SM";
 
-maxT=10000;
+maxT=100;
 m=5;
-e=0.5;
+e=0.1;
 alpha=0.9;
-theta=[1,2,3,4,5];
-mu=[0,1,0,-1,0];
+theta=[1,2,3,5,6];
+mu=[1,1,0,1,1];
 
 
 theta=theta(:);
