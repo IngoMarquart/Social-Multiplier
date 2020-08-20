@@ -34,8 +34,8 @@ firm.shufflePositions=0;
 % Calculate range of theta
 firm.thetaRange = abs(max(theta)-min(theta));
 % Perceived Benefit functions
-gemA=1;
-gemL=1;
+gemA=firm.thetaRange;
+gemL=firm.thetaRange;
 firm.psiWatcher=@(theta_i,theta_j) -gemL.*abs(theta_j-theta_i)+firm.thetaRange;
 firm.psiClimber=@(theta_i,theta_j) -gemA.*(theta_i-theta_j);
 firm.psiSlacker=@(theta_i,theta_j) -gemA.*(theta_j-theta_i);

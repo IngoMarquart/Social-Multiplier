@@ -111,12 +111,15 @@ identity=TIVec(:,2);
 % Calculate range of theta
 firm.thetaRange = abs(max(theta)-min(theta));
 % Perceived Benefit functions
-gemA=1;
-gemL=1;
-firm.psiWatcher=@(theta_i,theta_j) -gemL.*abs(theta_j-theta_i)+firm.thetaRange;
+% gemA=1;
+% gemL=1;
+% firm.psiWatcher=@(theta_i,theta_j) -gemL.*abs(theta_j-theta_i)+firm.thetaRange;
+% firm.psiClimber=@(theta_i,theta_j) -gemA.*(theta_i-theta_j);
+% firm.psiSlacker=@(theta_i,theta_j) -gemA.*(theta_j-theta_i);
+gemA=firm.thetaRange;
+firm.psiWatcher=@(theta_i,theta_j) -gemA.*(abs(theta_j-theta_i)-firm.thetaRange);
 firm.psiClimber=@(theta_i,theta_j) -gemA.*(theta_i-theta_j);
 firm.psiSlacker=@(theta_i,theta_j) -gemA.*(theta_j-theta_i);
-
 %% Create G matrix
 firm.gMethod=params.gMethod;
 if params.gMethod=="JR" % Jackson Rogers Social network
