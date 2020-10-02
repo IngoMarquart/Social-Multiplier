@@ -11,14 +11,65 @@ toGraph = "SM";
 % This saves the results into the folder ../Datasave/
 saveIt = 1; % Save simulation results to a new folder
 
+
+
+%% List of parameters to run
+% How many random seeds? Each seed will be put through all parameter
+% combinations.
+mListTotal=[1:1000];
+% How many "m" do we allow per block? Reduce if memory overflow
+mIterations=4;
+%% Per firm
+% comments and uncomment desired
+thetaVar=1;
+thetaMean=0;
+% 
+%% Single firm
+%  nList = [5]; % Number of workers
+%  mList = [5]; % Random Seeds / Iterations
+%  eList = [1000]; % Embedding levels
+%  consList = [-1]; % Consolidation levels
+%  PCscale=[0.5]; Wscale=1/4; % Ratio of Improvers/Enhancers and P(Assessors)
+%  thetascale=[2]; % Parameters of Beta Distribution
+% % The learning Rate delta
+% learningRates=[0];
+
+
+%% Archetype State Space
+identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
+%nList=[20:10:40];
+nList=[60];
+eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,0.999];
+%eList=[0.999,0.9999,0.99999,0.999999];
+%eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
+consList=[0];
+PCscale=[0,0.25,0.5]; Wscale=[1/3]; % "2/3"
+thetascale=[2,5000000];
+learningRates=[0,0.05,0.4,0.7,1];
 %% Dynamics
-maxT = 200; % Time periods to run
+maxT = 100; % Time periods to run
+
+
+%% Figure 1 and 2
+identifier='PFT-3x3Figure1ad'; % Use "runtime" for a timestamp
+nList=[60];
+%eList=[0,0.01,0.001,0.1,0.5,0.99];
+eList=[0.01,0.001];
+consList=[0];
+PCscale=[0,0.25,0.35,0.45,0.5]; Wscale=[1/3]; % "2/3"
+thetascale=[2,3,4,5,8,10,250,5000,500000000];
+learningRates=[0.5];
+%% Dynamics
+maxT = 100; % Time periods to run
+
+
+%% Detailed Settings
+
 % Whether or not the CEO doubles or halves e at T/2
 % Random, Double, Half, Zero, Off
 ceoAct="Off";
 % Times where the CEO intervenes
 ceoActStartT=[1];
-
 
 %% Skew handling
 % Symmetric handles whether the simulation runs checking
@@ -49,61 +100,6 @@ gMethod="Full";
 % Essentially determines if G is independent of theta by shuffling
 % Options: Random, Mu, Theta, Shuffled(default)
 ShufflePositions="Shuffled";
-
-%% List of parameters to run
-%% Per firm
-% comments and uncomment desired
-thetaVar=1;
-thetaMean=0;
-% 
-%% Single firm
-%  nList = [5]; % Number of workers
-%  mList = [5]; % Random Seeds / Iterations
-%  eList = [1000]; % Embedding levels
-%  consList = [-1]; % Consolidation levels
-%  PCscale=[0.5]; Wscale=1/4; % Ratio of Improvers/Enhancers and P(Assessors)
-%  thetascale=[2]; % Parameters of Beta Distribution
-% % The learning Rate delta
-% learningRates=[0];
-
-%% State Space
-% nList=[10:10:40];
-% mList=[1:10];
-% eList=[0.01,  0.1,  0.25,  0.5, 0.75, 0.9, 0.99];
-% learningRates=[0,0.01,0.05,0.1,0.2,0.35,0.5,0.7,1];
-% consList=[-1,0,1];
-% thetascale = [2:0.5:7];
-% PCscale=0.15:0.05:0.5; Wscale=[1/3,2/3];
-
-
-%% Archetypes
-%nList=[20:10:40];
-nList=[30];
-eList=[0.01,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99];
-%eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
-consList=[0];
-PCscale=[0,0.25,0.5]; Wscale=[0,1/3]; % "2/3"
-thetascale=[2,15];
-learningRates=[0,0.05,0.1,0.3,0.5,1];
-% 
-
-%% Archetypes Dynamics
-% nList=[40];
-% mList=[1:100];
-% eList=[1];
-% consList=[-1,0,1];
-% PCscale=0.25:0.25:0.5; Wscale=[1/3];
-%thetascale=[2,5];
-
-
-% % Archetypes v
-% nList=[10,15,20];
-% mList=[1:30];
-% eList=[0.5,1,5,10000];
-% consList=[-1,0,1];
-% PCscale=0.25:0.25:0.5; Wscale=[1/3];
-%thetascale=[2,5];
-
 
 
 %% Baseline parameters
