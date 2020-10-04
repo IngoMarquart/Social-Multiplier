@@ -38,6 +38,9 @@ ProbW=firm.gamma(2);
 ProbS=firm.gamma(3);
 
 
+flucX=firm.flucX;
+flucT=firm.flucT;
+
 thetaStartStr=string(strcat(num2str(firm.thetaMat(:,1)',"%.2f,")));
 thetaStr=string(strcat(num2str(firm.thetaMat(:,T)',"%.2f,")));
 xStr=string(strcat(num2str(firm.xMat(:,T)',"%.2f,")));
@@ -97,7 +100,7 @@ else
 end
 
 if firm.gMethod == "Full"
-    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,ShufflePositions,thetaStartStr,thetaStr,xStr,muStr,ceoType,startCeoType,ceoStartT,learningRate,pgrank,indegree,peer,peerX,peerMu);
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,ShufflePositions,thetaStartStr,thetaStr,xStr,muStr,ceoType,startCeoType,ceoStartT,learningRate,pgrank,indegree,peer,peerX,peerMu,flucX,flucT);
 else
-    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,muStr,ceoType,startCeoType,ceoStartT,learningRate,pgrank,indegree,peer,peerX,peerMu);
+    row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam, gMethod,gNrComponents,gRadius,gDiameter,gAvgPathLength,gDensity,gMaxEV,gAvgClustering,gAvgDegree, gSymmetry, gClusters, gModularity, gLinks,gAssembly,gMn,gMr,gPn,ShufflePositions,thetaStartStr,thetaStr,xStr,muStr,ceoType,startCeoType,ceoStartT,learningRate,pgrank,indegree,peer,peerX,peerMu,flucX,flucT);
 end

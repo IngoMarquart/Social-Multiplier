@@ -39,7 +39,17 @@ firm.NrC=NrClimbers;
 firm.NrW=NrWatchers;
 firm.NrS=NrSlackers;
 % Correlation measure across outputs and thetas
-
+if firm.T>2
+    XMatrix=firm.xMat(:,min(12,ceil(firm.T/2)):firm.T);
+    thetaMatrix=firm.thetaMat(:,min(12,ceil(firm.T/2)):firm.T);
+    diffX=diff(XMatrix')';
+    diffTheta=diff(thetaMatrix')';
+    firm.flucX=sum(sum(abs(diffX')));
+    firm.flucT=sum(sum(abs(diffTheta')));
+else
+    firm.flucX=0;
+    firm.flucT=0;
+end
 
 %% Network stuff
 Pgraph=digraph(PMat);

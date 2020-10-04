@@ -73,7 +73,7 @@ config;
 nrMBlocks=ceil(size(mListTotal,2)/mIterations);
 
 
-for bigSet = 88:nrMBlocks
+for bigSet = 1:nrMBlocks
 
 mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
 
