@@ -43,18 +43,18 @@ eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,0.999];
 %eList=[0.999,0.9999,0.99999,0.999999];
 %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
 consList=[0];
-PCscale=[0,0.25,0.5]; Wscale=[1/3]; % "2/3"
+PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
 thetascale=[2,5000000];
 learningRates=[0,0.05,0.4,0.7,1];
 %% Dynamics
-maxT = 100; % Time periods to run
+maxT = 200; % Time periods to run
 
 
 %% Figure 1 and 2
 identifier='PFT-3x3Figure1ad'; % Use "runtime" for a timestamp
 nList=[60];
 %eList=[0,0.01,0.001,0.1,0.5,0.99];
-eList=[0.01,0.001];
+eList=[0.01,0.05];
 consList=[0];
 PCscale=[0,0.25,0.35,0.45,0.5]; Wscale=[1/3]; % "2/3"
 thetascale=[2,3,4,5,8,10,250,5000,500000000];
