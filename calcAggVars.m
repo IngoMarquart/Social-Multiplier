@@ -38,10 +38,10 @@ firm.cons(firm.T)=actualCons.fcons;
 firm.NrC=NrClimbers;
 firm.NrW=NrWatchers;
 firm.NrS=NrSlackers;
+% Correlation measure across outputs and thetas
 
 
 %% Network stuff
-
 Pgraph=digraph(PMat);
 firm.pgrank=centrality(Pgraph,'pagerank');
 firm.pgrank=firm.pgrank(:);
