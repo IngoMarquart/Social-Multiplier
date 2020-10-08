@@ -47,7 +47,7 @@ PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
 thetascale=[2,5000000];
 learningRates=[0,0.05,0.4,0.7,1];
 %% Dynamics
-maxT = 100; % Time periods to run
+maxT = 200; % Time periods to run
 
 
 % %% Figure 1 and 2

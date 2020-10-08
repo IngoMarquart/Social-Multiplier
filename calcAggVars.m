@@ -40,12 +40,12 @@ firm.NrW=NrWatchers;
 firm.NrS=NrSlackers;
 % Correlation measure across outputs and thetas
 if firm.T>2
-    XMatrix=firm.xMat(:,min(12,ceil(firm.T/2)):firm.T);
-    thetaMatrix=firm.thetaMat(:,min(12,ceil(firm.T/2)):firm.T);
+    XMatrix=firm.xMat(:,max(firm.T-12,1):firm.T);
+    thetaMatrix=firm.thetaMat(:,max(firm.T-12,1):firm.T);
     diffX=diff(XMatrix')';
     diffTheta=diff(thetaMatrix')';
-    firm.flucX=sum(sum(abs(diffX')));
-    firm.flucT=sum(sum(abs(diffTheta')));
+    firm.flucX=mean(mean(abs(diffX')));
+    firm.flucT=mean(mean(abs(diffTheta')));
 else
     firm.flucX=0;
     firm.flucT=0;
