@@ -53,7 +53,7 @@ for z = 1:nrChoice
     PsiVec = Psi(theta(i),theta);
 
     % Get utility value
-    NewUtil=utilityPFT(x(i),x,a_i,theta,e,PsiVec,i,maxDegree,conParam)
+    NewUtil=-utilityPFT(x(i),x,a_i,theta,e,PsiVec,i,maxDegree,conParam);
     
     % If this choice is better than the previous one, do this
     if NewUtil < util

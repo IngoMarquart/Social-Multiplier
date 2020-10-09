@@ -15,7 +15,10 @@
 function u=utilityPFT(x_i,x_t_1,a_i,theta,e,PsiVec,i,maxDegree,conParam)
 
     x_t_1=x_t_1(:);
-    x(i)=x_i
+    PsiVec=PsiVec(:);
+    x=x_t_1;
+    x(i)=x_i;
+    a_i=a_i(:);
     theta=theta(:);
     n=length(theta);
     ez=ones(n,1);
@@ -34,8 +37,10 @@ function u=utilityPFT(x_i,x_t_1,a_i,theta,e,PsiVec,i,maxDegree,conParam)
     
     % Expected non-alignment cost
     ConfUtil=a_i'*((x(i).*ez-x).*(x(i).*ez-x));
-    
+    if sum(a_i)>0
     % Full utility new model
-    u=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
-    
+        u=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
+    else
+        u=-0;
+    end
 end

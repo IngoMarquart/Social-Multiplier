@@ -75,7 +75,7 @@ for t = 2:(endpoint)
         % Initialize a_i vector
         prevAi = prevAttention(i, :)';
         curAi = prevAttention(i, :)';
-        if firm.conParam == 1
+        if firm.conUtil == 0
             %% Discrete optimization to find focal peer
             % Using the current representation of theta by agent i
             % Set up objective function
@@ -87,6 +87,16 @@ for t = 2:(endpoint)
                 [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
             end
         else
+                        %% Discrete optimization to find focal peer
+            % Using the current representation of theta by agent i
+            % Set up objective function
+            if identity(i) == 1% Climber
+                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+            elseif identity(i) == 0% Watcher
+                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+            else % Slacker
+                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+            end
             %% Global optimization routine
             % Account for non-linear effects in monitoring, either concave or convex
             % Set up objective function
@@ -96,7 +106,21 @@ for t = 2:(endpoint)
                 [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb);
             else % Slacker
                 [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb);
-            end        
+            end 
+            if (round(curUiD,5) < round(curUi,5)) && round(curUiD,5) <0
+                disp(['curUID with', num2str(-curUiD), ' higher than ', num2str(-curUi)])
+                disp(['curAID='])
+                disp(curAiD)
+                disp(['curAI='])
+                disp(curAi)
+                disp(['i=', num2str(i)])
+                if round(curAi,5)==round(curAiD,5)
+                    error("Uh oh, something is wrong with global opt!")
+                end
+                %error("Uh oh, something is wrong with global opt!")
+                curAi=curAiD;
+                curUi=curUiD;
+            end
         end
         
         %% Post optimization checks

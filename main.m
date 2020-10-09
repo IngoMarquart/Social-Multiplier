@@ -79,7 +79,7 @@ mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
 
 disp(['Preparing for iteration set ', num2str(bigSet)])
 %% Create a cell array of parameters to run
-paramsCell = createParamCell(PCscale, Wscale, thetascale, mList, nList, eList, consList, paramsDefault, symmetric, conUtil, conParam,ceoActStartT,learningRates);
+paramsCell = createParamCell(PCscale, Wscale, thetascale, mList, nList, eList, consList, paramsDefault, symmetric, conUtil, conParam,learningRates);
 % Nr of simulations
 NrFirms = length(paramsCell);
 
@@ -151,7 +151,7 @@ for block=1:nrBlocks
     % for or parfor
     % SET TO PARFOR FOR LARGE SAMPLE
     % Currently GRAPHING REQUIRES FOR
-    for i = 1:cellLength
+    parfor i = 1:cellLength
         
         % Fill in parameters
         params = blockParamsCell{i};
@@ -221,6 +221,12 @@ clear blockParamsCell paramsCell
 if graphIt == 1
     %graphFirm=graphFirm{1};
     if toGraph == "NW"
+        sumMat=graphFirm.aMat{1};
+        for amat=graphFirm.aMat
+            sumMat=sumMat+amat{1};
+        end
+        graphFirm.aMat{graphFirm.T}=sumMat/graphFirm.maxT;
+        graphFirm.aMat{graphFirm.T}=graphFirm.aMat{graphFirm.T-1}
         GraphNetwork(graphFirm);
     elseif toGraph == "SM"
         % Get firm

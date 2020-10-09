@@ -18,13 +18,15 @@ identity=firm.muMat(:,firm.T);
 % Symmetrize network
 
 
-PMat(PMat<0.1)=0;
+PMat(PMat<0.05)=0;
 if firm.gMat==firm.gMat'
     GPgraph=graph(firm.gMat);
     SPMat=(PMat+PMat')./2;
     %SPMat(SPMat>0)=1;
     SPMat(SPMat<0.1)=0;
     Pgraph=graph(SPMat);
+        GPgraph=digraph(firm.gMat);
+    Pgraph=digraph(PMat);
 else
     GPgraph=digraph(firm.gMat);
     Pgraph=digraph(PMat);

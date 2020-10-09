@@ -18,7 +18,6 @@ n=length(theta);
 % Define One vector
 ez=ones(n,1);
 
-
 % Default values
 util=0;
 a_i_star=zeros(n,1);
@@ -42,13 +41,21 @@ PsiVec = Psi(theta(i),theta);
 
 options = optimoptions('fmincon' ,'Algorithm', 'sqp', 'Display', 'none', 'UseParallel', false);
 gs = GlobalSearch('Display', 'off', 'StartPointsToRun', 'all');
+ms = MultiStart('Display', 'off');
 
 
-fnc = @(aiRest)valueFunction(aiRest,x_t_1,theta,e,PsiVec,i,maxDegree,conParam,Choice,nrChoice);
+fnc = @(aiRest)valueFunction(aiRest,a_t_1,x_t_1,theta,e,PsiVec,i,maxDegree,conParam,Choice,nrChoice);
 
 problem = createOptimProblem('fmincon', 'x0', curAiRest, 'objective', fnc, ...
     'lb', lb, 'ub', ub, 'Aineq', A, 'bineq', b, 'options', options);
+
+% Global search
 [curAiRest, util] = run(gs, problem);
+
+% Multi search with startpoints given by discrete mixes
+startpoints=eye(length(curAiRest));
+startpoints=CustomStartPointSet(startpoints);
+[curAiRest, util] = run(ms, problem,startpoints);
 
 a_i_star = RecoverPi(curAiRest, Choice, n);
 
@@ -60,13 +67,52 @@ a_i_star(isnan(a_i_star)) = 0;
 
 end
 
-function util=valueFunction(a_i_Rest,x_t_1,theta,e,PsiVec,i,maxDegree,conParam,Choice,nrChoice)
+function util=valueFunction(a_i_Rest,a_t_1,x_t_1,theta,e,PsiVec,i,maxDegree,conParam,Choice,nrChoice)
     % Norm vectors to correspond to column vectors for now
     theta=theta(:);
-    aiRest=aiRest(:);
+    aiRest=a_i_Rest(:);
     % First we need to recover the true attention vector
     % from the restricted choices given G
     n = length(theta);
     a_i = RecoverPi(aiRest, Choice, n);
-    util=utilityPFT(x(i),x,a_i,theta,e,PsiVec,i,maxDegree,conParam)
+    a=a_t_1;
+    if (min(a_i < 0)) || max(a_i > 1)
+        %disp(['Pstar out of range. Fixing. Occured with g: ', num2str(g), ', identity: ', num2str(identity(i)), ', theta: ', num2str(theta_i), ...
+        %        ' in period ', num2str(t), ...
+        %        ' with pstar min/max: ', num2str(min(curAi)), ', ', num2str(max(curAi))]);
+        a_i(a_i < 0) = 0;
+        a_i(a_i > 1) = 1;
+    end
+
+    if sum(a_i > 1)
+        a_i = bsxfun(@times, a_i, 1 ./ (sum(a_i)));
+        a_i(isnan(a_i)) = 0;
+        % disp(['sum Pstar larger than 1. Fixing. Occured with g: ', num2str(g), ', identity: ', num2str(identity(i)), ', theta: ', num2str(theta_i), ...
+        %         ' in period ', num2str(t), ...
+        %         ' with sum pstar: ', num2str(sum(curAi))]);
+    end
+    % Assemble new P
+    if sum(isnan(a_i))>0
+        util=100000;
+    else
+        a(i,:)=a_i';    
+        x_new=XFOCPFT(x_t_1,a,theta,e);
+        x=x_t_1;
+        x(i)=x_new(i);
+        util=-utilityPFT(x(i),x,a_i,theta,e,PsiVec,i,maxDegree,conParam);
+        sx=size(util);
+    end
+    if length(util)>1
+        display(x(i))
+        display(x)
+        display(a_i)
+        display(util)
+        display(theta)
+        display(PsiVec)
+        display(i)
+        display(conParam)
+        
+        error("Whoops")
+        util=util(1);
+    end
 end

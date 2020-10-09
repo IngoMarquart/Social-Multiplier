@@ -5,11 +5,12 @@
 % @param: paramsDefault - starting struct of parameters that are constant
 % @return: pCell - Cell of params structures over which to loop
 %%
-function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric,conUtil,conParam,ceoActStartT,learningRates)
+function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric,conUtil,conParam,learningRates)
 
 %% Create a cell array of type vectors
 gammaVec={};
 iC=1;
+ceoActStartT=0;
 for watchP = Wscale
     for scale = PCscale
         normC=scale.*(1-watchP);

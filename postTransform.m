@@ -33,15 +33,15 @@ if firm.probTypeSwitch>0
     new_identities = [1.*ones(1,R(1)), 0.*ones(1,R(2)), -1.*ones(1,R(3))]';
     old_identities = firm.muMat(:,firm.T);
     % Get Bernoulli (0/1) sample
-    bernVec=binornd(1,firm.probTypeSwitch,firm.n)
+    bernVec=binornd(1,firm.probTypeSwitch,firm.n,1);
     % 1-> new identity, 0-> old identity
     new_identities=bernVec.*new_identities+(1-bernVec).*old_identities;
 
     % update Identity
-    firm.muMat(:,firm.T+1)=new_identities
+    firm.muMat(:,firm.T+1)=new_identities;
 
 else
-    firm.muMat(:,firm.T+1)=firm.muMat(:,firm.T)
+    firm.muMat(:,firm.T+1)=firm.muMat(:,firm.T);
 end
 
 end

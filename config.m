@@ -3,13 +3,13 @@
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
 % Please disable all parfor loops in main.m
-graphIt = 1;
+graphIt = 0;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "SM" graphs x-theta averages over time periods
-toGraph = "SM";
+toGraph = "NW";
 % This saves the results into the folder ../Datasave/
-saveIt = 0; % Save simulation results to a new folder
+saveIt = 1; % Save simulation results to a new folder
 
 %% List of parameters to run
 % How many random seeds? Each seed will be put through all parameter
@@ -44,26 +44,10 @@ thetaMean=0;
 % PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
 % thetascale=[2,5000000];
 % learningRates=[0,0.05,0.4,0.7,1];
-% %% Dynamics
+% % Dynamics
 % maxT = 200; % Time periods to run
 
 
-%% Archetype State Space
-mListTotal=[1];
-mIterations=1;
-
-identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
-%nList=[20:10:40];
-nList=[4];
-eList=[0.9];
-%eList=[0.999,0.9999,0.99999,0.999999];
-%eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
-consList=[0];
-PCscale=[0.5]; Wscale=[1/3]; % "2/3"
-thetascale=[2];
-learningRates=[0];
-%% Dynamics
-maxT = 200; % Time periods to run
 
 % %% Figure 1 and 2
 % identifier='PFT-3x3Figure1ad'; % Use "runtime" for a timestamp
@@ -74,9 +58,25 @@ maxT = 200; % Time periods to run
 % PCscale=[0,0.25,0.35,0.45,0.5]; Wscale=[1/3]; % "2/3"
 % thetascale=[2,3,4,5,8,10,250,5000,500000000];
 % learningRates=[0.5];
-% %% Dynamics
+% % Dynamics
 % maxT = 100; % Time periods to run
 
+%% Smaller State Space
+mListTotal=[1:100];
+mIterations=1;
+identifier='PFT-3x3v05'; % Use "runtime" for a timestamp
+nList=[10,20,30];
+eList=[0.1,0.4,0.7,0.9];
+consList=[0];
+PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
+thetascale=[2,5000000];
+learningRates=[0,0.05,0.4,1];
+% Dynamics
+maxT = 100; % Time periods to run
+
+% Concavity parameter if needed
+conUtil=1;
+conParam=0.5;
 
 %% Detailed Settings
 
@@ -96,10 +96,10 @@ symmetric = 1;
 % conUtil=-1 checks both cases
 conUtil=1;
 % Concavity parameter if needed
-conParam=1.5;
+conParam=0.5;
 
 %% Probability of type switching
-probTypeSwitch=0.5;
+probTypeSwitch=0;
 
 
 %% Baseline parameters
@@ -117,5 +117,6 @@ paramsDefault.maxDegree = 5; % Maximum number of peers to monitor
 paramsDefault.thetaVar=thetaVar;
 paramsDefault.thetaMean=thetaMean;
 paramsDefault.probTypeSwitch=probTypeSwitch;
+paramsDefault.ceoAct="Off";
 %paramsDefault.learningRate=learningRate;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
