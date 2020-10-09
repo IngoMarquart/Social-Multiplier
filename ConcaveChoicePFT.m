@@ -11,16 +11,31 @@
 % @return: util - Utility value
 % @return: a_i_star - Attention choice in the space of all n actors
 %%
-function [util,a_i_star]=ConcaveChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam,maxDegree)
+function [util,a_i_star]=ConcaveChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam,maxDegree,ConA, Conb)
 
 theta=theta(:);
 n=length(theta);
 % Define One vector
 ez=ones(n,1);
 
+
 % Default values
 util=0;
 a_i_star=zeros(n,1);
+
+% Pass this elsewhere
+%% Generate choice sets
+
+%% Generate Constraint matrices
+
+
+curAiRest = a_i_star(Choice);
+
+A = ConA{i};
+b = Conb{i};
+lb = zeros(size(curAiRest));
+ub = ones(size(curAiRest));
+
 
 % Constants
 PsiVec = Psi(theta(i),theta);
@@ -29,7 +44,7 @@ options = optimoptions('fmincon' ,'Algorithm', 'sqp', 'Display', 'none', 'UsePar
 gs = GlobalSearch('Display', 'off', 'StartPointsToRun', 'all');
 
 
-fnc = @(aiRest)valueFunction(aiRest,x_t_1,theta,e,PsiVec,i,maxDegree,conParam,Choice,nrChoice)
+fnc = @(aiRest)valueFunction(aiRest,x_t_1,theta,e,PsiVec,i,maxDegree,conParam,Choice,nrChoice);
 
 problem = createOptimProblem('fmincon', 'x0', curAiRest, 'objective', fnc, ...
     'lb', lb, 'ub', ub, 'Aineq', A, 'bineq', b, 'options', options);
