@@ -75,20 +75,29 @@ for t = 2:(endpoint)
         % Initialize a_i vector
         prevAi = prevAttention(i, :)';
         curAi = prevAttention(i, :)';
-        
-        %% Discrete optimization to find focal peer
-        % Using the current representation of theta by agent i
-        % Set up objective function
-        if identity(i) == 1% Climber
-            [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
-        elseif identity(i) == 0% Watcher
-            [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
-        else % Slacker
-            [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1);
-        end
-        
-        % Convention is utility is set to negative, same as fmincon
-        curUi = -curUi;
+        if firm.conParam == 1
+            %% Discrete optimization to find focal peer
+            % Using the current representation of theta by agent i
+            % Set up objective function
+            if identity(i) == 1% Climber
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+            elseif identity(i) == 0% Watcher
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+            else % Slacker
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+            end
+        else
+            %% Global optimization routine
+            % Account for non-linear effects in monitoring, either concave or convex
+            % Set up objective function
+            if identity(i) == 1% Climber
+                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree);
+            elseif identity(i) == 0% Watcher
+                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree);
+            else % Slacker
+                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree);
+            end        
+
         
         %% Post optimization checks
         %% Constraint check

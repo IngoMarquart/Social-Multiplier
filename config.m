@@ -11,8 +11,6 @@ toGraph = "SM";
 % This saves the results into the folder ../Datasave/
 saveIt = 0; % Save simulation results to a new folder
 
-
-
 %% List of parameters to run
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
@@ -82,12 +80,6 @@ maxT = 200; % Time periods to run
 
 %% Detailed Settings
 
-% Whether or not the CEO doubles or halves e at T/2
-% Random, Double, Half, Zero, Off
-ceoAct="Off";
-% Times where the CEO intervenes
-ceoActStartT=[1];
-
 %% Skew handling
 % Symmetric handles whether the simulation runs checking
 % left+right skew and slackers<>climbers distributions
@@ -106,36 +98,24 @@ conUtil=1;
 % Concavity parameter if needed
 conParam=1.5;
 
-%% G Network
-%% Choose method for underlying network G
-% Normally: Use Full
-% For robustness check: Use JR
-% Options: Task, JR, Full
-gMethod="Full";
-
-%% Shuffle positions:
-% Essentially determines if G is independent of theta by shuffling
-% Options: Random, Mu, Theta, Shuffled(default)
-ShufflePositions="Shuffled";
+%% Probability of type switching
+probTypeSwitch=0.5;
 
 
 %% Baseline parameters
 maxCellLength=10000; % Split simulation runs into blocks for memory
 avgOverT = 0; % Average results over all T - uncertainty sample
-paramsDefault.gMethod=gMethod;
 paramsDefault.maxT = maxT; % Time periods for the company to run
 paramsDefault.minEqmT = 2; % Minimum periods to achieve equilibrium convergence
 paramsDefault.maxEqmT = 100; % Maximum period to achieve eqm convergence
 paramsDefault.globalsearch = -1; % Unused
 paramsDefault.thetaRepShockVar = 0; % Standard deviation of shock to theta representations
 paramsDefault.rationality = 0; % First-stage rationality of agents - can anticipate A
-paramsDefault.ceoAct = ceoAct; % whether the CEO adapts over time
 paramsDefault.pn = 0; % P parameter for G network. Set to 0 for full G!
 paramsDefault.mn = 0; % M parameter for G network (Jackson&Rogers 2014 algorithm)
-paramsDefault.maxDegree = 40; % Maximum number of peers to monitor
-paramsDefault.shufflePositions=ShufflePositions;
+paramsDefault.maxDegree = 5; % Maximum number of peers to monitor
 paramsDefault.thetaVar=thetaVar;
 paramsDefault.thetaMean=thetaMean;
-
+paramsDefault.probTypeSwitch=probTypeSwitch;
 %paramsDefault.learningRate=learningRate;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%

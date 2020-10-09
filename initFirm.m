@@ -40,7 +40,7 @@ firm.Tbeta=params.thetaD(2);
 % We scale automatically by fixing variance.
 TIVec(:,1) = random(pd,params.n,1);
 c=sqrt(1/var(TIVec(:,1)))*params.thetaVar;
-% This fixes variance to 1
+% This fixes variance to thetaVar
 TIVec(:,1) =TIVec(:,1).*c;
 % De-mean theta, set mean to thetaMean
 TIVec(:,1)=TIVec(:,1)-mean(TIVec(:,1))+params.thetaMean;
@@ -66,42 +66,9 @@ else % Consolidation > 0: We sort descending, since climbers at the top
 end
 
 %% Shuffling of positions
-% For now, identities are ordered. Under consolidation, so are thetas.
-% Shuffling is required if:
-% - Jackson Rogers is used for G, since early nodes have larger density,
-% otherwise G correlates with theta
-% - Task network is desired to be independent of skill levels
-
-if params.shufflePositions=="Random" % Shuffle with probability half
-    
-    if rand>0.5
-        idx = randperm(size(TIVec,1));
-        TIVec=TIVec(idx,:);
-        firm.shufflePositions="RandomShuffled";
-    elseif rand>0.5
-        % sort by theta
-        [~,idx]=sort(TIVec(:,1),'ascend');
-        TIVec=TIVec(idx,:);
-        firm.shufflePositions="RandomTheta";
-    else
-        [~,idx]=sort(TIVec(:,2),'descend');
-        TIVec=TIVec(idx,:);
-        firm.shufflePositions="RandomMu";
-    end
-elseif params.shufflePositions=="Mu" % ordered by type
-    [~,idx]=sort(TIVec(:,2),'descend');
-    TIVec=TIVec(idx,:);
-    firm.shufflePositions="Mu";
-elseif params.shufflePositions=="Theta" % Order by Theta
-    [~,idx]=sort(TIVec(:,1),'ascend');
-    TIVec=TIVec(idx,:);
-    firm.shufflePositions="Theta";
-else % Default: Shuffle
-    firm.shufflePositions="Shuffled";
-    idx = randperm(size(TIVec,1));
-    TIVec=TIVec(idx,:);
-end
-
+firm.shufflePositions="Shuffled";
+idx = randperm(size(TIVec,1));
+TIVec=TIVec(idx,:);
 
 % Prepare vectors
 theta=TIVec(:,1);
@@ -111,72 +78,18 @@ identity=TIVec(:,2);
 % Calculate range of theta
 firm.thetaRange = abs(max(theta)-min(theta));
 % Perceived Benefit functions
-% gemA=1;
-% gemL=1;
-% firm.psiWatcher=@(theta_i,theta_j) -gemL.*abs(theta_j-theta_i)+firm.thetaRange;
-% firm.psiClimber=@(theta_i,theta_j) -gemA.*(theta_i-theta_j);
-% firm.psiSlacker=@(theta_i,theta_j) -gemA.*(theta_j-theta_i);
 gemA=firm.thetaRange;
 firm.psiWatcher=@(theta_i,theta_j) -gemA.*(abs(theta_j-theta_i)-firm.thetaRange);
 firm.psiClimber=@(theta_i,theta_j) -gemA.*(theta_i-theta_j);
 firm.psiSlacker=@(theta_i,theta_j) -gemA.*(theta_j-theta_i);
-%% Create G matrix
-firm.gMethod=params.gMethod;
-if params.gMethod=="JR" % Jackson Rogers Social network
-    p=min(0.1,rand);
-    m=ceil(rand*min(10,params.n));
-    Mnr=ceil(m/(p*params.n));
-    firm.gMn=round(Mnr*rand);
-    firm.gMr=Mnr-firm.gMn;
-    firm.gPn=p;
-    firm.gPr=p;
-    firm.gMat=JacksonRogersNW(params.n,firm.gMn,firm.gPn,firm.gMr,firm.gPr, params.m);
-elseif params.gMethod=="Task" % Task network
-    % We need to intialize modularity, cluster and symmetry
-    % Symmetry:
-    firm.gSymmetry=0;
-    if rand>0.5
-        firm.gSymmetry=1;
-    end
-    firm.gAssembly=0;
-    firm.gModularity=0.5*rand();
-    firm.gCluster=randi([2 floor(params.n./3)],1,1);
-    [firm.gMat,~,firm.gLinks]=TaskNetwork(params.n,firm.gCluster,firm.gModularity, firm.gSymmetry, params.m);
-elseif params.gMethod=="TaskAssembly"
-    % We need to intialize modularity, cluster and symmetry
-    % Forward/Backward Symmetry:
-    firm.gSymmetry=0;
-    if rand>0.5
-        firm.gSymmetry=1;
-    end
-    % Assemblyliness
-    firm.gAssembly=rand;
-    % Modularity - number of ties
-    firm.gModularity=rand();
-    firm.gCluster=randi([2 floor(params.n./3)],1,1);
-    [firm.gMat,~,firm.gLinks]=TaskNetworkAss(params.n,firm.gCluster,firm.gModularity,firm.gAssembly, firm.gSymmetry, params.m);
-else
-    firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
-end
 
-%% Generate CEO type
+%% Create G matrix DISABLED
+firm.gMethod="Full";
+firm.gMat=ones(params.n,params.n)-eye(params.n,params.n);
 
-if params.ceoAct=="Random" % Shuffle CEO Type
-    type=unidrnd(3,1,1);
-    switch type
-        case 1 % Embed
-            params.ceoAct="Embed";
-        case 2 % Embed
-            params.ceoAct="Decouple";
-            %case 3 % Off
-            %     params.ceoAct="Off";
-        case 3 % lowEmbed
-            params.ceoAct="LowEmbed";
-    end
-    firm.ceoAct=params.ceoAct;
-    
-end
-firm.startCeoAct=params.ceoAct;
+%% Generate CEO type DISABLED
+firm.ceoAct="Off";
+firm.startCeoAct="Off";
 
 %% Populate firm-level variables.
 % aMat saves the attention choices per time period
@@ -237,73 +150,8 @@ firm.ceoAct=params.ceoAct;
 firm.conUtil=params.conUtil;
 firm.conParam=params.conParam;
 firm.maxDegree=params.maxDegree;
+firm.probTypeSwitch=params.probTypeSwitch;
 % Hash the firm to get the ID of starting values.
 firm.firmID=DataHash(firm);
 
-
-%% Calculate network measures on G
-n=params.n;
-G=firm.gMat;
-if G==G'
-    GPgraph=graph(G);
-else
-    GPgraph=digraph(G);
-end
-
-% Network density
-PC=(n*(n-1))./2;
-EC=height(GPgraph.Edges);
-firm.gDensity=EC/PC;
-
-% Average path length
-% We calculate each path length separately for each
-% connected component in the symmetric graph of A
-% an then use a weighted average
-bincell = conncomp(GPgraph, 'OutputForm', 'cell');
-nrsubgraphs = length(bincell);
-nrNodes=zeros(1,nrsubgraphs);
-sumDist=zeros(1,nrsubgraphs);
-nrEdges=zeros(1,nrsubgraphs);
-weightfactor=zeros(1,nrsubgraphs);
-for ii = 1:nrsubgraphs
-    subg=subgraph(GPgraph, bincell{ii});
-    DM=distances(subg);
-    nrNodes(ii)=length(DM);
-    sumDist(ii)=sum(sum(DM));
-    weightfactor(ii)=nrNodes(ii)/n;
-    nrEdges(ii)=(nrNodes(ii).*(nrNodes(ii)-1));
-    % Zero weight for single nodes (Path Length not defined)
-    if(nrNodes(ii) == 1)
-        weightfactor(ii)=0;
-        nrEdges(ii)=1;
-    end
-    % Renormalize weights to sum to one
-    weightfactor=weightfactor./sum(weightfactor);
-    
-end
-% Average path length is given by the sum of distances divided by the
-firm.gAvgPathLength=((1./nrEdges).*weightfactor)*sumDist';
-firm.gNrComponents=nrsubgraphs;
-
-% Largest eigenvector
-firm.gMaxEV=max(eig(G));
-
-% Clustering & average Degree
-deg = sum(G, 2); %Determine node degrees
-cn = diag(G*triu(G)*G); %Number of triangles for each node
-%The local clustering coefficient of each node
-c = zeros(size(deg));
-c(deg > 1) = 2 * cn(deg > 1) ./ (deg(deg > 1).*(deg(deg > 1) - 1));
-firm.gAvgClustering=mean(c);
-firm.gAvgDegree=mean(deg);
-
-
-% Diameter
-d=distances(GPgraph);
-d(~isfinite(d))=1000;
-% Eccentricity
-ev=max(d,[],2);
-% Radius and diameter
-firm.gRadius=min(ev(ev>0));
-firm.gDiameter=max(ev(ev>0));
 end

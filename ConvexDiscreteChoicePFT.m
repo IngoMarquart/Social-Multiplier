@@ -8,10 +8,10 @@
 % @param: Psi - Expected benefit function handle
 % @param: Choice - Vector given the indecies of valid peers (where connection in G exists)
 % @param: nrChoice - Number of choices
-% @return: util - Utility value
+% @return: util - Negative Utility value
 % @return: a_i_star - Attention choice in the space of all n actors
 %%
-function [util,a_i_star]=ConvexDiscreteChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam)
+function [util,a_i_star]=ConvexDiscreteChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam, maxDegree)
 
 theta=theta(:);
 n=length(theta);
@@ -48,32 +48,15 @@ for z = 1:nrChoice
         x=x_pft;
     end
     
-    % Private utility, positive part
-    PrivUtil=(x(i)-theta(i))^2;
+
     % Calculate a benefit vector for each potential peer
     PsiVec = Psi(theta(i),theta);
-    % Make sure no connection to oneself
-    PsiVec(i)=-100;
-    % Expected benefit
-    if sum(a_i>0) > 10
-        CBenUtil=0;
-    elseif conParam==0
-        CBenUtil=((a_i'.^(1))*(PsiVec));
-    else
-        CBenUtil=((a_i'.^(conParam))*(PsiVec));
-    end
-    
-    % Expected non-alignment cost
-    ConfUtil=a_i'*((x(i).*ez-x).*(x(i).*ez-x));
-    
-    % Full utility new model
-    NewUtil=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
-    
-    % Full utility old model
-    %NewUtil=-PrivUtil+e.*CBenUtil-e.*ConfUtil;
+
+    % Get utility value
+    NewUtil=utilityPFT(x(i),x,a_i,theta,e,PsiVec,i,maxDegree,conParam)
     
     % If this choice is better than the previous one, do this
-    if NewUtil > util
+    if NewUtil < util
         a_i_star=a_i;
         util=NewUtil;
     end
