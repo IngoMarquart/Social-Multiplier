@@ -151,7 +151,7 @@ for block=1:nrBlocks
     % for or parfor
     % SET TO PARFOR FOR LARGE SAMPLE
     % Currently GRAPHING REQUIRES FOR
-    parfor i = 1:cellLength
+    for i = 1:cellLength
         
         % Fill in parameters
         params = blockParamsCell{i};

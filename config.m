@@ -3,13 +3,13 @@
 % Set to one to graph firms
 % Note this saves all firms in a cell, set to 0 for large sims
 % Please disable all parfor loops in main.m
-graphIt = 0;
+graphIt = 1;
 % toGraph denotes the desired graph
 % "NW" graphs the attention network in the last period
 % "SM" graphs x-theta averages over time periods
 toGraph = "SM";
 % This saves the results into the folder ../Datasave/
-saveIt = 1; % Save simulation results to a new folder
+saveIt = 0; % Save simulation results to a new folder
 
 
 
@@ -35,20 +35,37 @@ thetaMean=0;
 % learningRates=[0];
 
 
+% %% Archetype State Space
+% identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
+% %nList=[20:10:40];
+% nList=[60];
+% eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
+% %eList=[0.999,0.9999,0.99999,0.999999];
+% %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
+% consList=[0];
+% PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
+% thetascale=[2,5000000];
+% learningRates=[0,0.05,0.4,0.7,1];
+% %% Dynamics
+% maxT = 200; % Time periods to run
+
+
 %% Archetype State Space
+mListTotal=[1];
+mIterations=1;
+
 identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
 %nList=[20:10:40];
-nList=[60];
-eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
+nList=[4];
+eList=[0.9];
 %eList=[0.999,0.9999,0.99999,0.999999];
 %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
 consList=[0];
-PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
-thetascale=[2,5000000];
-learningRates=[0,0.05,0.4,0.7,1];
+PCscale=[0.5]; Wscale=[1/3]; % "2/3"
+thetascale=[2];
+learningRates=[0];
 %% Dynamics
 maxT = 200; % Time periods to run
-
 
 % %% Figure 1 and 2
 % identifier='PFT-3x3Figure1ad'; % Use "runtime" for a timestamp
@@ -85,9 +102,9 @@ symmetric = 1;
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=0;
+conUtil=1;
 % Concavity parameter if needed
-conParam=0;
+conParam=1.5;
 
 %% G Network
 %% Choose method for underlying network G
