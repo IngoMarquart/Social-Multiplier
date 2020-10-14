@@ -31,22 +31,25 @@ thetaMean=0;
 %  thetascale=[2]; % Parameters of Beta Distribution
 % % The learning Rate delta
 % learningRates=[0];
+%% Probability of type switching
+% probTypeSwitch=0.5;
 
-
-% %% Archetype State Space
+%% Archetype State Space
 % identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
-% %nList=[20:10:40];
-% nList=[60];
-% eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
-% %eList=[0.999,0.9999,0.99999,0.999999];
-% %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
-% consList=[0];
-% PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
-% thetascale=[2,5000000];
-% learningRates=[0,0.05,0.4,0.7,1];
-% % Dynamics
-% maxT = 200; % Time periods to run
-
+identifier='PFT-3x3-TS09'; % Use "runtime" for a timestamp
+%nList=[20:10:40];
+nList=[60];
+eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
+%eList=[0.999,0.9999,0.99999,0.999999];
+%eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
+consList=[0];
+PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
+thetascale=[2,5000000];
+learningRates=[0,0.05,0.4,0.7,1];
+% Dynamics
+maxT = 200; % Time periods to run
+%% Probability of type switching
+probTypeSwitch=0.9;
 
 
 % %% Figure 1 and 2
@@ -60,23 +63,23 @@ thetaMean=0;
 % learningRates=[0.5];
 % % Dynamics
 % maxT = 100; % Time periods to run
+%% Probability of type switching
+% probTypeSwitch=0;
 
 %% Smaller State Space
-mListTotal=[1:100];
-mIterations=1;
-identifier='PFT-3x3v05'; % Use "runtime" for a timestamp
-nList=[10,20,30];
-eList=[0.1,0.4,0.7,0.9];
-consList=[0];
-PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
-thetascale=[2,5000000];
-learningRates=[0,0.05,0.4,1];
-% Dynamics
-maxT = 100; % Time periods to run
-
-% Concavity parameter if needed
-conUtil=1;
-conParam=0.5;
+% mListTotal=[1:100];
+% mIterations=1;
+% identifier='PFT-3x3-TS05'; % Use "runtime" for a timestamp
+% nList=[10,20,30];
+% eList=[0.1,0.4,0.7,0.9];
+% consList=[0];
+% PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
+% thetascale=[2,5000000];
+% learningRates=[0,0.05,0.4,1];
+% % Dynamics
+% maxT = 200; % Time periods to run
+%% Probability of type switching
+% probTypeSwitch=0;
 
 %% Detailed Settings
 
@@ -94,12 +97,11 @@ symmetric = 1;
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=1;
+conUtil=0;
 % Concavity parameter if needed
-conParam=0.5;
+conParam=1;
 
-%% Probability of type switching
-probTypeSwitch=0;
+
 
 
 %% Baseline parameters
