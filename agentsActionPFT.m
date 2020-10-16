@@ -14,6 +14,7 @@ priorX = firm.xMat(:, firm.T-1);
 identity = firm.muMat(:, firm.T);
 % Realize current embedding
 e=firm.e;
+k=firm.k;
 % Set end point
 if firm.rationality==0
     endpoint=2;
@@ -76,12 +77,12 @@ for t = 2:(endpoint)
             %% Discrete optimization to find focal peer
             % Using the current representation of theta by agent i
             % Set up objective function
-            if identity(i) == 1% Self-Improver
-                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
-            elseif identity(i) == 0% Self-Assessor
-                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
-            else % Self-Enhancer
-                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+            if identity(i) == 1% Climber
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
+            elseif identity(i) == 0% Watcher
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
+            else % Slacker
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
             end
         else
             %% Concave utility detected.

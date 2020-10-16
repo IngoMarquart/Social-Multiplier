@@ -50,6 +50,22 @@ maxT = 200; % Time periods to run
 % Probability of type switching
 probTypeSwitch=0;
 
+% %% Archetype State Space
+% % identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
+% identifier='PFT-3x3-TS09'; % Use "runtime" for a timestamp
+% %nList=[20:10:40];
+% nList=[60];
+% eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
+% %eList=[0.999,0.9999,0.99999,0.999999];
+% %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
+% consList=[0];
+% PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
+% thetascale=[2,5000000];
+% learningRates=[0,0.05,0.4,0.7,1];
+% % Dynamics
+% maxT = 200; % Time periods to run
+% %% Probability of type switching
+% probTypeSwitch=0.9;
 
 
 %% Further Settings

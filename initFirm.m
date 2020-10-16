@@ -124,6 +124,7 @@ firm.T=2;
 firm.minEqmT=params.minEqmT;
 firm.maxEqmT=params.maxEqmT;
 firm.gamma=params.gamma;
+firm.k=params.k;
 firm.ceoStartT=params.ceoStartT;
 firm.learningRate=params.learningRate;
 firm.globalsearch=params.globalsearch;

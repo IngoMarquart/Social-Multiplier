@@ -34,7 +34,7 @@ Tbeta = firm.Tbeta;
 ProbC=firm.gamma(1);
 ProbW=firm.gamma(2);
 ProbS=firm.gamma(3);
-
+k=firm.k;
 
 flucX=firm.flucX;
 flucT=firm.flucT;
@@ -55,4 +55,4 @@ conParam = firm.conParam;
 ShufflePositions=firm.shufflePositions;
 learningRate=firm.learningRate;
 
-row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam,ShufflePositions,thetaStartStr,thetaStr,xStr,muStr,learningRate,pgrank,indegree,peer,peerX,peerMu,flucX,flucT);
+row = table(firmID, T, n, m, e, rationality, NrC, NrW, NrS,ProbC,ProbW,ProbS, Talpha, Tbeta, realSkew, realCons, paramCons, avgX, avgTheta, sumX, maxX, minX, maxTheta,minTheta,varX,varTheta, SM, diffM, maxDiff, minDiff, thetaRange, conUtil, conParam,ShufflePositions,thetaStartStr,thetaStr,xStr,muStr,learningRate,pgrank,indegree,peer,peerX,peerMu,flucX,flucT,k);

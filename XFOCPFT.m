@@ -7,26 +7,39 @@ function x=XFOCPFT(x_t_1,A,theta,e)
 % @param: theta - theta levels
 % @return: x - vector of effort levels
 %%
-theta=theta(:); % Make sure column vector
-x_t_1=x_t_1(:); % Make sure column vector
 
+function x=XFOCPFT(x_t_1,A,theta,e,k)
 % New utility
 n=length(theta);
+
+x_bar=A*x_t_1;
+
+logic_vec=theta<=x_bar;
+
+% Left leg of utility function
 if e<1
     ebar=e./(1-e);
     D=eye(n,n).*sum(A,2);
     O=eye(n,n)+ebar.*D;
     F=theta+ebar*A*x_t_1;
-    x=O\F;
+    x_n=O\F;
 else
-    x=A*x_t_1;
+    x_n=A*x_t_1;
 end
-% Old utility
-% n=length(theta);
-% D=eye(n,n).*sum(A,2);
-% O=eye(n,n)+e.*D;
-% x=O\(theta+e.*A*x_t_1);
-%x=(eye(n,n)+e.*(eye(n,n).*sum(A,2)))\(theta+e.*A*x_t_1);
+
+% Right leg of utility function
+if e<1
+    ebar=(e*k)./(1-e);
+    D=eye(n,n).*sum(A,2);
+    O=eye(n,n)+ebar.*D;
+    F=theta+ebar*A*x_t_1;
+    x_k=O\F;
+else
+    x_k=A*x_t_1;
+end
+
+% Assing left or right leg of utility
+x=logic_vec.*x_n+(1-logic_vec).*x_k;
 
 
 end

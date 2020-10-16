@@ -10,6 +10,8 @@ function [util,a_i_star]=ConvexDiscreteChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Cho
 % @return: util - Negative Utility value
 % @return: a_i_star - Attention choice in the space of all n actors
 %%
+function [util,a_i_star]=ConvexDiscreteChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam, maxDegree,k)
+
 theta=theta(:);
 n=length(theta);
 % Define One vector
@@ -35,7 +37,7 @@ for z = 1:nrChoice
     
     % PFT Version: x_t_1 for j != i
     x_pft=x_t_1;
-    x_pft_foc=XFOCPFT(x_t_1,a,theta,e);
+    x_pft_foc=XFOCPFT(x_t_1,a,theta,e,k);
     x_pft(i)=x_pft_foc(i);
     x=x_pft;
     
@@ -44,7 +46,7 @@ for z = 1:nrChoice
     PsiVec = Psi(theta(i),theta);
 
     % Get utility value
-    NewUtil=-utilityPFT(x(i),x,a_i,theta,e,PsiVec,i,maxDegree,conParam);
+    NewUtil=-utilityPFT(x(i),x,a_i,theta,e,PsiVec,i,maxDegree,conParam,k);
     
     % If this choice is better than the previous one, do this
     if NewUtil < util
