@@ -79,7 +79,7 @@ mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
 
 disp(['Preparing for iteration set ', num2str(bigSet)])
 %% Create a cell array of parameters to run
-paramsCell = createParamCell(PCscale, Wscale, thetascale, mList, nList, eList, consList, paramsDefault, symmetric, conUtil, conParam,learningRates);
+paramsCell = createParamCell(PCscale, Wscale, thetascale, mList, nList, eList, consList, paramsDefault, symmetric, conUtil, conParam,learningRates,kList);
 % Nr of simulations
 NrFirms = length(paramsCell);
 

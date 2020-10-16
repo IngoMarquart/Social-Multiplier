@@ -12,7 +12,7 @@
 % @return: u - Negative Utility Value
 %%
 
-function u=utilityPFT(x_i,x_t_1,a_i,theta,e,PsiVec,i,maxDegree,conParam)
+function u=utilityPFT(x_i,x_t_1,a_i,theta,e,PsiVec,i,maxDegree,conParam,k)
 
     x_t_1=x_t_1(:);
     PsiVec=PsiVec(:);
@@ -39,7 +39,7 @@ function u=utilityPFT(x_i,x_t_1,a_i,theta,e,PsiVec,i,maxDegree,conParam)
     ConfUtil=a_i'*((x(i).*ez-x).*(x(i).*ez-x));
     if sum(a_i)>0
     % Full utility new model
-        u=-PrivUtil.*(1-e)+e.*CBenUtil-e.*ConfUtil;
+        u=-PrivUtil.*(1-e)+e.*CBenUtil-k.*e.*ConfUtil;
     else
         u=-0;
     end

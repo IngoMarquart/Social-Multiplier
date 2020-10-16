@@ -17,6 +17,7 @@ priorX = firm.xMat(:, firm.T-1);
 identity = firm.muMat(:, firm.T);
 % Realize current embedding
 e=firm.e;
+k=firm.k;
 % Set end point
 if firm.rationality==0
     endpoint=2;
@@ -80,11 +81,11 @@ for t = 2:(endpoint)
             % Using the current representation of theta by agent i
             % Set up objective function
             if identity(i) == 1% Climber
-                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
             elseif identity(i) == 0% Watcher
-                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
             else % Slacker
-                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+                [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
             end
         else
                         %% Discrete optimization to find focal peer
@@ -177,7 +178,7 @@ for t = 2:(endpoint)
     
     % curAttention now has all period best-replies
     % PFT Version: x_t_1 for j != i
-    x_pft=XFOCPFT(priorX,curAttention,theta,e);
+    x_pft=XFOCPFT(priorX,curAttention,theta,e,k);
     % FOC Version: x anticipated based on a_t_1
     % Calculate boundedly rational or rational choice
     % X corresponds to x(t-1) or x(t)

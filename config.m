@@ -16,40 +16,44 @@ saveIt = 1; % Save simulation results to a new folder
 % combinations.
 mListTotal=[1:1000];
 % How many "m" do we allow per block? Reduce if memory overflow
-mIterations=4;
+mIterations=1;
 %% Per firm
 % comments and uncomment desired
 thetaVar=1;
 thetaMean=0;
 % 
 %% Single firm
-%  nList = [5]; % Number of workers
-%  mList = [5]; % Random Seeds / Iterations
-%  eList = [1000]; % Embedding levels
-%  consList = [-1]; % Consolidation levels
-%  PCscale=[0.5]; Wscale=1/4; % Ratio of Improvers/Enhancers and P(Assessors)
-%  thetascale=[2]; % Parameters of Beta Distribution
-% % The learning Rate delta
-% learningRates=[0];
-%% Probability of type switching
-% probTypeSwitch=0.5;
-
-%% Archetype State Space
-% identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
-identifier='PFT-3x3-TS09'; % Use "runtime" for a timestamp
-%nList=[20:10:40];
-nList=[60];
-eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
-%eList=[0.999,0.9999,0.99999,0.999999];
-%eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
-consList=[0];
-PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
-thetascale=[2,5000000];
-learningRates=[0,0.05,0.4,0.7,1];
-% Dynamics
+mListTotal=[1];
+nList = [10]; % Number of workers
+%mList = [5]; % Random Seeds / Iterations
+eList = [0.9]; % Embedding levels
+consList = [0]; % Consolidation levels
+PCscale=[0.5]; Wscale=1/4; % Ratio of Improvers/Enhancers and P(Assessors)
+thetascale=[2]; % Parameters of Beta Distribution
 maxT = 200; % Time periods to run
-%% Probability of type switching
-probTypeSwitch=0.9;
+% The learning Rate delta
+learningRates=[0];
+% Probability of type switching
+probTypeSwitch=0;
+% Loss Aversion
+kList=[0.1,0.4];
+
+% %% Archetype State Space
+% % identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
+% identifier='PFT-3x3-TS09'; % Use "runtime" for a timestamp
+% %nList=[20:10:40];
+% nList=[60];
+% eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
+% %eList=[0.999,0.9999,0.99999,0.999999];
+% %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
+% consList=[0];
+% PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
+% thetascale=[2,5000000];
+% learningRates=[0,0.05,0.4,0.7,1];
+% % Dynamics
+% maxT = 200; % Time periods to run
+% %% Probability of type switching
+% probTypeSwitch=0.9;
 
 
 % %% Figure 1 and 2
@@ -67,20 +71,21 @@ probTypeSwitch=0.9;
 % probTypeSwitch=0;
 
 %% Smaller State Space
-% mListTotal=[1:100];
-% mIterations=1;
-% identifier='PFT-3x3-TS05'; % Use "runtime" for a timestamp
-% nList=[10,20,30];
-% eList=[0.1,0.4,0.7,0.9];
-% consList=[0];
-% PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
-% thetascale=[2,5000000];
-% learningRates=[0,0.05,0.4,1];
-% % Dynamics
-% maxT = 200; % Time periods to run
-%% Probability of type switching
-% probTypeSwitch=0;
-
+mListTotal=[1:100];
+mIterations=4;
+identifier='PFT-3x3-LA'; % Use "runtime" for a timestamp
+nList=[10,20,30];
+eList=[0.1,0.4,0.7,0.9];
+consList=[0];
+PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
+thetascale=[2,5000000];
+learningRates=[0,0.05,0.4,1];
+% Dynamics
+maxT = 200; % Time periods to run
+% Probability of type switching
+probTypeSwitch=0;
+% Loss Aversion
+kList=[0.01,0.1,0.3,0.5,0.7,0.9,1];
 %% Detailed Settings
 
 %% Skew handling
