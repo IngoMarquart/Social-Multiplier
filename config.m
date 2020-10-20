@@ -14,7 +14,7 @@ saveIt = 1; % Save simulation results to a new folder
 %% List of parameters to run
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
-mListTotal=[1:1000];
+mListTotal=[1:500];
 % How many "m" do we allow per block? Reduce if memory overflow
 mIterations=4;
 %% Per firm
@@ -36,7 +36,7 @@ thetaMean=0;
 
 %% Archetype State Space
 % identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
-identifier='PFT-3x3-TS09'; % Use "runtime" for a timestamp
+identifier='PFT-3x3-TS03'; % Use "runtime" for a timestamp
 %nList=[20:10:40];
 nList=[60];
 eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
@@ -49,7 +49,7 @@ learningRates=[0,0.05,0.4,0.7,1];
 % Dynamics
 maxT = 200; % Time periods to run
 %% Probability of type switching
-probTypeSwitch=0.9;
+probTypeSwitch=0.3;
 
 
 % %% Figure 1 and 2
