@@ -37,7 +37,7 @@ thetaMean=0;
 %% Smaller State Space
 mListTotal=[1:100];
 mIterations=1;
-identifier='PFT-3x3-v02'; % Use "runtime" for a timestamp
+identifier='PFT-3x3v02'; % Use "runtime" for a timestamp
 nList=[10,20,30];
 eList=[0.1,0.4,0.7,0.9];
 consList=[0];

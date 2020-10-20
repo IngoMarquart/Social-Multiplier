@@ -108,12 +108,12 @@ for t = 2:(endpoint)
                 [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb);
             end 
             if (round(curUiD,5) < round(curUi,5)) && round(curUiD,5) <0
-                disp(['curUID with', num2str(-curUiD), ' higher than ', num2str(-curUi)])
-                disp(['curAID='])
-                disp(curAiD)
-                disp(['curAI='])
-                disp(curAi)
-                disp(['i=', num2str(i)])
+                %disp(['curUID with', num2str(-curUiD), ' higher than ', num2str(-curUi)])
+                %disp(['curAID='])
+                %disp(curAiD)
+                %disp(['curAI='])
+                %disp(curAi)
+                %disp(['i=', num2str(i)])
                 if round(curAi,5)==round(curAiD,5)
                     error("Uh oh, something is wrong with global opt!")
                 end
