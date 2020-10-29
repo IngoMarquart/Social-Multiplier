@@ -1,14 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% CONFIGURATION %%%%%%%%%%%%%%%%%%%%
-%% ROBUSTNESS CHECK: Focus Parameter & peer groups
+%% ROBUSTNESS CHECK: Loss Aversion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This configuration file replicates the v-parameter robustness check.
-% 1. Please note that it requires the global optimization toolpackage
-% 2. This simulation takes longer to run as the optimization problem is
-% complex
-% 3. The state space is a smaller version of the main result
-% 4. We recommend to run at least 6, better 12 random seeds "m", however,
-% indicitative results can be seen even after 3 iterations.
-
+% This configuration file replicates the k-parameter robustness check
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
 saveIt = 1; % Save simulation results to a new folder
@@ -21,7 +14,7 @@ graphIt = 0;
 
 % Concavity parameter "v"
 % We check 0.2,0.5,2 (main results),1.5
-conParam=0.2;
+conParam=1;
 %% List of parameters to run
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
@@ -29,7 +22,7 @@ mListTotal=[1:12];
 % How many "m" do we allow per block? Reduce if memory overflow
 mIterations=1;
 % Identifier for the folders being set
-identifier='PFT-3x3v02'; % Use "runtime" for a timestamp
+identifier='PFT-3x3-LA'; % Use "runtime" for a timestamp
 % Number of employees in the firm
 nList=[10,20,30];
 % Embedding levels to check
@@ -49,23 +42,8 @@ consList=[0];
 maxT = 200; % Time periods to run
 % Probability of type switching
 probTypeSwitch=0;
-
-% %% Archetype State Space
-% % identifier='PFT-3x3Figure3'; % Use "runtime" for a timestamp
-% identifier='PFT-3x3-TS09'; % Use "runtime" for a timestamp
-% %nList=[20:10:40];
-% nList=[60];
-% eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99,1];
-% %eList=[0.999,0.9999,0.99999,0.999999];
-% %eList=[0.10,  0.50, 1.00, 5.00, 50,100,1000,10000];
-% consList=[0];
-% PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
-% thetascale=[2,5000000];
-% learningRates=[0,0.05,0.4,0.7,1];
-% % Dynamics
-% maxT = 200; % Time periods to run
-% %% Probability of type switching
-% probTypeSwitch=0.9;
+% Loss Aversion
+kList=[0.01,0.1,0.3,0.5,0.7,0.9,1];
 
 
 %% Further Settings
@@ -91,7 +69,7 @@ toGraph = "NW";
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=1;
+conUtil=0;
 
 %% Baseline parameters
 maxCellLength=10000; % Split simulation runs into blocks for memory

@@ -1,12 +1,10 @@
-function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric,conUtil,conParam,learningRates)
+function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric,conUtil,conParam,learningRates,kList)
 % createParamCell - This function simply creates a list of parameters to run
 %%
 % @param: Lists - the lists of configurations
 % @param: paramsDefault - starting struct of parameters that are constant
 % @return: pCell - Cell of params structures over which to loop
 %%
-function pCell=createParamCell(PCscale,Wscale,thetascale,mList,nList,eList,consList,paramsDefault,symmetric,conUtil,conParam,learningRates,kList)
-
 %% Create a cell array of type vectors
 gammaVec={};
 iC=1;

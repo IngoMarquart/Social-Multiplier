@@ -1,4 +1,4 @@
-  function firm = runTurn(firm)
+function firm = runTurn(firm)
 % runTurn - runs one T on the given firm
 %%
 % @param: firm- a firm

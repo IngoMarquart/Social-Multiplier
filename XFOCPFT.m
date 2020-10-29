@@ -1,4 +1,4 @@
-function x=XFOCPFT(x_t_1,A,theta,e)
+function x=XFOCPFT(x_t_1,A,theta,e,k)
 % XFOCPFT - Solves FOC for all actors, returning PFT output
 %%
 % @param: x_t_1 - Prior period output
@@ -7,8 +7,6 @@ function x=XFOCPFT(x_t_1,A,theta,e)
 % @param: theta - theta levels
 % @return: x - vector of effort levels
 %%
-
-function x=XFOCPFT(x_t_1,A,theta,e,k)
 % New utility
 n=length(theta);
 

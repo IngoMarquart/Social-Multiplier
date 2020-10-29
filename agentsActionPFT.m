@@ -93,21 +93,21 @@ for t = 2:(endpoint)
             % Using the current representation of theta by agent i
             % Set up objective function
             if identity(i) == 1% Self-Improver
-                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
             elseif identity(i) == 0% Self-Assessor
-                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
             else % Self-Enhancer
-                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
+                [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree,k);
             end
             %% Global optimization routine
             % Account for non-linear effects in monitoring, either concave or convex
             % Set up objective function
             if identity(i) == 1% Climber
-                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb);
+                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb,k);
             elseif identity(i) == 0% Watcher
-                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb);
+                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb,k);
             else % Slacker
-                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb);
+                [curUi, curAi] = ConcaveChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,firm.conParam, firm.maxDegree,ConA, Conb,k);
             end 
             if (round(curUiD,5) < round(curUi,5)) && round(curUiD,5) <0
                 %disp(['curUID with', num2str(-curUiD), ' higher than ', num2str(-curUi)])
@@ -178,7 +178,7 @@ for t = 2:(endpoint)
     
     % curAttention now has all period best-replies
     % PFT Version: x_t_1 for j != i
-    x_pft=XFOCPFT(priorX,curAttention,theta,e);
+    x_pft=XFOCPFT(priorX,curAttention,theta,e,k);
     x=x_pft;
     % Save values to matrices
     output(:, t) = x;
