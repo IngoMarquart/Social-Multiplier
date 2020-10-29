@@ -1,6 +1,6 @@
 %%
 %   returnRow.m
-%   Returns the row of the current firm to save
+%   Returns the row of the current firm to save, possibly format results
 %%
 % @param: firm- a firm
 % @return: row - a 1-row table

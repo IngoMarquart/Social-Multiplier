@@ -40,13 +40,7 @@ for z = 1:nrChoice
     x_pft=x_t_1;
     x_pft_foc=XFOCPFT(x_t_1,a,theta,e);
     x_pft(i)=x_pft_foc(i);
-    % FOC Version: x anticipated based on a_t_1
-    if rationality > 0
-        x_rat=XFOCSPNE(a,theta,e);
-        x=(1-rationality).*x_pft+rationality.*x_rat;
-    else
-        x=x_pft;
-    end
+    x=x_pft;
     
 
     % Calculate a benefit vector for each potential peer

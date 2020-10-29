@@ -2,18 +2,7 @@
 %   initFirm.m
 %   For given parameter ranges, initiate a firm
 %%
-% @param: n - Number of actors
-% @param: T - Dynamic time periods
-% @param: gamma - Vector of type probabilities
-% @param: thetaD - Parameters of Beta distribution
-% @param: e - Embedding
-% @param: m - Firm Seed
-% @param: minEqmT - Minimum time periods to run (independent of convergence)
-% @param: maxEqmT - Minimum time periods to run (independent of convergence)
-% @param: globalsearch - Search method
-% @param: gMethod
-% @param: pn,mn - Exogenous social matrix configuration
-% @param: cons - Consolidation
+% @param: params - struct of parameters
 % @return: firm - a firm
 %%
 function firm=initFirm(params)

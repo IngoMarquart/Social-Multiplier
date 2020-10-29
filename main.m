@@ -1,79 +1,17 @@
 %% Initial comments
 % Use config.m to set parameters, then run main.m
-%% Plan of model
-% Each firm we run saves its state as a "firm" struct, which is the
-% argument of most of our model functions.
-% Results of the simulation are saved in a table object for simple
-% exporting.
-% 1. Parameter Cell
-%   With a list of variables passed from the config file, we create a Cell
-%   object that includes parameters for each firm we plan to run, including
-%   initial values, random networks and so on.
-% 2. Execution plan
-%   Since we do not want to hard-code which results are returned, but still
-%   need to pre-allocate (see below) the result objects, we run a test firm
-%   once to return a single "example" row, to see how many variables are
-%   returned.
-%   If not graphing, we will run several firms in parallel. Each firm runs
-%   over maxT time periods.
-%   Results from each time period t are saved as a row in tableToFill.
-%   All these T rows for each firm are then saved in resultCell. This is
-%   necessary to run firms in parallel.
-%   Therefore, resultCell{i} holds all maxT
-%   results for firm i.
-%   After the simulation block, the cell is reduced (syncronously) to a
-%   table called mainTable. This is the final return object.
-% 3. Reduction into mainTable
-%   Reduction proceeds in two steps. First, all cell items from resultCell
-%   are vertically concatenated into vertcat. vertcat is then filled into
-%   mainTable at the appropriate location (see below why it is not just
-%   appended).
-% 4. Block execution
-%   Firms need to be ran for maxT time periods which implies a large
-%   resultCell. Since Cells take more memory than
-%   a table, we may need to reduce resultCell into mainTable periodically
-%   instead of once at the end. Set maxCellLength as the maximum size of
-%   resultCell to hold in memory. When maxCellLength is larger than this
-%   value, parallel executation is held and resultCell is reduced to
-%   mainTable.
-%   Thus, the main loop runs along
-%   -> blocks
-%   --> firms
-%   ---> time periods
-%   But mainTable saves a row for each time period. Thus, some index
-%   juggling is necessary.
-% 5. Working with parallel objects - code complexity.
-%   Matlabs parallel programming model is quite simple, hence, at the time of
-%   writing this program, limited.
-%   You will note that we try to pre-allocate all tables and cells.
-%   Generally, efficient and parallel MatLab code requires us to always
-%   access tables or cells via a an index or range that is fixed prior to
-%   executation. Essentially, this can only be the counter variable of a
-%   loop. In contrast, if we could append results, the code would be much
-%   simpler. Especially when it comes to memory efficiency, appending is not
-%   possible in MatLab2018.
+%% ROBUSTNESS CHECK: Focus Parameter & peer groups
+% Please see config.m for further details
+% Please see main results for description of simulation
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% CONFIGURATION %%%%%%%%%%%%%%%%%%%%
 % run outsources config.m in path
 config;
 
-
-
-
-% Calculate maximal variance such that range stays positive
-% a=2;
-%b=max(thetascale);
-%c_var=(a*b)/((a+b+1)*(a+b)^2);
-%c=sqrt(1/c_var);
-%paramsDefault.thetaVar=(paramsDefault.thetaMean*2)/c;
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
 
 nrMBlocks=ceil(size(mListTotal,2)/mIterations);
-
-
-for bigSet = 1:12
+for bigSet = 1:nrMBlocks
 
 mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
 
@@ -301,7 +239,7 @@ if graphIt == 1
     
 end
 
-%% Saving mechanics
+%% Saving
 % Current runtime
 runtime = posixtime(datetime);
 

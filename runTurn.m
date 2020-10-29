@@ -11,12 +11,6 @@ function firm = runTurn(firm)
 %firm = preTransform(firm);
 firm.e=firm.eMat(firm.T);
 
-
-%% CEO Action
-if firm.ceoAct~="Off"
-firm = ceoAction(firm);
-end
-
 %% Confirm embedding size - Matlab limit on float size to invert matrices
 if firm.e>=1.0000e+14
     firm.e=1.0000e+14;

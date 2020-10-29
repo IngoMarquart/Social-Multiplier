@@ -20,7 +20,7 @@ e=firm.e;
 % Set end point
 if firm.rationality==0
     endpoint=2;
-else
+else % We have disabled rationality for now, so one optimization run is sufficient
     endpoint=firm.maxEqmT;
 end
 %% Generate choice sets
@@ -79,22 +79,26 @@ for t = 2:(endpoint)
             %% Discrete optimization to find focal peer
             % Using the current representation of theta by agent i
             % Set up objective function
-            if identity(i) == 1% Climber
+            if identity(i) == 1% Self-Improver
                 [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
-            elseif identity(i) == 0% Watcher
+            elseif identity(i) == 0% Self-Assessor
                 [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
-            else % Slacker
+            else % Self-Enhancer
                 [curUi, curAi] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
             end
         else
-                        %% Discrete optimization to find focal peer
+            %% Concave utility detected.
+            % We run both discrete (fast) and global optimization (slow)
+            % where the former checks border cases of the latter
+            % We then pick the most beneficial for the employee!
+            %% Discrete optimization to find focal peer
             % Using the current representation of theta by agent i
             % Set up objective function
-            if identity(i) == 1% Climber
+            if identity(i) == 1% Self-Improver
                 [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e, thetaRep, firm.psiClimber, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
-            elseif identity(i) == 0% Watcher
+            elseif identity(i) == 0% Self-Assessor
                 [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiWatcher, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
-            else % Slacker
+            else % Self-Enhancer
                 [curUiD, curAiD] = ConvexDiscreteChoicePFT(prevAttention,priorX, firm.e,  thetaRep, firm.psiSlacker, i, ChoiceCell{i}, nrChoices(i), firm.rationality,1, firm.maxDegree);
             end
             %% Global optimization routine
@@ -117,7 +121,6 @@ for t = 2:(endpoint)
                 if round(curAi,5)==round(curAiD,5)
                     error("Uh oh, something is wrong with global opt!")
                 end
-                %error("Uh oh, something is wrong with global opt!")
                 curAi=curAiD;
                 curUi=curUiD;
             end
@@ -178,43 +181,12 @@ for t = 2:(endpoint)
     % curAttention now has all period best-replies
     % PFT Version: x_t_1 for j != i
     x_pft=XFOCPFT(priorX,curAttention,theta,e);
-    % FOC Version: x anticipated based on a_t_1
-    % Calculate boundedly rational or rational choice
-    % X corresponds to x(t-1) or x(t)
-    if firm.rationality > 0
-        x_rat=XFOCSPNE(a,theta,e);
-        x=(1-firm.rationality).*x_pft+firm.rationality.*x_rat;
-        
-    else
-        x=x_pft;
-    end
+    x=x_pft;
     % Save values to matrices
     output(:, t) = x;
     attention{t} = curAttention;
     utility(:, t) = utilityVec(:);
     finalt = t;
-    if firm.rationality > 0
-        % Check convergence. Fluctuations should be small enough, and the
-        % Simulation has run for many periods already
-        udif = abs(max(abs(utility(:, t) - utility(:, t - 1))));
-        xdif = abs(max(abs(output(:, t) - output(:, t - 1))));
-        pdif = abs(sum(sum(abs(curAttention - prevAttention))));
-        
-        
-        %%% Uncomment "disp" to see convergence per iteration
-        
-        if (((pdif <= 1.0000e-5) && (udif <= 1.0000e-5) && (xdif <= 1.0000e-5)) && (t > firm.minEqmT))
-            %disp(['Finish on t ',num2str(t),' with current convergence in utils ',num2str(udif),', in x ',num2str(xdif),' in p ',num2str(pdif)])
-            break;
-        end
-        
-        % If half-time is achieved and p values fluctuate only by tiny amounts,
-        % end the simulation
-        if ((abs(pdif) <= 1.0000e-6 * t) && (t >= endpoint / 2))
-            warning('Convergence achieved due to half-time');
-            break;
-        end
-    end
 end
 
 %% Update Firm

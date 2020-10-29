@@ -1,13 +1,15 @@
 %%
-% DiscreteChoice
-% Assuming that each actor picks only one peer, this function find the one
-% giving the most utility
-% @param: a_t_1 - Attention matrix of last time period
-% @param: e,delta - Embedding and scaling variable
+% ConcaveChoice
+% Global optimization routine if utility is concave wrt. monitoring weights
+% @param: a/x_t_1 - Attention/output matrix of last time period
+% @param: e - Embedding and scaling variable
 % @param: theta_i, theta - theta vector and theta of i
 % @param: Psi - Expected benefit function handle
 % @param: Choice - Vector given the indecies of valid peers (where connection in G exists)
 % @param: nrChoice - Number of choices
+% @param: conParam - v parameter of utility function
+% @param: maxDegree - bound to degree
+% @param: conA,ConB - Constraints for optimization
 % @return: util - Utility value
 % @return: a_i_star - Attention choice in the space of all n actors
 %%
@@ -22,19 +24,13 @@ ez=ones(n,1);
 util=0;
 a_i_star=zeros(n,1);
 
-% Pass this elsewhere
-%% Generate choice sets
-
 %% Generate Constraint matrices
-
-
 curAiRest = a_i_star(Choice);
 
 A = ConA{i};
 b = Conb{i};
 lb = zeros(size(curAiRest));
 ub = ones(size(curAiRest));
-
 
 % Constants
 PsiVec = Psi(theta(i),theta);
@@ -87,9 +83,6 @@ function util=valueFunction(a_i_Rest,a_t_1,x_t_1,theta,e,PsiVec,i,maxDegree,conP
     if sum(a_i > 1)
         a_i = bsxfun(@times, a_i, 1 ./ (sum(a_i)));
         a_i(isnan(a_i)) = 0;
-        % disp(['sum Pstar larger than 1. Fixing. Occured with g: ', num2str(g), ', identity: ', num2str(identity(i)), ', theta: ', num2str(theta_i), ...
-        %         ' in period ', num2str(t), ...
-        %         ' with sum pstar: ', num2str(sum(curAi))]);
     end
     % Assemble new P
     if sum(isnan(a_i))>0
