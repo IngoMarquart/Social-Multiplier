@@ -1,10 +1,8 @@
-%%
-% % calcAggVars
-% This function calculates the aggregate variables needed to be saved in firm
-% @param: firm
-%%
-
 function firm= calcAggVars(firm)
+% calcAggVars - This function calculates the aggregate variables needed to be saved in firm
+%%
+% @param/return: firm
+%%
 % Unpack firm variables
 PMat=firm.aMat{firm.T};
 X=firm.xMat(:,firm.T);

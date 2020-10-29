@@ -1,12 +1,9 @@
-%%
-%   runTurn.m
-%   runs one T on the given firm
+  function firm = runTurn(firm)
+% runTurn - runs one T on the given firm
 %%
 % @param: firm- a firm
 % @return: firm - a firm
 %%
-function firm = runTurn(firm)
-
 %% Pre-turn Transform
 %firm = preTransform(firm);
 firm.e=firm.eMat(firm.T);

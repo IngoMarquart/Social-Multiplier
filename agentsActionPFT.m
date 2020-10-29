@@ -1,12 +1,9 @@
-%%
-% agentsAction.m
-% runs one T on the given firm
+function firm = agentsActionPFT(firm)
+% agentsActionPFT - runs one T on the given firm
 %%
 % @param firm - a firm
 % @return firm - a firm
 %%
-function firm = agentsActionPFT(firm)
-
 %% Unpack some common variables
 n = firm.n;
 % Row of thetas and prior thetas

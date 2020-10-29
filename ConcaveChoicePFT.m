@@ -1,6 +1,6 @@
+function [util,a_i_star]=ConcaveChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam,maxDegree,ConA, Conb)
+% ConcaveChoice - Global optimization routine if utility is concave wrt. monitoring weights
 %%
-% ConcaveChoice
-% Global optimization routine if utility is concave wrt. monitoring weights
 % @param: a/x_t_1 - Attention/output matrix of last time period
 % @param: e - Embedding and scaling variable
 % @param: theta_i, theta - theta vector and theta of i
@@ -13,8 +13,6 @@
 % @return: util - Utility value
 % @return: a_i_star - Attention choice in the space of all n actors
 %%
-function [util,a_i_star]=ConcaveChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam,maxDegree,ConA, Conb)
-
 theta=theta(:);
 n=length(theta);
 % Define One vector

@@ -1,13 +1,10 @@
+function n=GraphNetwork(firm)
+% GraphNetwork - This function graphs the G network and highlights the A network on top of it.
 %%
-% % GraphNetwork
-% This function graphs the G network and highlights the A network on top of it.
 % @param: Gmat - Symmetric G matrix
 % @param: SPmat - Symmetric P matrix
 % @param: identity, theta, X: nx1 vectors of identity, theta and X
 %%
-
-function n=GraphNetwork(firm)
-
 % Unpack firm variables
 PMat=firm.aMat{firm.T};
 X=firm.xMat(:,firm.T);

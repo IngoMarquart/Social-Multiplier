@@ -1,13 +1,11 @@
-%%
-% % CalcConstraints
-% Returns linear constraint matrices for the optimization
+function [ConA,Conb] = CalcConstraints(n, NrChoices)
+% CalcConstraints - Returns linear constraint matrices for the optimization
 % Assuming there are NrChoices to be made, makes sure they are
 % Positive, smaller than one, and sum to at most 1 and at least 0
+%%
 % @param: n - number of actors
 % @param: NrChoices - vector for each actor i determining how many choices he has.
 %% 
-
-function [ConA,Conb] = CalcConstraints(n, NrChoices)
 ConA={};
 Conb={};
 %% Constraints

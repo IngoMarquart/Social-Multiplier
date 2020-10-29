@@ -1,12 +1,9 @@
-%%
-%   initFirm.m
-%   For given parameter ranges, initiate a firm
+function firm=initFirm(params)
+% initFirm.m - For given parameter ranges, initiate a firm
 %%
 % @param: params - struct of parameters
 % @return: firm - a firm
 %%
-function firm=initFirm(params)
-
 % Set the random stream
 s = RandStream('mcg16807','Seed',params.m);
 RandStream.setGlobalStream(s);

@@ -1,11 +1,9 @@
-%%
-%   returnRow.m
-%   Returns the row of the current firm to save, possibly format results
+function row = returnRow(firm, T)
+% returnRow - Returns the row of the current firm to save, possibly format results
 %%
 % @param: firm- a firm
 % @return: row - a 1-row table
 %%
-function row = returnRow(firm, T)
 firmID = string(firm.firmID);
 n = firm.n;
 e = firm.eMat(T);

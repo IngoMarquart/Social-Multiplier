@@ -1,12 +1,8 @@
-%%
-% % postTransform
-% This function calculates the transformation and learning in the following steps
-% 1.
-% @param: firm
-%%
-
 function firm=postTransform(firm)
-
+% postTransform - This function calculates the transformation and learning following a period
+%%
+% @param&return: firm
+%%
 % Set the random stream
 s = RandStream('mcg16807','Seed',sum(int32([firm.firmID]))+firm.T);
 RandStream.setGlobalStream(s);

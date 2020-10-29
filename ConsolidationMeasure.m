@@ -1,12 +1,10 @@
-%%%
-% % ConsolidationMeasure
-% This function calculates the actual consolidation within the company.
+function samplecons = ConsolidationMeasure(theta,identity)
+% ConsolidationMeasure - This function calculates the actual consolidation within the company.
+%%
 % @param: theta - Theta vector
 % @param: identity - Identity vector
 % @return: samplecons - consolidation value
-%%%
-function samplecons = ConsolidationMeasure(theta,identity)
-
+%%
 % Sort everything by identity
 [~,idIndex]=sort(identity,'descend');
 theta=theta(idIndex);

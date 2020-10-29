@@ -1,7 +1,6 @@
+function [util,a_i_star]=ConvexDiscreteChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam, maxDegree)
+% ConvexDiscreteChoicePFT - Assuming that each actor picks only one peer, this function find the one giving the most utility
 %%
-% DiscreteChoice
-% Assuming that each actor picks only one peer, this function find the one
-% giving the most utility
 % @param: a_t_1 - Attention matrix of last time period
 % @param: e,delta - Embedding and scaling variable
 % @param: theta_i, theta - theta vector and theta of i
@@ -11,8 +10,6 @@
 % @return: util - Negative Utility value
 % @return: a_i_star - Attention choice in the space of all n actors
 %%
-function [util,a_i_star]=ConvexDiscreteChoicePFT(a_t_1,x_t_1,e, theta, Psi,i,Choice,nrChoice, rationality, conParam, maxDegree)
-
 theta=theta(:);
 n=length(theta);
 % Define One vector

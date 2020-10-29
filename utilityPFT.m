@@ -1,6 +1,6 @@
+function u=utilityPFT(x_i,x_t_1,a_i,theta,e,PsiVec,i,maxDegree,conParam)
+% utilityPFT - Returns utility
 %%
-% % utilityPFT
-% Returns utility
 % @param: x_i - output if i in t
 % @param: x_t_1 - last period output
 % @param: A - Attention matrix
@@ -11,9 +11,6 @@
 % @param: conParam - Convex or concave influence of monitoring
 % @return: u - Negative Utility Value
 %%
-
-function u=utilityPFT(x_i,x_t_1,a_i,theta,e,PsiVec,i,maxDegree,conParam)
-
     x_t_1=x_t_1(:);
     PsiVec=PsiVec(:);
     x=x_t_1;
