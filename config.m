@@ -17,32 +17,31 @@ saveIt = 1; % Save simulation results to a new folder
 graphIt = 0;
 
 
-%% V Parameter
+%% Figure 2: State Space
 
 % Concavity parameter "v"
-% We check 0.2,0.5,2 (main results),1.5
-conParam=0.2;
+conParam=1;
 %% List of parameters to run
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
-mListTotal=[1:12];
+mListTotal=[1:1000];
 % How many "m" do we allow per block? Reduce if memory overflow
-mIterations=1;
+mIterations=5;
 % Identifier for the folders being set
-identifier='PFT-3x3v02'; % Use "runtime" for a timestamp
+identifier='PFT-3x3Figure2'; % Use "runtime" for a timestamp
 % Number of employees in the firm
-nList=[10,20,30];
+nList=[60];
 % Embedding levels to check
-eList=[0.1,0.4,0.7,0.9];
+eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99];
 % PCscale - Ratio of improvers to enhancers. Simulation also runs the
 % equivalent ratio of enhancers to improvers.
 % Wscale - Overall probability of assessors
-PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3"
+PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3";
 % Skew parameter: Second parameter of Beta distribution
 % Simulation also checks the other direction
 thetascale=[2,5000000];
 % Alpha levels
-learningRates=[0,0.05,0.4,1];
+learningRates=[0,0.05,0.4,0.7,1];
 % Correlation of P and F (unused)
 consList=[0];
 % Dynamics
@@ -75,7 +74,7 @@ toGraph = "NW";
 % conUtil=1 gives concave benefit
 % conUtil=0 gives linear benefit
 % conUtil=-1 checks both cases
-conUtil=1;
+conUtil=0;
 
 %% Baseline parameters
 maxCellLength=10000; % Split simulation runs into blocks for memory
