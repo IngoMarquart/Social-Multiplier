@@ -1,13 +1,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% CONFIGURATION %%%%%%%%%%%%%%%%%%%%
-%% ROBUSTNESS CHECK: Focus Parameter & peer groups
+%% FIGURE 2: Main State Space
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This configuration file replicates the v-parameter robustness check.
-% 1. Please note that it requires the global optimization toolpackage
-% 2. This simulation takes longer to run as the optimization problem is
-% complex
-% 3. The state space is a smaller version of the main result
-% 4. We recommend to run at least 6, better 12 random seeds "m", however,
-% indicitative results can be seen even after 3 iterations.
+% This produces the main state space.
+% Due to the large number of parameter combinations, the simulation takes
+% considerable time to run through many random seeds. This, however, is
+% required to get enough draws for a balanced, symmetric state space.
+% However, qualitatively, our results can be confirmed by fewer runs.
+% On an 8-Core Xeon, each set of 5 random seeds takes 2,75 hours to run.
+% In the below, we provide alternative settings for a smaller state space.
+%% Main simulation size
+% How many random seeds? Each seed will be put through all parameter
+% combinations.
+mListTotal=[1:500];
+% mListTotal=[1:100]; % Smaller State Space
 
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
@@ -22,31 +27,32 @@ graphIt = 0;
 % Concavity parameter "v"
 conParam=1;
 %% List of parameters to run
-% How many random seeds? Each seed will be put through all parameter
-% combinations.
-mListTotal=[1:1000];
-% How many "m" do we allow per block? Reduce if memory overflow
+
+%% How many "m" do we allow per block? Reduce if memory overflow
 mIterations=5;
-% Identifier for the folders being set
+%% Identifier for the folders being set
 identifier='PFT-3x3Figure2'; % Use "runtime" for a timestamp
-% Number of employees in the firm
+%% Number of employees in the firm
 nList=[60];
-% Embedding levels to check
+% nList=[30]; % Smaller State Space
+%% Embedding levels to check
 eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99];
-% PCscale - Ratio of improvers to enhancers. Simulation also runs the
+% eList=[0,0.2,0.4,0.5,0.6,0.8,0.95]; % Smaller State Space
+%% PCscale - Ratio of improvers to enhancers. Simulation also runs the
 % equivalent ratio of enhancers to improvers.
 % Wscale - Overall probability of assessors
 PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3";
-% Skew parameter: Second parameter of Beta distribution
+%% Skew parameter: Second parameter of Beta distribution
 % Simulation also checks the other direction
 thetascale=[2,5000000];
-% Alpha levels
+%% Alpha levels
 learningRates=[0,0.05,0.4,0.7,1];
-% Correlation of P and F (unused)
+%% Correlation of P and F (unused)
 consList=[0];
-% Dynamics
+%% Dynamics
 maxT = 200; % Time periods to run
-% Probability of type switching
+% maxT = 100; % Smaller State Space
+%% Probability of type switching
 probTypeSwitch=0;
 
 
