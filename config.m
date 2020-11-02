@@ -1,18 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% CONFIGURATION %%%%%%%%%%%%%%%%%%%%
-%% FIGURE 2: Main State Space
+%% FIGURE 1: Skew and Embedding
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This produces the main state space.
-% Due to the large number of parameter combinations, the simulation takes
-% considerable time to run through many random seeds. This, however, is
-% required to get enough draws for a balanced, symmetric state space.
-% However, qualitatively, our results can be confirmed by fewer runs.
-% On an 8-Core Xeon, each set of 5 random seeds takes 2,75 hours to run.
-% In the below, we provide alternative settings for a smaller state space.
+% This produces the first figure in the paper.
 %% Main simulation size
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
 mListTotal=[1:500];
-% mListTotal=[1:100]; % Smaller State Space
 
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
@@ -21,8 +14,7 @@ saveIt = 1; % Save simulation results to a new folder
 % ATTN: If set to 1, please disable all parfor loops in main.m
 graphIt = 0;
 
-
-%% Figure 2: State Space
+%% Figure 1: Skew
 
 % Concavity parameter "v"
 conParam=1;
@@ -31,22 +23,20 @@ conParam=1;
 %% How many "m" do we allow per block? Reduce if memory overflow
 mIterations=5;
 %% Identifier for the folders being set
-identifier='PFT-3x3Figure2'; % Use "runtime" for a timestamp
+identifier='PFT-Figure1'; % Use "runtime" for a timestamp
 %% Number of employees in the firm
 nList=[60];
-% nList=[30]; % Smaller State Space
 %% Embedding levels to check
-eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99];
-% eList=[0,0.2,0.4,0.5,0.6,0.8,0.95]; % Smaller State Space
+eList=[0,0.01,0.1,0.5,0.99];
 %% PCscale - Ratio of improvers to enhancers. Simulation also runs the
 % equivalent ratio of enhancers to improvers.
 % Wscale - Overall probability of assessors
-PCscale=[0.25,0.5]; Wscale=[1/3]; % "2/3";
+PCscale=[0,0.25,0.35,0.45,0.5]; Wscale=[1/3]; % "2/3"
 %% Skew parameter: Second parameter of Beta distribution
 % Simulation also checks the other direction
-thetascale=[2,5000000];
+thetascale=[2,3,4,5,8,10,250,5000,500000000];
 %% Alpha levels
-learningRates=[0,0.05,0.4,0.7,1];
+learningRates=[0.5];
 %% Correlation of P and F (unused)
 consList=[0];
 %% Dynamics

@@ -1,6 +1,6 @@
 %% Initial comments
 % Use config.m to set parameters, then run main.m
-%% FIGURE 2: Main State Space
+%% FIGURE 1: Skew and embedding
 % Please see config.m for further details
 %% Plan of simulation
 % Each firm we run saves its state as a "firm" struct, which is the
