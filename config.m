@@ -8,13 +8,24 @@
 % 3. The state space is a smaller version of the main result
 % 4. We recommend to run at least 6, better 12 random seeds "m", however,
 % indicitative results can be seen even after 3 iterations.
-
+% 5. Please run for each desired level of "v"
+% We check 0.2,0.5,1 (main results),1.5 in the main paper
+% The strongest test is to check v=0.2
+% 6. We set a max degree at 5 for peer groups to reduce complexity
+% This parameter can be changed below to see that it does not impact the
+% conclusions.
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
 saveIt = 1; % Save simulation results to a new folder
 % Graph firms - recommended for only a single firm
 % ATTN: If set to 1, please disable all parfor loops in main.m
 graphIt = 0;
+
+%% Simulation size
+% How many random seeds? Each seed will be put through all parameter
+% combinations.
+% We recommend at least 12 seeds to preserve state space symmetry.
+mListTotal=[1:12];
 
 
 %% V Parameter
@@ -23,9 +34,7 @@ graphIt = 0;
 % We check 0.2,0.5,2 (main results),1.5
 conParam=0.2;
 %% List of parameters to run
-% How many random seeds? Each seed will be put through all parameter
-% combinations.
-mListTotal=[1:12];
+
 % How many "m" do we allow per block? Reduce if memory overflow
 mIterations=1;
 % Identifier for the folders being set
