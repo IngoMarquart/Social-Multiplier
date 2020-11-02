@@ -1,6 +1,6 @@
 %% Initial comments
 % Use config.m to set parameters, then run main.m
-%% ROBUSTNESS CHECK: Loss aversion and asymmetry
+%% ROBUSTNESS CHECK: Monitoring Type Switch
 % Please see config.m for further details
 % Please see main results for description of simulation
 

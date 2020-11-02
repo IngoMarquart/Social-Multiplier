@@ -1,7 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% CONFIGURATION %%%%%%%%%%%%%%%%%%%%
-%% ROBUSTNESS CHECK: Loss Aversion
+%% ROBUSTNESS CHECK: Monitoring Type Switching
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This configuration file replicates the k-parameter robustness check
+% This configuration file replicates the p-parameter robustness check
+% Please run for all values of "probTypeSwitch" desired
+% In paper: 0.2,0.5,0.9
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
 saveIt = 1; % Save simulation results to a new folder
@@ -22,7 +24,7 @@ mListTotal=[1:12];
 % How many "m" do we allow per block? Reduce if memory overflow
 mIterations=1;
 % Identifier for the folders being set
-identifier='PFT-3x3-LA'; % Use "runtime" for a timestamp
+identifier='PFT-3x3-TS09'; % Use "runtime" for a timestamp
 % Number of employees in the firm
 nList=[10,20,30];
 % Embedding levels to check
@@ -41,9 +43,9 @@ consList=[0];
 % Dynamics
 maxT = 200; % Time periods to run
 % Probability of type switching
-probTypeSwitch=0;
+probTypeSwitch=0.9;
 % Loss Aversion
-kList=[0.01,0.1,0.3,0.5,0.7,0.9,1];
+kList=[1];
 
 
 %% Further Settings
