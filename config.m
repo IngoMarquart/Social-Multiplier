@@ -2,23 +2,26 @@
 %% ROBUSTNESS CHECK: Loss Aversion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This configuration file replicates the k-parameter robustness check
+% Reproduce a state space with less levels of embedding and adaptation.
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
 saveIt = 1; % Save simulation results to a new folder
 % Graph firms - recommended for only a single firm
 % ATTN: If set to 1, please disable all parfor loops in main.m
 graphIt = 0;
+%% Simulation size
+% How many random seeds? Each seed will be put through all parameter
+% combinations.
+% We recommend a value of 20 or more.
+% Lower values would mean small sample sizes and a loss of symmetry in the
+% state space.
+mListTotal=[1:24];
 
-
-%% V Parameter
-
+%% K Parameter
 % Concavity parameter "v"
 % We check 0.2,0.5,2 (main results),1.5
 conParam=1;
 %% List of parameters to run
-% How many random seeds? Each seed will be put through all parameter
-% combinations.
-mListTotal=[1:12];
 % How many "m" do we allow per block? Reduce if memory overflow
 mIterations=1;
 % Identifier for the folders being set
@@ -42,7 +45,7 @@ consList=[0];
 maxT = 200; % Time periods to run
 % Probability of type switching
 probTypeSwitch=0;
-% Loss Aversion
+% Loss Aversion: Values are "1-k" in paper, e.g. 1 means no loss aversion
 kList=[0.01,0.1,0.3,0.5,0.7,0.9,1];
 
 
