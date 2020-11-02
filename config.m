@@ -2,25 +2,31 @@
 %% ROBUSTNESS CHECK: Monitoring Type Switching
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This configuration file replicates the p-parameter robustness check
+% This reproduces qualitatively the results of the main state space,
+% for less values of embedding and adaptation.
+%%
 % Please run for all values of "probTypeSwitch" desired
 % In paper: 0.2,0.5,0.9
+% Then run the RMD file to produce the graphs.
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
 saveIt = 1; % Save simulation results to a new folder
-% Graph firms - recommended for only a single firm
+% Graph firms - recommended for a single firm
 % ATTN: If set to 1, please disable all parfor loops in main.m
 graphIt = 0;
-
-
-%% V Parameter
-
-% Concavity parameter "v"
-% We check 0.2,0.5,2 (main results),1.5
-conParam=1;
-%% List of parameters to run
+%% Simulation size
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
+% We recommend a value of 12 or more.
+% Lower values would mean small sample sizes and a loss of symmetry in the
+% state space.
 mListTotal=[1:12];
+
+%% Type Switchting Parameter
+
+% Concavity parameter "v"
+conParam=1;
+%% List of parameters to run
 % How many "m" do we allow per block? Reduce if memory overflow
 mIterations=1;
 % Identifier for the folders being set
@@ -44,7 +50,7 @@ consList=[0];
 maxT = 200; % Time periods to run
 % Probability of type switching
 probTypeSwitch=0.9;
-% Loss Aversion
+% Loss Aversion parameter "1-k": Set 1 to disable.
 kList=[1];
 
 
