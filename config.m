@@ -5,14 +5,19 @@
 % Due to the large number of parameter combinations, the simulation takes
 % considerable time to run through many random seeds. This, however, is
 % required to get enough draws for a balanced, symmetric state space.
+% We recommend at least 300 random seeds to achieve a balanced sample.
+%
 % However, qualitatively, our results can be confirmed by fewer runs.
-% On an 8-Core Xeon, each set of 5 random seeds takes 2,75 hours to run.
-% In the below, we provide alternative settings for a smaller state space.
+% On a shared 8-Core Xeon, each set of 5 random seeds takes 2,75 hours to run.
+% Our sample thus takes 30+ hours of runtime.
+% In the below, we provide alternative settings for a smaller state space
+% with less random seeds and less parameter values. 
+% This smaller sample runs on our machine in just under an hour.
 %% Main simulation size
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
-mListTotal=[1:500];
-% mListTotal=[1:100]; % Smaller State Space
+mListTotal=[1:300];
+%mListTotal=[1:25]; % Smaller State Space
 
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
@@ -34,10 +39,10 @@ mIterations=5;
 identifier='PFT-3x3Figure2'; % Use "runtime" for a timestamp
 %% Number of employees in the firm
 nList=[60];
-% nList=[30]; % Smaller State Space
+%nList=[30]; % Smaller State Space
 %% Embedding levels to check
 eList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99];
-% eList=[0,0.2,0.4,0.5,0.6,0.8,0.95]; % Smaller State Space
+%eList=[0,0.2,0.4,0.5,0.6,0.8,0.95]; % Smaller State Space
 %% PCscale - Ratio of improvers to enhancers. Simulation also runs the
 % equivalent ratio of enhancers to improvers.
 % Wscale - Overall probability of assessors
