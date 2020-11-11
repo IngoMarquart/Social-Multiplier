@@ -5,7 +5,7 @@
 %% Main simulation size
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
-mListTotal=[1:500];
+mListTotal=[1:300];
 
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
