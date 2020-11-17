@@ -5,7 +5,7 @@
 %% Main simulation size
 % How many random seeds? Each seed will be put through all parameter
 % combinations.
-mListTotal=[1:300];
+mListTotal=[1:500];
 
 %% Saving and graphing
 % This saves the results into the folder ../Datasave/
@@ -40,7 +40,7 @@ learningRates=[0.5];
 %% Correlation of P and F (unused)
 consList=[0];
 %% Dynamics
-maxT = 200; % Time periods to run
+maxT = 50; % Time periods to run
 % maxT = 100; % Smaller State Space
 %% Probability of type switching
 probTypeSwitch=0;
