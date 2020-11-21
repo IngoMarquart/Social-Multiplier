@@ -64,11 +64,6 @@ config;
 nrMBlocks=ceil(size(mListTotal,2)/mIterations);
 for bigSet = 1:nrMBlocks
 
-% Restart parallel pool to avoid slowdown bug
-% This is a Matlab Bug that occurs when looping over a parfor
-poolobj = gcp('nocreate');
-delete(poolobj);
-parpool('local');
     
 mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
 
@@ -317,5 +312,13 @@ if saveIt == 1
     writetable(mainTable, TableName);
     clear mainTable
 end
+
+
+
+% Restart parallel pool to avoid slowdown bug
+% This is a Matlab Bug that occurs when looping over a parfor
+poolobj = gcp('nocreate');
+delete(poolobj);
+parpool;
 
 end
