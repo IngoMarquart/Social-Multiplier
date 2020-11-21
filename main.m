@@ -62,14 +62,13 @@ config;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF CONFIG %%%%%%%%%%%%%%%%%%%%
 
 nrMBlocks=ceil(size(mListTotal,2)/mIterations);
-for bigSet = 51:nrMBlocks
-
-    
+for bigSet = 1:nrMBlocks
 
 % Restart parallel pool to avoid slowdown bug
+% This is a Matlab Bug that occurs when looping over a parfor
 poolobj = gcp('nocreate');
 delete(poolobj);
-parpool('local', 8);
+parpool('local');
     
 mList=[mListTotal((bigSet-1)*(mIterations)+1):mListTotal(bigSet*mIterations)];
 
