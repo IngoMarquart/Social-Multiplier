@@ -263,4 +263,11 @@ end
 
 
 
+% Restart parallel pool to avoid slowdown bug
+% This is a Matlab Bug that occurs when looping over a parfor
+poolobj = gcp('nocreate');
+delete(poolobj);
+parpool;
+
+
 end
