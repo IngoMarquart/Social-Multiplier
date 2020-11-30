@@ -27,7 +27,7 @@ identifier='PFT-Figure1'; % Use "runtime" for a timestamp
 %% Number of employees in the firm
 nList=[60];
 %% Embedding levels to check
-eList=[0,0.01,0.1,0.5,0.99];
+eList=[0,0.01,0.1,0.5,0.95];
 %% PCscale - Ratio of improvers to enhancers. Simulation also runs the
 % equivalent ratio of enhancers to improvers.
 % Wscale - Overall probability of assessors
